@@ -1,0 +1,21 @@
+@import "./Variables.scss";
+
+// Media queries for Responsive page
+
+@mixin respond($breakpoint) {
+  @if ($breakpoint == $MOBILE) {
+    @media screen and (max-width: $mobile-size) {
+      @content;
+    }
+  }
+  @if ($breakpoint == $TABLET) {
+    @media screen and (max-width: $tablet-size) {
+      @content;
+    }
+  }
+  @if ($breakpoint == $LAPTOP) {
+    @media screen and (max-width: $laptop-size) {
+      @content;
+    }
+  }
+}

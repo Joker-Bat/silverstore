@@ -1,0 +1,20 @@
+@import "./styles/Variables.scss";
+@import "./styles/ResponsiveSheet.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+
+  @include respond($MOBILE) {
+    font-size: 50%;
+  }
+}
+
+body {
+  font-family: "Noto Sans JP", sans-serif;
+}

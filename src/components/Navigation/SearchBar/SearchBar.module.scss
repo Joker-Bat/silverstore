@@ -1,0 +1,56 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.Form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.Input {
+  appearance: none;
+  border: 1px solid transparent;
+  border-bottom: 1px solid $gray;
+  padding: 0.8rem 4rem 0.8rem 1.5rem;
+  font-size: 1.8rem;
+  transition: all 0.2s ease;
+
+  @include respond($TABLET) {
+    font-size: 2.3rem;
+    color: $white;
+    background-color: transparent;
+    border-bottom: 1px solid $black;
+  }
+
+  &::placeholder {
+    @include respond($TABLET) {
+      color: #fff;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    border: 1px solid $gray;
+    border-radius: 2rem;
+
+    @include respond($TABLET) {
+      border-bottom: 1px solid $white;
+    }
+  }
+}
+
+.Button {
+  border-radius: 50%;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+
+  @include respond($TABLET) {
+    color: $white;
+  }
+}

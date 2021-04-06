@@ -1,0 +1,77 @@
+@import "../../../../styles/Variables.scss";
+@import "../../../../styles/ResponsiveSheet.scss";
+
+.NavItem {
+  font-size: 2rem;
+  position: relative;
+
+  @include respond($TABLET) {
+    width: 200px;
+  }
+
+  &:not(:last-child) {
+    margin-right: 6rem;
+
+    @include respond($TABLET) {
+      margin-right: 0;
+      margin-bottom: 4rem;
+    }
+  }
+
+  .NavLink {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    text-decoration: none;
+    color: $text-dark;
+
+    @include respond($TABLET) {
+      color: $white;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    svg {
+      margin-right: 1rem;
+      color: $black;
+      font-size: 3.8rem;
+      transition: font-size 0.2s ease;
+
+      @include respond($TABLET) {
+        color: rgba($black, 0.8);
+        margin-right: 2rem;
+        margin-bottom: 2rem;
+        transform: translateY(20%);
+      }
+    }
+
+    p {
+      color: $black;
+      transform-origin: top;
+      opacity: 0;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: scaleY(0) translate(-50%, -100%);
+      transition: transform 0.3s ease, opacity 0.2s ease;
+
+      @include respond($TABLET) {
+        font-size: 2.5rem;
+        color: $white;
+        position: static;
+        opacity: 1;
+        transform: scaleY(1) translate(0, 0);
+      }
+    }
+
+    &:hover p {
+      opacity: 1;
+      transform: scaleY(1) translate(-50%, 0);
+
+      @include respond($TABLET) {
+        transform: scaleY(1) translate(0, 0);
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@import "../../../styles/ResponsiveSheet.scss";
+@import "../../../styles/Variables.scss";
+
+.Navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5rem;
+  margin-bottom: 2rem;
+
+  @include respond($MOBILE) {
+    padding: 2rem 3rem;
+  }
+}
+
+.NavItems {
+  display: flex;
+}
+
+.NavItemsLinks {
+  @include respond($TABLET) {
+    display: none;
+  }
+}

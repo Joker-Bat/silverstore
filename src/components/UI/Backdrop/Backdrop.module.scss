@@ -1,0 +1,33 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.Backdrop {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 60px;
+  height: 60px;
+  background-color: rgba($black, 0.5);
+  border-radius: 50%;
+  z-index: 10;
+  transform: scale(0);
+  transition: transform .5s ease;
+
+  @include respond($TABLET) {
+    top: 2rem;
+    right: 3rem;
+  }
+
+  @include respond($MOBILE) {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  &.Active {
+    transform: scale(50);
+  }
+
+  &.Close {
+    transform: scale(0);
+  }
+}

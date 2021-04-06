@@ -1,0 +1,23 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+
+.Sidebar {
+  position: absolute;
+  top: 5rem;
+  left: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 40;
+  display: none;
+  transition: all .4s ease;
+
+  @include respond($TABLET) {
+    display: block;
+  }
+
+  &.Open {
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
