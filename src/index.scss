@@ -1,6 +1,21 @@
 @import "./styles/Variables.scss";
 @import "./styles/ResponsiveSheet.scss";
 
+:root {
+  --tertiary: #ccc;
+  --primary: #000;
+  --secondary: #f7f7f7;
+  --text-dark: #333;
+  --black: #000;
+  --white: #fff;
+  --mint: #02b15a;
+}
+
+[data-theme="dark"] {
+  --primary: #f7f7f7;
+  --secondary: #000;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,6 +30,14 @@ html {
   }
 }
 
+:focus {
+  outline: 2px solid var(--secondary);
+  outline-offset: .5rem;
+}
+
 body {
   font-family: "Noto Sans JP", sans-serif;
+  background-color: var(--secondary);
+  color: var(--primary);
+  transition: all 0.3s ease-out;
 }

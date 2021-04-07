@@ -4,10 +4,24 @@ import React from "react";
 import classes from "./Logo.module.scss";
 
 const Logo = () => {
+  const toggleTheme = (e) => {
+    e.preventDefault();
+    if (!document.documentElement.getAttribute("data-theme")) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+  };
+
   return (
-    <h1 className={classes.Logo}>
+    <a
+      href="/"
+      className={classes.Logo}
+      onClick={(e) => e.preventDefault()}
+      onDoubleClick={toggleTheme}
+    >
       <i class="fab fa-think-peaks"></i>
-    </h1>
+    </a>
   );
 };
 

@@ -24,22 +24,22 @@
     flex-direction: column;
 
     text-decoration: none;
-    color: $text-dark;
+    color: var(--text-dark);
 
     @include respond($TABLET) {
-      color: $white;
+      color: var(--white);
       flex-direction: row;
       align-items: center;
     }
 
     svg {
       margin-right: 1rem;
-      color: $black;
+      color: var(--primary);
       font-size: 3.8rem;
       transition: font-size 0.2s ease;
 
       @include respond($TABLET) {
-        color: rgba($black, 0.8);
+        color: var(--primary);
         margin-right: 2rem;
         margin-bottom: 2rem;
         transform: translateY(20%);
@@ -47,7 +47,7 @@
     }
 
     p {
-      color: $black;
+      color: var(--primary);
       transform-origin: top;
       opacity: 0;
       position: absolute;
@@ -58,7 +58,7 @@
 
       @include respond($TABLET) {
         font-size: 2.5rem;
-        color: $white;
+        color: var(--white);
         position: static;
         opacity: 1;
         transform: scaleY(1) translate(0, 0);
