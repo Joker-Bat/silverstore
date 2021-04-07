@@ -17,7 +17,7 @@ const SearchBar = (props) => {
         placeholder="Search product here..."
       />
       <button className={classes.Button}>
-        <i class="fas fa-search"></i>
+        <i className="fas fa-search"></i>
       </button>
     </form>
   );

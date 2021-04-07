@@ -23,6 +23,7 @@
   }
 
   &::placeholder {
+    color: var(--black);
     @include respond($TABLET) {
       color: var(--white);
     }
@@ -34,7 +35,7 @@
     border-radius: 2rem;
 
     @include respond($TABLET) {
-      border-bottom: 1px solid var(--secondary);
+      border-bottom: 1px solid var(--primary);
     }
   }
 }

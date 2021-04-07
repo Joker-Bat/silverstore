@@ -67,7 +67,7 @@
 
     &:hover p {
       opacity: 1;
-      transform: scaleY(1) translate(-50%, 0);
+      transform: scaleY(1) translate(-50%, -10%);
 
       @include respond($TABLET) {
         transform: scaleY(1) translate(0, 0);

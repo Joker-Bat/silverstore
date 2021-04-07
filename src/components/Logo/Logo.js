@@ -20,7 +20,7 @@ const Logo = () => {
       onClick={(e) => e.preventDefault()}
       onDoubleClick={toggleTheme}
     >
-      <i class="fab fa-think-peaks"></i>
+      <i className="fab fa-think-peaks"></i>
     </a>
   );
 };
