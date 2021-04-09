@@ -36,7 +36,7 @@
       margin-right: 1rem;
       color: var(--primary);
       font-size: 3.8rem;
-      transition: font-size 0.2s ease;
+      transition: font-size 0.2s ease, color 0.2s ease-in;
 
       @include respond($TABLET) {
         color: var(--primary);
@@ -71,6 +71,16 @@
 
       @include respond($TABLET) {
         transform: scaleY(1) translate(0, 0);
+      }
+    }
+  }
+
+  .ActiveLink {
+    svg {
+      color: var(--secondary);
+
+      @include respond($TABLET) {
+        color: var(--mint);
       }
     }
   }

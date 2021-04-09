@@ -3,6 +3,9 @@ import React from "react";
 // styles
 import classes from "./Logo.module.scss";
 
+// Router
+import { NavLink } from "react-router-dom";
+
 const Logo = () => {
   const toggleTheme = (e) => {
     e.preventDefault();
@@ -14,14 +17,9 @@ const Logo = () => {
   };
 
   return (
-    <a
-      href="/"
-      className={classes.Logo}
-      onClick={(e) => e.preventDefault()}
-      onDoubleClick={toggleTheme}
-    >
+    <NavLink to="/" className={classes.Logo} onDoubleClick={toggleTheme}>
       <i className="fab fa-think-peaks"></i>
-    </a>
+    </NavLink>
   );
 };
 

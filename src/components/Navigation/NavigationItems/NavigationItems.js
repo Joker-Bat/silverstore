@@ -11,18 +11,21 @@ const NavigationItems = (props) => {
   return (
     <ul className={classes.NavigationItems}>
       <NavigationItem
+        path="products"
         icon="fab fa-product-hunt"
         name="Products"
         closeBackdrop={props.closeBackdrop}
       />
 
       <NavigationItem
+        path="cart"
         icon="fas fa-shopping-cart"
         name="Cart"
         closeBackdrop={props.closeBackdrop}
       />
 
       <NavigationItem
+        path="login"
         icon="fas fa-sign-in-alt"
         name="Login"
         closeBackdrop={props.closeBackdrop}

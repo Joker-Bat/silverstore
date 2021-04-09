@@ -3,13 +3,29 @@ import "./App.module.scss";
 
 // Components
 import Layout from "./hoc/Layout";
+import Homepage from "./containers/Homepage/Homepage";
+import Cart from "./containers/Cart/Cart";
+import Login from "./containers/Login/Login";
+import Products from "./containers/Products/Products";
+
+// Router
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
   render() {
+    let routes = (
+      <Switch>
+        <Route path="/products" component={Products} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/login" component={Login} />
+        <Route path="/" component={Homepage} />
+      </Switch>
+    );
+
     return (
-      <Layout>
-        <h1>Hello World</h1>
-      </Layout>
+      <Router>
+        <Layout>{routes}</Layout>
+      </Router>
     );
   }
 }
