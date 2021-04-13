@@ -7,8 +7,11 @@ import classes from "./NavigationItem.module.scss";
 import { NavLink } from "react-router-dom";
 
 export const NavigationItem = (props) => {
+  // console.log(props);
+  const NavItemClass = [classes.NavItem, props.shrink && classes.ShrinkNavItem];
+
   return (
-    <li className={classes.NavItem} onClick={props.closeBackdrop}>
+    <li className={NavItemClass.join(' ')} onClick={props.closeBackdrop}>
       <NavLink
         to={props.path}
         activeClassName={classes.ActiveLink}

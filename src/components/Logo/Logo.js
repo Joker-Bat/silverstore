@@ -4,11 +4,14 @@ import React from "react";
 import classes from "./Logo.module.scss";
 
 // Router
-import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-const Logo = () => {
-  const toggleTheme = (e) => {
-    e.preventDefault();
+const Logo = (props) => {
+  let timer = null;
+
+  const LogoClass = [classes.Logo, props.shrink && classes.ShrinkLogo];
+
+  const toggleTheme = () => {
     if (!document.documentElement.getAttribute("data-theme")) {
       document.documentElement.setAttribute("data-theme", "dark");
     } else {
@@ -16,11 +19,20 @@ const Logo = () => {
     }
   };
 
+  const clickHandler = (e) => {
+    clearTimeout(timer);
+    if (e.detail === 1) {
+      timer = setTimeout(() => props.history.push("/"), 300);
+    } else if (e.detail === 2) {
+      toggleTheme();
+    }
+  };
+
   return (
-    <NavLink to="/" className={classes.Logo} onDoubleClick={toggleTheme}>
+    <div className={LogoClass.join(' ')} onClick={clickHandler}>
       <i className="fab fa-think-peaks"></i>
-    </NavLink>
+    </div>
   );
 };
 
-export default Logo;
+export default withRouter(Logo);

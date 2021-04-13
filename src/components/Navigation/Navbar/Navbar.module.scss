@@ -3,12 +3,21 @@
 
 .Navbar {
   width: 100%;
+  height: 10rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2rem 5rem;
   margin-bottom: 2rem;
-  background-color:var(--mint);
+  background-color: var(--mint);
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: height 0.2s linear;
+
+  &.ShrinkNavbar {
+    height: 5rem;
+  }
 
   @include respond($MOBILE) {
     padding: 2rem 3rem;

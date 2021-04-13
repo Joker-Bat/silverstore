@@ -9,11 +9,13 @@ const SearchBar = (props) => {
     props.closeBackdrop();
   };
 
+  const InputClass = [classes.Input, props.shrink && classes.ShrinkInput];
+
   return (
     <form className={classes.Form} onSubmit={submitHandler}>
       <input
         type="text"
-        className={classes.Input}
+        className={InputClass.join(' ')}
         placeholder="Search product here..."
       />
       <button className={classes.Button}>

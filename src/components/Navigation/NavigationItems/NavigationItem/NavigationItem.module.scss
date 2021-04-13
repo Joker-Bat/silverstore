@@ -4,6 +4,7 @@
 .NavItem {
   font-size: 2rem;
   position: relative;
+  transition: .2s ease;
 
   @include respond($TABLET) {
     width: 200px;
@@ -15,6 +16,21 @@
     @include respond($TABLET) {
       margin-right: 0;
       margin-bottom: 4rem;
+    }
+  }
+
+  &.ShrinkNavItem {
+    font-size: 1.5rem;
+
+    &:not(:last-child) {
+      margin-right: 4rem;
+    }
+
+    .NavLink {
+
+      svg {
+        font-size: 2.5rem;
+      }
     }
   }
 
@@ -35,11 +51,12 @@
     svg {
       margin-right: 1rem;
       color: var(--primary);
-      font-size: 3.8rem;
+      font-size: 3.5rem;
       transition: font-size 0.2s ease, color 0.2s ease-in;
+      transition: .2s ease;
 
       @include respond($TABLET) {
-        color: var(--primary);
+        color: var(--white);
         margin-right: 2rem;
         margin-bottom: 2rem;
         transform: translateY(20%);

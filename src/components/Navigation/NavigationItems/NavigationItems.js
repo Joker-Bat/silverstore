@@ -8,6 +8,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import classes from "./NavigationItems.module.scss";
 
 const NavigationItems = (props) => {
+  // console.log(props.shrink);
   return (
     <ul className={classes.NavigationItems}>
       <NavigationItem
@@ -15,6 +16,7 @@ const NavigationItems = (props) => {
         icon="fab fa-product-hunt"
         name="Products"
         closeBackdrop={props.closeBackdrop}
+        shrink={props.shrink}
       />
 
       <NavigationItem
@@ -22,6 +24,7 @@ const NavigationItems = (props) => {
         icon="fas fa-shopping-cart"
         name="Cart"
         closeBackdrop={props.closeBackdrop}
+        shrink={props.shrink}
       />
 
       <NavigationItem
@@ -29,9 +32,10 @@ const NavigationItems = (props) => {
         icon="fas fa-sign-in-alt"
         name="Login"
         closeBackdrop={props.closeBackdrop}
+        shrink={props.shrink}
       />
 
-      <SearchBar closeBackdrop={props.closeBackdrop} />
+      <SearchBar closeBackdrop={props.closeBackdrop} shrink={props.shrink} />
     </ul>
   );
 };

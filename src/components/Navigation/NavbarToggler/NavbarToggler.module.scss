@@ -2,6 +2,7 @@
 @import "../../../styles/Variables.scss";
 
 .NavbarToggler {
+  position: relative;
   color: var(--primary);
   cursor: pointer;
   width: 4.4rem;
@@ -11,7 +12,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  z-index: 25;
+  z-index: 50;
 
   &.Active span:nth-child(2) {
     transform-origin: center;
