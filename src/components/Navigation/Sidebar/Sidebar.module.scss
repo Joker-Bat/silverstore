@@ -1,22 +1,21 @@
 @import "../../../styles/Variables.scss";
 @import "../../../styles/ResponsiveSheet.scss";
 
-
 .Sidebar {
-  position: absolute;
+  position: fixed;
   top: 5rem;
   left: 100%;
   transform: translate(-50%, -50%) scale(0);
-  z-index: 40;
+  z-index: 10;
   display: none;
-  transition: all .4s ease;
+  transition: all 0.4s ease;
 
   @include respond($TABLET) {
     display: block;
   }
 
   &.Open {
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
   }

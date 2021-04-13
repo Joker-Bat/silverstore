@@ -28,7 +28,7 @@ const Navbar = (props) => {
 
   return (
     <header className={NavbarClass.join(" ")}>
-      <Logo shrink={shrinkedNavbar} />
+      <Logo shrink={shrinkedNavbar} closeSidebar={props.close} />
       <nav className={classes.NavItems}>
         <div className={classes.NavItemsLinks}>
           <NavigationItems shrink={shrinkedNavbar} />

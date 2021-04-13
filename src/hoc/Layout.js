@@ -23,9 +23,15 @@ class Layout extends Component {
   render() {
     return (
       <div>
-        <Navbar toggle={this.toggleSidebar} open={this.state.isSidebarOpen} />
+        <Navbar
+          toggle={this.toggleSidebar}
+          open={this.state.isSidebarOpen}
+          close={this.closeSidebar}
+        />
         <Sidebar open={this.state.isSidebarOpen} close={this.closeSidebar} />
-        <main style={{ minHeight: "200vh", paddingTop: "12rem" }}>{this.props.children}</main>
+        <main style={{ minHeight: "200vh", paddingTop: "12rem" }}>
+          {this.props.children}
+        </main>
         <Footer />
       </div>
     );

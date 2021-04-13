@@ -38,7 +38,10 @@ const Logo = (props) => {
   const clickHandler = (e) => {
     clearTimeout(timer);
     if (e.detail === 1) {
-      timer = setTimeout(() => props.history.push("/"), 300);
+      timer = setTimeout(() => {
+        props.closeSidebar();
+        props.history.push("/");
+      }, 300);
     } else if (e.detail === 2) {
       toggleTheme();
     }
@@ -46,7 +49,7 @@ const Logo = (props) => {
 
   return (
     <div className={LogoClass.join(" ")} onClick={clickHandler}>
-      <p className={PopupClass.join(" ")}>Try Double Tap  😉</p>
+      <p className={PopupClass.join(" ")}>Try Double Tap 😉</p>
       <i className="fab fa-think-peaks"></i>
     </div>
   );
