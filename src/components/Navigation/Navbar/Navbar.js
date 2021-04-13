@@ -14,8 +14,8 @@ const Navbar = (props) => {
   useEffect(() => {
     window.onscroll = () => {
       if (
-        document.body.scrollTop > 200 ||
-        document.documentElement.scrollTop > 200
+        document.body.scrollTop > 100 ||
+        document.documentElement.scrollTop > 100
       ) {
         setShrinkedNavbar(true);
       } else {

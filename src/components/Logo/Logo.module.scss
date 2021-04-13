@@ -4,9 +4,38 @@
   font-size: 4rem;
   font-weight: 500;
   color: var(--primary);
-  transition: all .2s;
+  transition: all 0.2s;
 
   &.ShrinkLogo {
     font-size: 3rem;
+  }
+
+  .Popup {
+    position: absolute;
+    top: 50%;
+    left: 170%;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left;
+    font-size: 1.6rem;
+    text-align: center;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 0.5rem 2rem;
+    transition: transform 1s ease;
+
+    &.ActivePopup {
+      transform: translateY(-50%) scaleX(1);
+    }
+
+    &::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background: var(--black);
+      position: absolute;
+      top: 50%;
+      left: -15px;
+      transform: rotate(45deg) translateY(-50%);
+    }
   }
 }

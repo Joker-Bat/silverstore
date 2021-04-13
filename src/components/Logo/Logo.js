@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 // styles
 import classes from "./Logo.module.scss";
@@ -7,9 +7,25 @@ import classes from "./Logo.module.scss";
 import { withRouter } from "react-router-dom";
 
 const Logo = (props) => {
+  const [popup, setPopup] = useState(false);
+
+  useEffect(() => {
+    let startPopup = setTimeout(() => {
+      setPopup(true);
+    }, 2000);
+    let endPopup = setTimeout(() => {
+      setPopup(false);
+    }, 5000);
+    return () => {
+      clearTimeout(startPopup);
+      clearTimeout(endPopup);
+    };
+  }, []);
+
   let timer = null;
 
   const LogoClass = [classes.Logo, props.shrink && classes.ShrinkLogo];
+  const PopupClass = [classes.Popup, popup && classes.ActivePopup];
 
   const toggleTheme = () => {
     if (!document.documentElement.getAttribute("data-theme")) {
@@ -29,7 +45,8 @@ const Logo = (props) => {
   };
 
   return (
-    <div className={LogoClass.join(' ')} onClick={clickHandler}>
+    <div className={LogoClass.join(" ")} onClick={clickHandler}>
+      <p className={PopupClass.join(" ")}>Try Double Tap  😉</p>
       <i className="fab fa-think-peaks"></i>
     </div>
   );
