@@ -6,7 +6,8 @@ import * as Contact from "./Links";
 // Styles
 import classes from "./Footer.module.scss";
 
-const Footer = (props) => {
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className={classes.Footer}>
       <div className={classes.CTA}>
@@ -28,7 +29,7 @@ const Footer = (props) => {
         </a>
       </div>
       <div className={classes.Attribution}>
-        <p>&copy; 2021 SilverStore</p>
+        <p>&copy; {currentYear} SilverStore</p>
         <p>
           Made with <i className="fas fa-heart"></i> by
           <a

@@ -1,0 +1,12 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.carousel.carousel-slider .control-arrow {
+  @include respond($LAPTOP) {
+    width: 60px;
+  }
+
+  @include respond($MOBILE) {
+    display: none;
+  }
+}

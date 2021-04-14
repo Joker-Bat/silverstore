@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+// Emoji
+import eyeClick from "../../images/emoji/eyeClick.webp";
+
 // styles
 import classes from "./Logo.module.scss";
 
@@ -49,7 +52,9 @@ const Logo = (props) => {
 
   return (
     <div className={LogoClass.join(" ")} onClick={clickHandler}>
-      <p className={PopupClass.join(" ")}>Try Double Tap 😉</p>
+      <p className={PopupClass.join(" ")}>
+        Try Double Tap <img src={eyeClick} alt="emoji" width="20px" />
+      </p>
       <i className="fab fa-think-peaks"></i>
     </div>
   );

@@ -13,7 +13,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  transition: height 0.2s linear;
+  transition: height 0.05s ease;
   z-index: 10; //Higher than backdrop z-index
 
   &.ShrinkNavbar {

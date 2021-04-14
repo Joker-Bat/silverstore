@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 
 // Test
-import data from "../../data/data";
+// import data from "../../data/data";
+
+// Components
+import CarouselSet from "../../components/Homepage/Carousel/Carousel";
 
 export class Homepage extends Component {
   // componentDidMount() {
@@ -11,10 +14,7 @@ export class Homepage extends Component {
   render() {
     return (
       <div>
-        <h1>Homepage</h1>
-        <div style={{ width: "200px", height: "200px" }}>
-          <img src={data[5].images[0]} alt="img" />
-        </div>
+        <CarouselSet />
       </div>
     );
   }
