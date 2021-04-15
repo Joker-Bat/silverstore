@@ -5,6 +5,7 @@ import React, { Component } from "react";
 
 // Components
 import CarouselSet from "../../components/Homepage/Carousel/Carousel";
+import FeaturedProducts from "../../components/Homepage/FeaturedProducts/FeaturedProducts";
 
 export class Homepage extends Component {
   // componentDidMount() {
@@ -15,6 +16,7 @@ export class Homepage extends Component {
     return (
       <div>
         <CarouselSet />
+        <FeaturedProducts />
       </div>
     );
   }

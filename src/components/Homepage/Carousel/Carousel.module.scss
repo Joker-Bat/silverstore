@@ -4,6 +4,7 @@
 .Slide {
   height: 400px;
   transition: height 0.2s;
+  cursor: pointer;
 
   @include respond($TABLET) {
     height: 350px;
