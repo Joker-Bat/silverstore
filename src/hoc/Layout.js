@@ -22,7 +22,7 @@ class Layout extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <Navbar
           toggle={this.toggleSidebar}
           open={this.state.isSidebarOpen}
@@ -33,7 +33,7 @@ class Layout extends Component {
           {this.props.children}
         </main>
         <Footer />
-      </div>
+      </>
     );
   }
 }
