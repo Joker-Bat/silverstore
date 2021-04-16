@@ -2,7 +2,7 @@
 @import "../../../styles/ResponsiveSheet.scss";
 
 .Slide {
-  height: 400px;
+  height: 420px;
   transition: height 0.2s;
   cursor: pointer;
 
@@ -11,7 +11,7 @@
   }
 
   @include respond($MOBILE) {
-    height: 250px;
+    height: 230px;
   }
 
   & .Banner {

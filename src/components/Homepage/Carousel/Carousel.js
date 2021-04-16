@@ -35,7 +35,6 @@ const CarouselSet = () => {
       showThumbs={false}
       showStatus={false}
       autoPlay={true}
-      transitionTime="300"
       emulateTouch={true}
       useKeyboardArrows={true}
       autoFocus={true}

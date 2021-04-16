@@ -12,7 +12,7 @@
   appearance: none;
   color: var(--white);
   border: 1px solid transparent;
-  border-bottom: 1px solid var(--primary);
+  border-bottom: 1px solid var(--white);
   padding: 0.8rem 4rem 0.8rem 1.5rem;
   font-size: 1.8rem;
   transition: all 0.2s ease;
@@ -28,7 +28,7 @@
   }
 
   &::placeholder {
-    color: var(--black);
+    color: var(--white);
     @include respond($TABLET) {
       color: var(--white);
     }

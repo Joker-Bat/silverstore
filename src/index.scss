@@ -4,18 +4,18 @@
 :root {
   --tertiary: #ccc;
   --primary: #000;
-  --secondary: #f7f7f7;
+  --secondary: #fff;
   --text-dark: #333;
   --black: #000;
   --white: #fff;
-  --mint: #02b15a;
+  --main: #2874f0;
   --github: #f1501f;
-  --twitter: #1DA1F2;
+  --twitter: #1da1f2;
 }
 
 [data-theme="dark"] {
   --primary: #f7f7f7;
-  --secondary: #222;
+  --secondary: #141414;
 }
 
 * {
@@ -35,14 +35,11 @@ html {
 
 :focus {
   outline: 2px solid var(--secondary);
-  outline-offset: .5rem;
+  outline-offset: 0.5rem;
 }
 
 body {
   font-family: "Noto Sans JP", sans-serif;
   background-color: var(--secondary);
   color: var(--primary);
-  transition: all 0.3s ease-out;
 }
-
-

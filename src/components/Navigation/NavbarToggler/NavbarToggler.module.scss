@@ -3,7 +3,7 @@
 
 .NavbarToggler {
   position: relative;
-  color: var(--primary);
+  color: var(--white);
   cursor: pointer;
   width: 4.4rem;
   height: 3rem;
@@ -38,7 +38,7 @@
     border-radius: 2rem;
     transition: transform 0.2s ease, background-color 0.1s ease-out;
 
-    background-color: var(--primary);
+    background-color: var(--white);
   }
 
   &.Active span {
