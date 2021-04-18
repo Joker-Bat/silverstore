@@ -10,8 +10,12 @@ import IntroHeading from "./IntroHeading/IntroHeading";
 const Header = () => {
   return (
     <header className={classes.Header}>
-      <IntroHeading />
-      <CarouselSet />
+      <div className={classes.IntroHeading}>
+        <IntroHeading />
+      </div>
+      <div className={classes.CarouselSet}>
+        <CarouselSet />
+      </div>
     </header>
   );
 };

@@ -10,7 +10,7 @@ const IntroHeading = () => {
         <span>Silver</span> Store
       </h1>
       <h4 className={classes.SubHeading}>
-        Find your <span>tech</span> needs
+        Live like a <span>pro</span>
       </h4>
       <button className={classes.StartShopping}>Start shopping</button>
     </div>

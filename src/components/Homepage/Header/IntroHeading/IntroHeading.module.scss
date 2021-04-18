@@ -11,20 +11,25 @@
   background-color: var(--black);
   color: var(--white);
   height: 330px;
+  clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
+  z-index: 2;
 
   @include respond($TABLET) {
-    height: 300px;
+    clip-path: none;
+    height: 50%;
     width: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 93%, 0% 100%);
   }
 
   @include respond($MOBILE) {
-    height: 230px;
+    height: 55%;
+    clip-path: polygon(0 0, 100% 0, 100% 93%, 0% 100%);
   }
 
   .Heading {
     font-size: 4.5rem;
     letter-spacing: 0.4rem;
-    line-height: 4.5rem;
+    line-height: 5rem;
 
     span {
       color: var(--main);
@@ -38,6 +43,8 @@
 
     span {
       color: var(--main);
+      font-weight: 500;
+      text-transform: capitalize;
     }
   }
 

@@ -3,10 +3,40 @@
 
 .Header {
   width: 100%;
+  position: relative;
   display: flex;
-  
 
   @include respond($TABLET) {
     flex-direction: column;
+    height: 500px;
+  }
+
+  @include respond($MOBILE) {
+    height: 460px;
+  }
+
+  .IntroHeading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    @include respond($TABLET) {
+      height: 100%;
+      align-items: flex-start;
+    }
+  }
+
+  .CarouselSet {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    @include respond($TABLET) {
+      height: 100%;
+      align-items: flex-end;
+    }
   }
 }
