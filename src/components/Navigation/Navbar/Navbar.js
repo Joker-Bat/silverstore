@@ -27,15 +27,15 @@ const Navbar = (props) => {
   const NavbarClass = [classes.Navbar, shrinkedNavbar && classes.ShrinkNavbar];
 
   return (
-    <header className={NavbarClass.join(" ")}>
+    <nav className={NavbarClass.join(" ")}>
       <Logo shrink={shrinkedNavbar} closeSidebar={props.close} />
-      <nav className={classes.NavItems}>
+      <div className={classes.NavItems}>
         <div className={classes.NavItemsLinks}>
           <NavigationItems shrink={shrinkedNavbar} />
         </div>
         <NavbarToggler toggle={props.toggle} open={props.open} />
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 };
 

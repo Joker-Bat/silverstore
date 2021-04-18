@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // Data
-import data from "../../../data/data";
+import data from "../../../../data/data";
 
 // Carousel
 import { Carousel } from "react-responsive-carousel";

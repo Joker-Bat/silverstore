@@ -1,0 +1,12 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.Header {
+  width: 100%;
+  display: flex;
+  
+
+  @include respond($TABLET) {
+    flex-direction: column;
+  }
+}
