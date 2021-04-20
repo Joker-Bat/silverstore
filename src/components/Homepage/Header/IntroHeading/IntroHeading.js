@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../../../UI/Button/Button";
 
 // Styles
 import classes from "./IntroHeading.module.scss";
@@ -12,7 +13,7 @@ const IntroHeading = () => {
       <h4 className={classes.SubHeading}>
         Live like a <span>pro</span>
       </h4>
-      <button className={classes.StartShopping}>Start shopping</button>
+      <Button name="Start shopping" small />
     </div>
   );
 };

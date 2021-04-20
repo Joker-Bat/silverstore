@@ -1,4 +1,3 @@
-
 // Responsive styles
 $MOBILE: "MOBILE";
 $TABLET: "TABLET";
@@ -11,3 +10,6 @@ $laptop-size: 1300px;
 
 // Variables
 $backdrop: #000;
+
+// Darkmode transition
+$darkTransition: background-color 0.2s linear, color 0.15s ease;

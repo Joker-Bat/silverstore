@@ -1,0 +1,31 @@
+@import "../../../styles/Variables.scss";
+
+.Button {
+  appearance: none;
+  border: none;
+  background-color: var(--main);
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease-in;
+
+  &.Small {
+    padding: 0.5rem 1rem;
+    font-size: 2rem;
+    border-radius: 0.3rem;
+  }
+
+  &.Large {
+    padding: 0.5rem 2rem;
+    font-size: 3rem;
+    border-radius: 0.5rem;
+  }
+
+  &.Uppercase {
+    text-transform: uppercase;
+  }
+
+  &:hover {
+    transform: scale(0.98);
+    filter: brightness(120%);
+  }
+}
