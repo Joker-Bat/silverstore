@@ -26,7 +26,7 @@ const headphone = [
       {
         stars: 5,
         title: "Must buy!",
-        description: "Good laptop in this price",
+        description: "Good in this price",
         userName: "Shanmugam M",
         daysBefore: "9days ago",
       },
@@ -64,7 +64,7 @@ const headphone = [
       {
         stars: 5,
         title: "Must buy!",
-        description: "Good laptop in this price",
+        description: "Good in this price",
         userName: "Shanmugam M",
         daysBefore: "9days ago",
       },
@@ -97,7 +97,7 @@ const headphone = [
       {
         stars: 5,
         title: "Must buy!",
-        description: "Good laptop in this price",
+        description: "Good in this price",
         userName: "Shanmugam M",
         daysBefore: "9days ago",
       },
@@ -134,7 +134,7 @@ const headphone = [
       {
         stars: 5,
         title: "Must buy!",
-        description: "Good laptop in this price",
+        description: "Good in this price",
         userName: "Shanmugam M",
         daysBefore: "9days ago",
       },
@@ -173,7 +173,7 @@ const headphone = [
       {
         stars: 5,
         title: "Must buy!",
-        description: "Good laptop in this price",
+        description: "Good in this price",
         userName: "Shanmugam M",
         daysBefore: "9days ago",
       },
