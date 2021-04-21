@@ -4,10 +4,9 @@ import React, { Component } from "react";
 // import data from "../../data/data";
 
 // Components
-// import CarouselSet from "../../components/Homepage/Carousel/Carousel";
-import FeaturedProducts from "../../components/Homepage/FeaturedProducts/FeaturedProducts";
-
 import Header from "../../components/Homepage/Header/Header";
+import FeaturedProducts from "../../components/Homepage/FeaturedProducts/FeaturedProducts";
+import RandomProduct from "../../components/Homepage/RandomProduct/RandomProduct";
 
 export class Homepage extends Component {
   // componentDidMount() {
@@ -16,10 +15,11 @@ export class Homepage extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <Header />
         <FeaturedProducts />
-      </div>
+        <RandomProduct />
+      </>
     );
   }
 }

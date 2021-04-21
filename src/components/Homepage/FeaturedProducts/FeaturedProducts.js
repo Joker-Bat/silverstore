@@ -8,7 +8,7 @@ import classes from "./FeaturedProducts.module.scss";
 
 // Components
 import Title from "../../UI/Title/Title";
-import Product from "./Product/Product";
+import Product from "../../UI/Product/Product";
 import Button from "../../UI/Button/Button";
 
 const FeaturedProducts = () => {
