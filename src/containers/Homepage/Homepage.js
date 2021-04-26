@@ -7,6 +7,7 @@ import React, { Component } from "react";
 import Header from "../../components/Homepage/Header/Header";
 import FeaturedProducts from "../../components/Homepage/FeaturedProducts/FeaturedProducts";
 import RandomProduct from "../../components/Homepage/RandomProduct/RandomProduct";
+import PopularBrands from "../../components/Homepage/PopularBrands/PopularBrands";
 
 export class Homepage extends Component {
   // componentDidMount() {
@@ -19,6 +20,7 @@ export class Homepage extends Component {
         <Header />
         <FeaturedProducts />
         <RandomProduct />
+        <PopularBrands />
       </>
     );
   }
