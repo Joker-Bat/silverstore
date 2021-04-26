@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
 
 // Styles
 import classes from "./Button.module.scss";
 
 const Button = (props) => {
-
   const buttonClass = [classes.Button];
 
-  props.small && buttonClass.push(classes.Small)
-  props.large && buttonClass.push(classes.Large)
-  props.uppercase && buttonClass.push(classes.Uppercase)
+  props.small && buttonClass.push(classes.Small);
+  props.large && buttonClass.push(classes.Large);
+  props.uppercase && buttonClass.push(classes.Uppercase);
 
   return (
-    <button className={buttonClass.join(' ')}>
+    <button className={buttonClass.join(" ")} onClick={props.clicked}>
       {props.name}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

@@ -8,6 +8,11 @@ const Product = (props) => {
     <div className={classes.Product}>
       <img src={props.image} alt={props.name} />
       <h1>{props.name}</h1>
+      {props.searchingAnimation && (
+        <div className={classes.SearchingAnimation}>
+          <div></div>
+        </div>
+      )}
     </div>
   );
 };

@@ -2,6 +2,7 @@
 @import "../../../styles/ResponsiveSheet.scss";
 
 .Product {
+  position: relative;
   height: 300px;
   padding: 3rem;
   min-width: 350px;
@@ -15,7 +16,7 @@
   border-radius: 5px;
   cursor: pointer;
   border: 0.5px solid var(--tertiary);
-  transition: box-shadow 0.2s ease;
+  transition: outline 0.1s ease;
 
   @include respond($TABLET) {
     padding: 4rem 2rem;
@@ -28,7 +29,8 @@
 
   &:hover,
   &:active {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    outline: 3px dashed var(--main);
+    outline-offset: 0.5rem;
   }
 
   img {
@@ -41,5 +43,37 @@
     text-transform: capitalize;
     font-weight: 400;
     font-size: 2rem;
+    text-align: center;
+  }
+
+  .SearchingAnimation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div {
+      width: 10rem;
+      height: 10rem;
+      border-top: 5px solid var(--main);
+      border-bottom: 5px solid var(--main);
+      border-radius: 50%;
+      animation: searchAnimation 0.8s linear infinite;
+    }
+  }
+}
+
+@keyframes searchAnimation {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(360deg);
   }
 }

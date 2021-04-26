@@ -36,7 +36,7 @@ html {
 }
 
 :focus {
-  outline: 2px solid var(--secondary);
+  outline: 2px solid var(--primary);
   outline-offset: 0.5rem;
 }
 
@@ -45,4 +45,16 @@ body {
   background-color: var(--secondary);
   color: var(--primary);
   transition: $darkTransition;
+}
+
+@include respond($MOBILE) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    user-select: none;
+  }
 }
