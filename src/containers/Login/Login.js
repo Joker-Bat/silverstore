@@ -1,13 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+
+// Components
+import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
 
 export class Login extends Component {
   render() {
     return (
-      <div>
+      <section>
+        <BreadCrumb title="login" />
         <h1>Login</h1>
-      </div>
-    )
+      </section>
+    );
   }
 }
 
-export default Login
+export default Login;

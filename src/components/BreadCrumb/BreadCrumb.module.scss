@@ -1,0 +1,23 @@
+.BreadCrumb {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  display: flex;
+  font-size: 2rem;
+  align-items: center;
+  text-transform: capitalize;
+  margin-bottom: 2rem;
+
+  a {
+    text-decoration: none;
+    color: var(--main);
+
+    svg {
+      margin: 0 2rem;
+    }
+  }
+
+  svg {
+    margin: 0 1rem;
+    color: var(--main);
+  }
+}
