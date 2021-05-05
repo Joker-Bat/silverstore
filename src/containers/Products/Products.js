@@ -2,16 +2,17 @@ import React, { Component } from "react";
 
 // components
 import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
+import Products from "../../components/Products/Products";
 
-export class Products extends Component {
+class ProductsPage extends Component {
   render() {
     return (
       <section>
         <BreadCrumb title="products" />
-        <h1>This is products page</h1>
+        <Products />
       </section>
     );
   }
 }
 
-export default Products;
+export default ProductsPage;

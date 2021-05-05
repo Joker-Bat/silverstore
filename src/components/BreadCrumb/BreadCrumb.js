@@ -14,11 +14,11 @@ const BreadCrumb = ({ title, product }) => {
       </Link>
       {product && (
         <Link to="/products">
-          <i class="fas fa-long-arrow-alt-right"></i> products
+          <i className="fas fa-long-arrow-alt-right"></i> products
         </Link>
       )}
       <span>
-        <i class="fas fa-long-arrow-alt-right"></i>
+        <i className="fas fa-long-arrow-alt-right"></i>
         {title}
       </span>
     </div>
