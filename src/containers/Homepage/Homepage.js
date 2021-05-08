@@ -10,9 +10,9 @@ import RandomProduct from "../../components/Homepage/RandomProduct/RandomProduct
 import PopularBrands from "../../components/Homepage/PopularBrands/PopularBrands";
 
 export class Homepage extends Component {
-  // componentDidMount() {
-  //   console.log(data[0].images[0]);
-  // }
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  };
 
   render() {
     return (
