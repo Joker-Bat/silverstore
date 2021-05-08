@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 
+// Styles
+import classes from "./Filters.module.scss";
+
 // Helperfunctions
 import getCompanysFromCategorys from "./getCompanysFromCategorys";
 
@@ -58,7 +61,7 @@ const Filters = (props) => {
   });
 
   return (
-    <div>
+    <aside className={classes.Filter}>
       <div className="category">
         <h1>Category</h1>
         {categoryToShow}
@@ -68,7 +71,7 @@ const Filters = (props) => {
         <h1>Company</h1>
         {companyToShow}
       </div>
-    </div>
+    </aside>
   );
 };
 

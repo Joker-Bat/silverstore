@@ -17,5 +17,17 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+
+    & > div {
+      margin-bottom: 2rem;
+    }
+
+    & > div:not(:last-child) {
+      margin-right: 2rem;
+
+      @include respond($MOBILE) {
+        margin-right: 0;
+      }
+    }
   }
 }

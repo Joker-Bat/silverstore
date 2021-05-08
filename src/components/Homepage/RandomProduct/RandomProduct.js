@@ -40,6 +40,7 @@ const RandomProduct = () => {
       <Product
         image={product.images[0]}
         name={product.name}
+        price={product.price}
         searchingAnimation={searching}
       />
       <Button name={"get random"} clicked={getRandomProduct} large uppercase />

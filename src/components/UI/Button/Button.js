@@ -3,17 +3,24 @@ import React from "react";
 // Styles
 import classes from "./Button.module.scss";
 
-const Button = (props) => {
+// React Router
+import { Link } from "react-router-dom";
+
+const Button = ({ small, large, uppercase, name, route, clicked }) => {
   const buttonClass = [classes.Button];
 
-  props.small && buttonClass.push(classes.Small);
-  props.large && buttonClass.push(classes.Large);
-  props.uppercase && buttonClass.push(classes.Uppercase);
+  small && buttonClass.push(classes.Small);
+  large && buttonClass.push(classes.Large);
+  uppercase && buttonClass.push(classes.Uppercase);
 
   return (
-    <button className={buttonClass.join(" ")} onClick={props.clicked}>
-      {props.name}
-    </button>
+    <Link
+      to={route ? route : ""}
+      className={buttonClass.join(" ")}
+      onClick={clicked}
+    >
+      {name}
+    </Link>
   );
 };
 

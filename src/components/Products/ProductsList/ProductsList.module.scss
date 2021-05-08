@@ -1,0 +1,20 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.ProductsList {
+  padding: 3rem 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: center;
+  justify-items: center;
+  gap: 2rem;
+
+  @include respond($LAPTOP) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond($TABLET) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

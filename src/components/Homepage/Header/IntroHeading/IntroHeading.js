@@ -13,7 +13,7 @@ const IntroHeading = () => {
       <h4 className={classes.SubHeading}>
         Live like a <span>pro</span>
       </h4>
-      <Button name="Start shopping" small />
+      <Button name="Start shopping" route="/products" small />
     </div>
   );
 };

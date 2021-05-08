@@ -39,11 +39,12 @@ const FeaturedProducts = () => {
               key={"FeaturedProduct" + item.id}
               image={item.images[0]}
               name={item.name}
+              price={item.price}
             />
           );
         })}
       </div>
-      <Button name="all products" large uppercase />
+      <Button name="all products" route="/products" large uppercase />
     </section>
   );
 };
