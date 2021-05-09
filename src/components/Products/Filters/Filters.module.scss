@@ -6,7 +6,7 @@
   height: 100vh;
   position: sticky;
   top: 50px;
-  padding: 2rem;
+  padding: 1rem 2rem;
   border-right: 1px solid var(--main);
   border-top: 1px solid var(--main);
 
@@ -45,6 +45,44 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.4);
       // box-shadow: 1px 0 2px rgba(0, 0, 0, 0.4);
       transform: rotate(45deg);
+    }
+  }
+
+  .CategoryContainer {
+    margin-bottom: 1rem;
+
+    .CategoryTitle {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .CompanyContainer {
+    margin-bottom: 1rem;
+
+    .CompanyTitle {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .CompanyList {
+      max-height: 250px;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--main);
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--black);
+        border-radius: 20px;
+        border: 2px solid var(--main);
+      }
     }
   }
 }

@@ -45,14 +45,14 @@ const Filters = (props) => {
 
   return (
     <aside className={filterClasses.join(" ")}>
-      <div className="category">
-        <h1>Category</h1>
-        {categoryToShow}
+      <div className={classes.CategoryContainer}>
+        <h1 className={classes.CategoryTitle}>Category</h1>
+        <div className={classes.CategoryList}>{categoryToShow}</div>
       </div>
 
-      <div className="company">
-        <h1>Company</h1>
-        {companyToShow}
+      <div className={classes.CompanyContainer}>
+        <h1 className={classes.CompanyTitle}>Company</h1>
+        <div className={classes.CompanyList}>{companyToShow}</div>
       </div>
     </aside>
   );
