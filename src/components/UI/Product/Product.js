@@ -8,7 +8,7 @@ import classes from "./Product.module.scss";
 
 const Product = ({ name, image, price, searchingAnimation }) => {
   const truncateWord = (word) => {
-    return word.length > 22 ? word.substring(0, 19) + "..." : word;
+    return word.length > 18 ? word.substring(0, 15) + "..." : word;
   };
 
   return (

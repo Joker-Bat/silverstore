@@ -15,6 +15,7 @@ export const filterSlice = createSlice({
   initialState: {
     categorys: categoryState,
     companys: {},
+    openFilter: false,
   },
   reducers: {
     categoryCheckboxChangedHandler: (state, { payload }) => {
@@ -26,6 +27,12 @@ export const filterSlice = createSlice({
     setCompanys: (state, { payload }) => {
       state.companys = payload;
     },
+    toggleFilter: (state) => {
+      state.openFilter = !state.openFilter;
+    },
+    closeFilter: (state) => {
+      state.openFilter = false;
+    },
   },
 });
 
@@ -33,6 +40,8 @@ export const {
   categoryCheckboxChangedHandler,
   companyCheckboxChangedHandler,
   setCompanys,
+  toggleFilter,
+  closeFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

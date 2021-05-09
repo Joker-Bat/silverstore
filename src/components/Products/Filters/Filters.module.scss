@@ -1,7 +1,50 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
 .Filter {
+  color: var(--primary);
   height: 100vh;
   position: sticky;
   top: 50px;
   padding: 2rem;
-  box-shadow: 1px 0 2px rgba(0,0,0,0.4);
+  border-right: 1px solid var(--main);
+  border-top: 1px solid var(--main);
+
+  @include respond($MOBILE) {
+    color: var(--black);
+    border-right: unset;
+    border-top: unset;
+    border-radius: 4px;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.4);
+    height: 70vh;
+    width: 250px;
+    background-color: #fff;
+    padding: 3rem;
+    position: fixed;
+    top: unset;
+    bottom: 12rem;
+    right: 2rem;
+    z-index: 2;
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: transform 0.4s ease;
+
+    &.ToggleFilter {
+      transform: scale(1) !important;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -1.6rem;
+      right: 2rem;
+      width: 3rem;
+      height: 3rem;
+      background-color: var(--white);
+      border-right: 1px solid rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+      // box-shadow: 1px 0 2px rgba(0, 0, 0, 0.4);
+      transform: rotate(45deg);
+    }
+  }
 }

@@ -96,10 +96,10 @@
 
   .ActiveLink {
     svg {
-      color: var(--secondary);
+      color: var(--black);
 
       @include respond($TABLET) {
-        color: var(--mint);
+        color: var(--main);
       }
     }
   }

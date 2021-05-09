@@ -23,7 +23,9 @@ const categroryList = [...new Set(data.map((item) => item.type))];
 const Filters = (props) => {
   // Redux toolkit
   const dispatch = useDispatch();
-  const { categorys, companys } = useSelector((state) => state.filter);
+  const { categorys, companys, openFilter } = useSelector(
+    (state) => state.filter
+  );
 
   useEffect(() => {
     const filteredCompanys = getCompanysFromCategorys(categorys, data);
@@ -60,8 +62,12 @@ const Filters = (props) => {
     );
   });
 
+  const filterClasses = [classes.Filter];
+
+  openFilter && filterClasses.push(classes.ToggleFilter);
+
   return (
-    <aside className={classes.Filter}>
+    <aside className={filterClasses.join(" ")}>
       <div className="category">
         <h1>Category</h1>
         {categoryToShow}

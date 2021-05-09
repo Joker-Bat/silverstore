@@ -1,5 +1,42 @@
+@import "../../styles/Variables.scss";
+@import "../../styles/ResponsiveSheet.scss";
+
 .Products {
   width: 100%;
   display: grid;
   grid-template-columns: 200px 1fr;
+
+  .FilterIcon {
+    display: none;
+  }
+
+  @include respond($TABLET) {
+    grid-template-columns: 150px 1fr;
+  }
+
+  @include respond($MOBILE) {
+    grid-template-columns: 1fr;
+
+    .FilterIcon {
+      display: block;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--main);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      cursor: pointer;
+  
+      &:hover {
+        filter: brightness(120%);
+      }
+  
+      svg {
+        font-size: 4rem;
+        color: var(--white);
+      }
+    }
+  }
+
+  
 }
