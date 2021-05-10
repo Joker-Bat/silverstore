@@ -8,7 +8,7 @@ import data from "../../data/data";
 
 // List of Categorys and its uses as state to control the companys to choose
 const categroryList = [...new Set(data.map((item) => item.type))];
-const categoryState = arrayToObjectState(categroryList);
+const categoryState = arrayToObjectState(categroryList, false);
 
 export const filterSlice = createSlice({
   name: "filter",
@@ -30,7 +30,9 @@ export const filterSlice = createSlice({
     toggleFilter: (state) => {
       state.openFilter = !state.openFilter;
     },
-    closeFilter: (state) => {
+    resetFilter: (state) => {
+      state.categorys = categoryState;
+      state.companys = {};
       state.openFilter = false;
     },
   },
@@ -41,7 +43,7 @@ export const {
   companyCheckboxChangedHandler,
   setCompanys,
   toggleFilter,
-  closeFilter,
+  resetFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

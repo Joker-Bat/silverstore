@@ -1,5 +1,5 @@
-export const arrayToObjectState = (arr) => {
+export const arrayToObjectState = (arr, value) => {
   return arr.reduce((acc, cur) => {
-    return { ...acc, [cur]: false };
+    return { ...acc, [cur]: value };
   }, {});
 };

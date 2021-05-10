@@ -13,7 +13,7 @@ import {
 const Checkbox = ({ value, type }) => {
   // Redux toolkit
   const dispatch = useDispatch();
-  const { categorys } = useSelector((state) => state.filter);
+  const { categorys, companys } = useSelector((state) => state.filter);
 
   const handleChange = () => {
     if (type === "category") {
@@ -34,7 +34,7 @@ const Checkbox = ({ value, type }) => {
         name={value}
         id={value}
         onChange={handleChange}
-        checked={categorys[value]}
+        checked={type === "category" ? categorys[value] : companys[value]}
         className={classes.Checkbox}
       />
 

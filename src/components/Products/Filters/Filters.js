@@ -15,6 +15,11 @@ import { setCompanys } from "../../../store/filter/filterSlice";
 // List of Categorys and its uses as state to control the companys to choose
 const categroryList = [...new Set(data.map((item) => item.type))];
 
+/*  
+
+  Main Component
+
+*/
 const Filters = (props) => {
   // Redux toolkit
   const dispatch = useDispatch();
@@ -23,8 +28,13 @@ const Filters = (props) => {
   );
 
   useEffect(() => {
-    const filteredCompanys = getCompanysFromCategorys(categorys, data);
+    const filteredCompanys = getCompanysFromCategorys(
+      categorys,
+      companys,
+      data
+    );
     dispatch(setCompanys(filteredCompanys));
+    // eslint-disable-next-line
   }, [categorys, dispatch]);
 
   const categoryToShow = categroryList.map((item, index) => {
