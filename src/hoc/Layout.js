@@ -29,7 +29,7 @@ class Layout extends Component {
           close={this.closeSidebar}
         />
         <Sidebar open={this.state.isSidebarOpen} close={this.closeSidebar} />
-        <main style={{paddingTop: '10rem'}}>
+        <main style={{paddingTop: '10rem', minHeight: '100vh'}}>
           {this.props.children}
         </main>
         <Footer />

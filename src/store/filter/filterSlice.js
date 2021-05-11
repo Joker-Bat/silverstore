@@ -10,11 +10,15 @@ import data from "../../data/data";
 const categroryList = [...new Set(data.map((item) => item.type))];
 const categoryState = arrayToObjectState(categroryList, false);
 
+//Max price
+const maxPrice = Math.max(...data.map((item) => +item.price));
+
 export const filterSlice = createSlice({
   name: "filter",
   initialState: {
     categorys: categoryState,
     companys: {},
+    price: maxPrice,
     openFilter: false,
   },
   reducers: {
@@ -30,10 +34,14 @@ export const filterSlice = createSlice({
     toggleFilter: (state) => {
       state.openFilter = !state.openFilter;
     },
+    updataPrice: (state, { payload }) => {
+      state.price = payload;
+    },
     resetFilter: (state) => {
       state.categorys = categoryState;
       state.companys = {};
       state.openFilter = false;
+      state.price = maxPrice;
     },
   },
 });
@@ -43,6 +51,7 @@ export const {
   companyCheckboxChangedHandler,
   setCompanys,
   toggleFilter,
+  updataPrice,
   resetFilter,
 } = filterSlice.actions;
 

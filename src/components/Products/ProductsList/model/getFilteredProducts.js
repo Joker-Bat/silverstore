@@ -9,33 +9,33 @@ const parseTrueValuesFromObject = (obj) => {
   return selectedValues;
 };
 
-// Get Products from Selected Categorys
-const getFilteredProductsByCategory = (categorys, data) => {
-  const selectedCategorys = parseTrueValuesFromObject(categorys);
-  if (selectedCategorys.length === 0) {
-    return data;
-  }
-  const filteredProducts = data.filter((item) => {
-    return selectedCategorys.includes(item.type);
-  });
-  return filteredProducts;
-};
-
-// Get Products from Selected Companys
-const getFilteredProductsByCompany = (categorys, companys, data) => {
+// Get Products below the current price
+const getFilteredProductsByChoices = (categorys, companys, price, data) => {
   const selectedCompanys = parseTrueValuesFromObject(companys);
-
   const selectedCategorys = parseTrueValuesFromObject(categorys);
-  if (companys.length === 0) {
-    return data;
+
+  let currentProducts;
+
+  if (selectedCategorys.length !== 0) {
+    const categoryProducts = data.filter((item) => {
+      return selectedCategorys.includes(item.type);
+    });
+    if (selectedCompanys.length !== 0) {
+      currentProducts = categoryProducts.filter((item) => {
+        return selectedCompanys.includes(item.brand);
+      });
+    } else {
+      currentProducts = categoryProducts;
+    }
+  } else {
+    currentProducts = data;
   }
-  const filteredProducts = data.filter((item) => {
-    return (
-      selectedCompanys.includes(item.brand) &&
-      selectedCategorys?.includes(item.type)
-    );
+
+  const filteredProducts = currentProducts.filter((item) => {
+    return item.price <= price;
   });
+
   return filteredProducts;
 };
 
-export { getFilteredProductsByCategory, getFilteredProductsByCompany };
+export { getFilteredProductsByChoices };

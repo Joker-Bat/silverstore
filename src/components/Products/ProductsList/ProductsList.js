@@ -9,37 +9,27 @@ import Product from "../../UI/Product/Product";
 import { useSelector, useDispatch } from "react-redux";
 
 // Helper function
-import {
-  getFilteredProductsByCategory,
-  getFilteredProductsByCompany,
-} from "./model/getFilteredProducts";
+import { getFilteredProductsByChoices } from "./model/getFilteredProducts";
 import { updateProducts } from "../../../store/products/productsSlice";
 
 const ProductsList = () => {
   // Redux toolkit
-  const { categorys, companys } = useSelector((state) => state.filter);
+  const { categorys, companys, price } = useSelector((state) => state.filter);
   const { products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   // UseEffect
   useEffect(() => {
-    const filteredProductsByCategory = getFilteredProductsByCategory(
-      categorys,
-      data
-    );
-    dispatch(updateProducts(filteredProductsByCategory));
-    const filteredProductsByCompany = getFilteredProductsByCompany(
+    const filteredProductsByPrice = getFilteredProductsByChoices(
       categorys,
       companys,
+      price,
       data
     );
-
-    if (filteredProductsByCompany.length !== 0) {
-      dispatch(updateProducts(filteredProductsByCompany));
-    }
+    dispatch(updateProducts(filteredProductsByPrice));
 
     // eslint-disable-next-line
-  }, [categorys, companys]);
+  }, [categorys, companys, price]);
 
   // Return
   return (

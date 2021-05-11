@@ -14,11 +14,7 @@ const Button = ({ small, large, uppercase, name, route, clicked }) => {
   uppercase && buttonClass.push(classes.Uppercase);
 
   return (
-    <Link
-      to={route ? route : ""}
-      className={buttonClass.join(" ")}
-      onClick={clicked}
-    >
+    <Link to={route} className={buttonClass.join(" ")} onClick={clicked}>
       {name}
     </Link>
   );
