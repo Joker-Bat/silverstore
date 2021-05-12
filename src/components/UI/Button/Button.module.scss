@@ -1,4 +1,5 @@
 @import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
 
 .Button {
   appearance: none;
@@ -14,6 +15,10 @@
     padding: 0.5rem 1rem;
     font-size: 2rem;
     border-radius: 0.3rem;
+
+    @include respond($TABLET) {
+      font-size: 1.6rem;
+    }
   }
 
   &.Large {

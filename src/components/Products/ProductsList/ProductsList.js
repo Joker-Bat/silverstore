@@ -4,6 +4,7 @@ import classes from "./ProductsList.module.scss";
 // Data
 import data from "../../../data/data";
 // Component
+import ProductsTop from "./ProductsTop/ProductsTop";
 import Product from "../../UI/Product/Product";
 // Redux toolkit
 import { useSelector, useDispatch } from "react-redux";
@@ -33,17 +34,20 @@ const ProductsList = () => {
 
   // Return
   return (
-    <div className={classes.ProductsList}>
-      {products.map((item) => {
-        return (
-          <Product
-            key={"ProductsList" + item.id}
-            name={item.name}
-            image={item.images[0]}
-            price={item.price}
-          />
-        );
-      })}
+    <div className={classes.ProductsContainer}>
+      <ProductsTop />
+      <div className={classes.ProductsList}>
+        {products.map((item) => {
+          return (
+            <Product
+              key={"ProductsList" + item.id}
+              name={item.name}
+              image={item.images[0]}
+              price={item.price}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

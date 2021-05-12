@@ -18,12 +18,12 @@ const Products = (props) => {
     <div className={classes.Products}>
       <Filters />
       <ProductsList />
-      <div
+      <button
         className={classes.FilterIcon}
         onClick={() => dispatch(toggleFilter())}
       >
         <i className="fas fa-filter"></i>
-      </div>
+      </button>
     </div>
   );
 };

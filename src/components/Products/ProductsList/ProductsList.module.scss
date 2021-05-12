@@ -1,9 +1,16 @@
 @import "../../../styles/Variables.scss";
 @import "../../../styles/ResponsiveSheet.scss";
 
-.ProductsList {
+.ProductsContainer {
+  width: 100%;
   border-top: 1px solid var(--main);
-  padding: 3rem 2rem;
+  padding: 2rem 1rem;
+
+  
+}
+
+.ProductsList {
+  // padding: 2rem 2rem;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);

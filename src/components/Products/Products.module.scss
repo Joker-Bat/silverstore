@@ -19,6 +19,7 @@
 
     .FilterIcon {
       display: block;
+      border: none;
       position: fixed;
       bottom: 2rem;
       right: 2rem;
@@ -26,17 +27,15 @@
       padding: 1.5rem;
       border-radius: 1rem;
       cursor: pointer;
-  
+
       &:hover {
         filter: brightness(120%);
       }
-  
+
       svg {
         font-size: 4rem;
         color: var(--white);
       }
     }
   }
-
-  
 }
