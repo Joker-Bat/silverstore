@@ -5,12 +5,9 @@
   width: 100%;
   border-top: 1px solid var(--main);
   padding: 2rem 1rem;
-
-  
 }
 
 .ProductsList {
-  // padding: 2rem 2rem;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -30,4 +27,11 @@
     border-top: 1px solid transparent;
     grid-template-columns: 1fr;
   }
+}
+
+.ProductsListView {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
 }

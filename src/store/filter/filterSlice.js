@@ -20,6 +20,7 @@ export const filterSlice = createSlice({
     companys: {},
     price: maxPrice,
     openFilter: false,
+    listView: false,
   },
   reducers: {
     categoryCheckboxChangedHandler: (state, { payload }) => {
@@ -43,6 +44,12 @@ export const filterSlice = createSlice({
       state.openFilter = false;
       state.price = maxPrice;
     },
+    setListView: (state) => {
+      state.listView = true;
+    },
+    removeListView: (state) => {
+      state.listView = false;
+    },
   },
 });
 
@@ -53,6 +60,8 @@ export const {
   toggleFilter,
   updataPrice,
   resetFilter,
+  setListView,
+  removeListView,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

@@ -4,15 +4,22 @@ import React from "react";
 import classes from "./ProductsTop.module.scss";
 
 // React Toolkit
+import {
+  setListView,
+  removeListView,
+} from "../../../../store/filter/filterSlice";
 // Get Product Count
-
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 /*
 Main Component
 */
 const ProductsTop = () => {
+  // Redux toolkit
+  const dispatch = useDispatch();
+
   const { products } = useSelector((state) => state.products);
+  const { listView } = useSelector((state) => state.filter);
 
   return (
     <div className={classes.ProductsTop}>
@@ -23,11 +30,17 @@ const ProductsTop = () => {
       </h1>
       <hr />
       <div className={classes.ButtonContainer}>
-        <button>
+        <button
+          className={listView ? classes.Active : ""}
+          onClick={() => dispatch(setListView())}
+        >
           <i className="fas fa-list"></i>
           <span>list view</span>
         </button>
-        <button className={classes.Active}>
+        <button
+          className={listView ? "" : classes.Active}
+          onClick={() => dispatch(removeListView())}
+        >
           <i className="fas fa-th"></i>
           <span>grid view</span>
         </button>
