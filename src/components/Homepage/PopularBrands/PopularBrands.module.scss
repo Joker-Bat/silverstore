@@ -39,7 +39,7 @@
       }
 
       @include respond($MOBILE) {
-        margin-right: 2rem;
+        margin-right: 3rem;
       }
     }
 
@@ -59,15 +59,15 @@
     transform: translateY(-2px);
   }
 
-  .Dell {
-    @extend .Brand;
-  }
-
   .Hp {
     @extend .Brand;
   }
 
   .Samsung {
+    @extend .Brand;
+  }
+
+  .Msi {
     @extend .Brand;
   }
 }

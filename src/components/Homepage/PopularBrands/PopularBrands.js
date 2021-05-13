@@ -5,9 +5,9 @@ import classes from "./PopularBrands.module.scss";
 
 // SVG Iconst
 import { ReactComponent as Apple } from "../../../images/brandIcons/apple.svg";
-import { ReactComponent as Dell } from "../../../images/brandIcons/dell.svg";
 import { ReactComponent as Hp } from "../../../images/brandIcons/hp.svg";
 import { ReactComponent as Samsung } from "../../../images/brandIcons/samsung.svg";
+import { ReactComponent as Msi } from "../../../images/brandIcons/msi.svg";
 
 // Components
 import Title from "../../UI/Title/Title";
@@ -20,8 +20,8 @@ const PopularBrands = () => {
         <div className={classes.Apple}>
           <Apple />
         </div>
-        <div className={classes.Dell}>
-          <Dell />
+        <div className={classes.Msi}>
+          <Msi />
         </div>
         <div className={classes.Samsung}>
           <Samsung />
