@@ -25,18 +25,27 @@ const Logo = (props) => {
     };
   }, []);
 
-  let timer = null;
-
   const LogoClass = [classes.Logo, props.shrink && classes.ShrinkLogo];
   const PopupClass = [classes.Popup, popup && classes.ActivePopup];
 
+  useEffect(() => {
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme) {
+      document.documentElement.setAttribute("data-theme", currentTheme);
+    }
+  }, []);
+
   const toggleTheme = () => {
     if (!document.documentElement.getAttribute("data-theme")) {
+      localStorage.setItem("theme", "dark");
       document.documentElement.setAttribute("data-theme", "dark");
     } else {
+      localStorage.setItem("theme", "light");
       document.documentElement.removeAttribute("data-theme");
     }
   };
+
+  let timer = null;
 
   const clickHandler = (e) => {
     clearTimeout(timer);
