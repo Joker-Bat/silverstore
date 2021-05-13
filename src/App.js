@@ -7,6 +7,7 @@ import Homepage from "./containers/Homepage/Homepage";
 import Cart from "./containers/Cart/Cart";
 import Login from "./containers/Login/Login";
 import Products from "./containers/Products/Products";
+import SingleProduct from "./components/SingleProduct/SingleProduct";
 
 // Router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -15,10 +16,12 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
+        <Route path="/products/:id" exact component={SingleProduct} />
         <Route path="/products" component={Products} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/" component={Homepage} />
+        <Route path="*" component={Homepage} />
       </Switch>
     );
 

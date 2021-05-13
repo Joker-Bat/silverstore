@@ -37,6 +37,7 @@ const FeaturedProducts = () => {
           return (
             <Product
               key={"FeaturedProduct" + item.id}
+              id={item.id}
               image={item.images[0]}
               name={item.name}
               price={item.price}

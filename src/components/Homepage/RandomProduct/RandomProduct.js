@@ -9,7 +9,7 @@ import classes from "./RandomProduct.module.scss";
 // Components
 import Title from "../../UI/Title/Title";
 import Product from "../../UI/Product/Product";
-import Button from "../../UI/Button/Button";
+import SimpleButton from "../../UI/SimpleButton/SimpleButton";
 
 const RandomProduct = () => {
   const [product, setProduct] = useState(data[8]);
@@ -38,12 +38,18 @@ const RandomProduct = () => {
     <section className={classes.RandomProduct}>
       <Title name={"dont know where to start"} />
       <Product
+        id={product.id}
         image={product.images[0]}
         name={product.name}
         price={product.price}
         searchingAnimation={searching}
       />
-      <Button name={"get random"} clicked={getRandomProduct} large uppercase />
+      <SimpleButton
+        name={"get random"}
+        clicked={getRandomProduct}
+        large
+        uppercase
+      />
     </section>
   );
 };

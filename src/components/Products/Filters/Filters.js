@@ -9,6 +9,7 @@ import data from "../../../data/data";
 // Components
 import Checkbox from "./Checkbox/Checkbox";
 import RangeSlider from "./RangeSlider/RangeSlider";
+import SimpleButton from "../../UI/SimpleButton/SimpleButton";
 // Redux toolkit
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -94,7 +95,12 @@ const Filters = (props) => {
       </div>
 
       <div className={classes.ClearFilter}>
-        <button onClick={clearFilters}>Clear Filters</button>
+        <SimpleButton
+          name="clear filters"
+          clicked={clearFilters}
+          capitalize
+          small
+        />
       </div>
     </aside>
   );

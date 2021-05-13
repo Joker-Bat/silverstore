@@ -1,23 +1,26 @@
 import React from "react";
 
-// NumberFormat
-import NumberFormat from "react-number-format";
-
 // Style
 import classes from "./Product.module.scss";
+// React Router
+import { withRouter } from "react-router-dom";
+// NumberFormat
+import NumberFormat from "react-number-format";
+// HelperFunction
+import { truncateWords } from "../../../utilities/helperFunctions";
 
-const Product = ({ name, image, price, searchingAnimation, id }) => {
-  const truncateWord = (word) => {
-    return word.length > 18 ? word.substring(0, 15) + "..." : word;
+const Product = ({ name, image, price, searchingAnimation, id, history }) => {
+  const handleClick = (curID) => {
+    history.push(`/products/${curID}`);
   };
 
   return (
-    <div className={classes.Product}>
+    <div className={classes.Product} onClick={() => handleClick(id)}>
       <div className={classes.ImageContainer}>
         <img src={image} alt={name} />
       </div>
       <div className={classes.ProductDetails}>
-        <h1>{truncateWord(name)}</h1>
+        <h1>{truncateWords(name, 18)}</h1>
         <h3>
           <NumberFormat
             displayType={"text"}
@@ -37,4 +40,4 @@ const Product = ({ name, image, price, searchingAnimation, id }) => {
   );
 };
 
-export default Product;
+export default withRouter(Product);
