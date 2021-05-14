@@ -1,0 +1,13 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.SingleProductHeader {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  @include respond($TABLET) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}

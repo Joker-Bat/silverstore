@@ -7,7 +7,7 @@ import Homepage from "./containers/Homepage/Homepage";
 import Cart from "./containers/Cart/Cart";
 import Login from "./containers/Login/Login";
 import Products from "./containers/Products/Products";
-import SingleProduct from "./components/SingleProduct/SingleProduct";
+import SingleProduct from "./containers/SingleProduct/SingleProduct";
 
 // Router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";

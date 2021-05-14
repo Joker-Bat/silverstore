@@ -1,0 +1,37 @@
+.PopupImageContainer {
+  position: fixed;
+  width: 85%;
+  height: 70%;
+  top: 20%;
+  left: 8%;
+  min-height: 500px;
+  background-color: #fff;
+  border-radius: 4px;
+  z-index: 90;
+  transition: transform 0.2s ease;
+  transform: scale(0);
+
+  &.OpenPopup {
+    transform: scale(1);
+  }
+
+  .CloseIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    font-size: 4rem;
+    color: #000;
+    z-index: 100;
+  }
+}
+
+.PopupImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 95%;
+  max-height: 100%;
+  z-index: 100;
+}
