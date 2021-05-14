@@ -21,6 +21,9 @@ const SingleProduct = (props) => {
         <SingleProductHeader
           name={currentProduct.name}
           images={currentProduct.images}
+          ratings={currentProduct.ratings}
+          price={currentProduct.price}
+          realPrice={currentProduct.realPrice}
         />
       </main>
     </div>

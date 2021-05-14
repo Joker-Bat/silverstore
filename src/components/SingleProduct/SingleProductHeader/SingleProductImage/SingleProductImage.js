@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-// // Data
-// import data from "../../data/data";
-
 // Styles
 import classes from "./SingleProductImage.module.scss";
 

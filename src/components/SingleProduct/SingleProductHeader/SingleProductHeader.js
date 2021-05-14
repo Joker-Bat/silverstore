@@ -11,7 +11,12 @@ const SingleProductHeader = (props) => {
   return (
     <header className={classes.SingleProductHeader}>
       <SingleProductImage name={props.name} images={props.images} />
-      <SingleProductDetails name={props.name} />
+      <SingleProductDetails
+        name={props.name}
+        ratings={props.ratings}
+        price={props.price}
+        realPrice={props.realPrice}
+      />
     </header>
   );
 };
