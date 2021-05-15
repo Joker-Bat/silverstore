@@ -1,0 +1,89 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.SingleProductSpecs {
+  margin: auto;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  padding: 3rem 0;
+
+  @include respond($TABLET) {
+    padding: 3rem 1rem;
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .Highlights {
+    @include respond($TABLET) {
+      margin-bottom: 2rem;
+    }
+
+    ul {
+      list-style: none;
+
+      li {
+        text-transform: capitalize;
+        font-size: 1.8rem;
+        line-height: 180%;
+
+        @include respond($TABLET) {
+          font-size: 1.7rem;
+        }
+
+        &::before {
+          content: "\2022";
+          color: var(--main);
+          font-weight: bold;
+          display: inline-block;
+          width: 1em;
+        }
+      }
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 500;
+      color: var(--main);
+      margin-bottom: 1rem;
+    }
+  }
+
+  .Specifications {
+    width: 60%;
+
+    @include respond($MOBILE) {
+      width: 50%;
+    }
+
+    @include respond($MOBILE) {
+      width: 65%;
+    }
+    & > h1 {
+      font-size: 3rem;
+      font-weight: 500;
+      color: var(--main);
+      margin-bottom: 1rem;
+    }
+
+    .Spec {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 400;
+        text-transform: capitalize;
+        color: var(--main);
+      }
+
+      p {
+        font-size: 1.5rem;
+        text-transform: capitalize;
+      }
+    }
+  }
+}
