@@ -1,6 +1,18 @@
 @import "../../../../styles/Variables.scss";
 @import "../../../../styles/ResponsiveSheet.scss";
 
+.SingleProductImageContainer {
+  justify-self: center;
+
+  @include respond($TABLET) {
+    height: 430px;
+  }
+
+  @include respond($MOBILE) {
+    height: auto;
+  }
+}
+
 .SingleProductImage {
   width: 100%;
   padding: 2rem 3rem;
@@ -17,7 +29,7 @@
 
     @include respond($TABLET) {
       max-width: 450px;
-      max-height: 450px;
+      max-height: 430px;
     }
 
     @include respond($MOBILE) {

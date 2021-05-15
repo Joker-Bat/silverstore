@@ -15,34 +15,16 @@
 
   .SingleProductTitle {
     font-size: 4rem;
+    line-height: 130%;
     text-transform: capitalize;
     color: var(--main);
   }
 
   .RatingContainer {
-    width: 90%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 2rem;
-
-    @include respond($MOBILE) {
-      width: 100%;
-    }
-
-    .Rating {
-      .Star {
-        font-size: 2rem;
-
-        &.Active {
-          color: var(--gold);
-        }
-
-        &:not(:last-child) {
-          margin-right: 0.4rem;
-        }
-      }
-    }
 
     .RatingCount {
       p {
@@ -54,6 +36,7 @@
   .PriceContainer {
     display: flex;
     align-items: center;
+    margin-bottom: 2rem;
 
     .CurrentPrice {
       margin-right: 2rem;
@@ -90,6 +73,38 @@
         font-size: 1.8rem;
         color: var(--main);
       }
+    }
+  }
+
+  .ExtraDetailsContainer {
+    width: 100%;
+    margin-bottom: 5rem;
+
+    .Available,
+    .Brand {
+      width: 50%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+
+      @include respond($MOBILE) {
+        width: 60%;
+      }
+
+      h1 {
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+
+      p {
+        font-size: 2rem;
+        text-transform: capitalize;
+        color: var(--main);
+      }
+    }
+
+    .Available {
+      margin-bottom: 1.5rem;
     }
   }
 }

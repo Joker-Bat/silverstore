@@ -24,6 +24,7 @@ const SingleProduct = (props) => {
           ratings={currentProduct.ratings}
           price={currentProduct.price}
           realPrice={currentProduct.realPrice}
+          brand={currentProduct.brand}
         />
       </main>
     </div>

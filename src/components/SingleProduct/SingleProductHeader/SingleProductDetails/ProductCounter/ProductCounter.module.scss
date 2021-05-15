@@ -1,0 +1,39 @@
+.CounterContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  button {
+    appearance: none;
+    border: 1px solid var(--main);
+    background-color: transparent;
+    padding: 0.7rem;
+    border-radius: 50%;
+    color: var(--main);
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    &:hover,
+    &:active {
+      color: var(--white);
+      background-color: var(--main);
+    }
+
+    &:nth-child(1) {
+      margin-right: 2rem;
+    }
+
+    &:last-child {
+      margin-left: 2rem;
+    }
+
+    svg {
+      font-size: 2rem;
+    }
+  }
+
+  .Count {
+    font-size: 4rem;
+    font-weight: 500;
+  }
+}

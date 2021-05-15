@@ -1,0 +1,14 @@
+.Rating {
+  margin-right: 2rem;
+  .Star {
+    font-size: 2rem;
+
+    &.Active {
+      color: var(--gold);
+    }
+
+    &:not(:last-child) {
+      margin-right: 0.4rem;
+    }
+  }
+}
