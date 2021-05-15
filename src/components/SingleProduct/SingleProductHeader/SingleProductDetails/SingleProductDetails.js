@@ -68,6 +68,10 @@ const SingleProductDetails = (props) => {
           <h1>Available :</h1>
           <p>in stock</p>
         </div>
+        <div className={classes.Type}>
+          <h1>Type :</h1>
+          <p>{props.type}</p>
+        </div>
         <div className={classes.Brand}>
           <h1>Brand :</h1>
           <p>{props.brand}</p>

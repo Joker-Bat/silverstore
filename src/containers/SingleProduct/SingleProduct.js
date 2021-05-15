@@ -15,6 +15,8 @@ const SingleProduct = (props) => {
   const id = props.match.params.id;
   const currentProduct = data.filter((item) => item.id === id)[0];
 
+  console.log(currentProduct);
+
   return (
     <div>
       <BreadCrumb title={truncateWords(currentProduct.name, 18)} product />
@@ -26,6 +28,7 @@ const SingleProduct = (props) => {
           price={currentProduct.price}
           realPrice={currentProduct.realPrice}
           brand={currentProduct.brand}
+          type={currentProduct.type}
         />
         <SingleProductSpecs
           highlights={currentProduct.highlights}

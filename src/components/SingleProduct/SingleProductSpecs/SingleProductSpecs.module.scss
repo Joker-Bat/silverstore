@@ -16,6 +16,15 @@
   }
 
   .Highlights {
+    width: 60%;
+
+    @include respond($MOBILE) {
+      width: 50%;
+    }
+
+    @include respond($MOBILE) {
+      width: 65%;
+    }
     @include respond($TABLET) {
       margin-bottom: 2rem;
     }

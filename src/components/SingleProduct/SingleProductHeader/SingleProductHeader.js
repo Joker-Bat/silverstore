@@ -17,6 +17,7 @@ const SingleProductHeader = (props) => {
         price={props.price}
         realPrice={props.realPrice}
         brand={props.brand}
+        type={props.type}
       />
     </header>
   );

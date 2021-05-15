@@ -78,10 +78,15 @@
 
   .ExtraDetailsContainer {
     width: 100%;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
+
+    @include respond($TABLET) {
+      margin-bottom: 3rem;
+    }
 
     .Available,
-    .Brand {
+    .Brand,
+    .Type {
       width: 50%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -103,7 +108,8 @@
       }
     }
 
-    .Available {
+    .Available,
+    .Type {
       margin-bottom: 1.5rem;
     }
   }

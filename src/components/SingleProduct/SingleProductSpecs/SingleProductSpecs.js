@@ -4,19 +4,21 @@ import React from "react";
 import classes from "./SingleProductSpecs.module.scss";
 
 const SingleProductSpecs = ({ highlights, specs }) => {
-  const filteredSpecs = Object.keys(specs).map((item, index) => {
-    let Product;
-    if (specs[item]) {
-      Product = (
-        <div key={`SingleProductSpecs${index}`} className={classes.Spec}>
-          <h1>{item + ":"}</h1> <p>{specs[item]}</p>
-        </div>
-      );
-    } else {
-      Product = "";
-    }
-    return Product;
-  });
+  const filteredSpecs =
+    specs &&
+    Object.keys(specs).map((item, index) => {
+      let Product;
+      if (specs[item]) {
+        Product = (
+          <div key={`SingleProductSpecs${index}`} className={classes.Spec}>
+            <h1>{item + ":"}</h1> <p>{specs[item]}</p>
+          </div>
+        );
+      } else {
+        Product = "";
+      }
+      return Product;
+    });
 
   return (
     <section className={classes.SingleProductSpecs}>
