@@ -1,0 +1,103 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.Reviews {
+  width: 90%;
+  margin: auto;
+  padding: 0 0 2rem 0;
+
+  .Heading {
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--main);
+    margin-bottom: 2rem;
+    line-height: 100%;
+  }
+
+  .ReviewsContainer {
+    width: 100%;
+
+    .Review {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      border-bottom: 0.5px solid var(--main);
+      padding: 1rem 0;
+
+      .UserIcon {
+        margin-top: 0.3rem;
+        justify-self: center;
+
+        @include respond($MOBILE) {
+          margin-top: 0.5rem;
+        }
+
+        svg {
+          font-size: 2rem;
+          color: var(--main);
+        }
+      }
+
+      .ReviewDetail {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .UserDetails {
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 0.2rem;
+          .UserDetail {
+            margin-right: 1rem;
+            .Username {
+              font-size: 1.4rem;
+              text-transform: capitalize;
+              font-weight: 500;
+              line-height: 120%;
+              color: var(--main);
+
+              @include respond($MOBILE) {
+                font-size: 1.6rem;
+              }
+            }
+
+            .Days {
+              font-size: 1rem;
+              opacity: 0.7;
+              margin-bottom: 0.5rem;
+            }
+          }
+          .UserStar {
+            background-color: var(--main);
+            color: var(--white);
+            padding: 0 0.4rem;
+            border-radius: 2px;
+            margin-top: 0.2rem;
+
+            p {
+              display: flex;
+              align-items: center;
+              span {
+                font-size: 1.2rem;
+                margin-right: 0.2rem;
+              }
+            }
+          }
+        }
+
+        .UserTitle {
+          font-size: 1.3rem;
+          font-weight: 500;
+
+          @include respond($MOBILE) {
+            font-size: 1.4rem;
+          }
+        }
+
+        .UserReview {
+          opacity: 0.8;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ import { truncateWords } from "../../utilities/helperFunctions";
 import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
 import SingleProductHeader from "../../components/SingleProduct/SingleProductHeader/SingleProductHeader";
 import SingleProductSpecs from "../../components/SingleProduct/SingleProductSpecs/SingleProductSpecs";
+import Reviews from "../../components/SingleProduct/Reviews/Reviews";
 
 const SingleProduct = (props) => {
   const id = props.match.params.id;
@@ -34,6 +35,7 @@ const SingleProduct = (props) => {
           highlights={currentProduct.highlights}
           specs={currentProduct.specs}
         />
+        <Reviews ratings={currentProduct.ratings} />
       </main>
     </div>
   );
