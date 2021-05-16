@@ -15,10 +15,12 @@
     flex-direction: column;
     align-items: center;
     position: absolute;
-    top: 50%;
-    left: 170%;
-    transform: translateY(-50%) scaleX(0);
-    transform-origin: left;
+    top: 120%;
+    left: 0%;
+    border: 1.5px solid var(--main);
+    border-radius: 4px;
+    transform: scale(0);
+    transform-origin: top left;
     font-size: 1.6rem;
     text-align: center;
     background-color: var(--black);
@@ -27,17 +29,18 @@
     transition: transform 1s ease;
 
     &.ActivePopup {
-      transform: translateY(-50%) scaleX(1);
+      transform: scale(1);
     }
 
     &::after {
       content: "";
       width: 20px;
       height: 20px;
+      border: 1.5px solid var(--main);
       background: var(--black);
       position: absolute;
-      top: 50%;
-      left: -15px;
+      top: -2%;
+      left: -3%;
       transform: rotate(45deg) translateY(-50%);
     }
   }
