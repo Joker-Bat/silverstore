@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Styles
 import classes from "./Reviews.module.scss";
 
+// Components
+import SimpleButton from "../../UI/SimpleButton/SimpleButton";
+import Backdrop from "../../UI/Backdrop/Backdrop";
+
 const Reviews = ({ ratings }) => {
+  const [addReview, setAddReview] = useState(false);
+
+  const starsCount = Array(5).fill(0);
+
+  const openReviewContainer = () => {
+    setAddReview(true);
+  };
+
+  const closeReviewContainer = (e) => {
+    e.preventDefault();
+    setAddReview(false);
+  };
+
   return (
     <div className={classes.Reviews}>
+      {/* Title */}
       <h1 className={classes.Heading}>Reviews</h1>
+      {/* List of Reviews */}
       <div className={classes.ReviewsContainer}>
         {ratings.map((item, index) => {
           return (
@@ -33,6 +52,45 @@ const Reviews = ({ ratings }) => {
             </div>
           );
         })}
+      </div>
+      <div className={classes.AddReview}>
+        <Backdrop isOpen={addReview} close={closeReviewContainer} />
+        <SimpleButton
+          name="Add your review"
+          small
+          capitalize
+          clicked={openReviewContainer}
+        />
+        <div
+          className={[
+            classes.AddReviewContainer,
+            addReview && classes.Active,
+          ].join(" ")}
+        >
+          <div className={classes.StarContainer}>
+            {starsCount.map((_, index) => {
+              return (
+                <span key={`ReviewStars${index}`} className={classes.Star}>
+                  <i className="fas fa-star"></i>
+                </span>
+              );
+            })}
+          </div>
+          <h1 className={classes.ReviewTitle}>I like it</h1>
+          <form className={classes.FormContainer}>
+            <textarea
+              cols="30"
+              rows="6"
+              placeholder="leave your review..."
+            ></textarea>
+            <SimpleButton
+              name="post"
+              capitalize
+              small
+              clicked={closeReviewContainer}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );

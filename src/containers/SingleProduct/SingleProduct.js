@@ -16,7 +16,7 @@ const SingleProduct = (props) => {
   const id = props.match.params.id;
   const currentProduct = data.filter((item) => item.id === id)[0];
 
-  console.log(currentProduct);
+  // console.log(currentProduct);
 
   return (
     <div>
