@@ -19,7 +19,7 @@ const SimpleButton = ({
   capitalize && buttonClass.push(classes.Capitalize);
 
   return (
-    <button onClick={clicked} className={buttonClass.join(" ")}>
+    <button onClick={clicked} type="button" className={buttonClass.join(" ")}>
       {name}
     </button>
   );

@@ -35,7 +35,7 @@ const SingleProduct = (props) => {
           highlights={currentProduct.highlights}
           specs={currentProduct.specs}
         />
-        <Reviews ratings={currentProduct.ratings} />
+        <Reviews id={currentProduct.id} ratings={currentProduct.ratings} />
       </main>
     </div>
   );
