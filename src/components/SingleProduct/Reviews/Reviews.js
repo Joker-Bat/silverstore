@@ -13,7 +13,7 @@ import SingleReview from "./SingleReview/SingleReview";
   Main Component
 */
 
-const Reviews = ({ ratings, id }) => {
+const Reviews = ({ ratings, id, updateLocalReviews }) => {
   // Open or close Add Review Container
   const [addReview, setAddReview] = useState(false);
 
@@ -44,7 +44,7 @@ const Reviews = ({ ratings, id }) => {
           capitalize
           clicked={openReviewContainer}
         />
-        <AddReviewBox id={id} isOpen={addReview} close={closeReviewContainer} />
+        <AddReviewBox id={id} isOpen={addReview} close={closeReviewContainer} updateLocalReviews={updateLocalReviews} />
       </div>
     </div>
   );

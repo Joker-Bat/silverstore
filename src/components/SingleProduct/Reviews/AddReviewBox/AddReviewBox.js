@@ -61,6 +61,7 @@ const AddReview = (props) => {
     }
     // Make details into object
     const currentReview = {
+      reviewId: new Date().toLocaleString(),
       id: props.id,
       userName: "testUser",
       stars: currentStar,
@@ -76,11 +77,13 @@ const AddReview = (props) => {
     if (currentLocalReviews) {
       currentLocalReviews.push(currentReview);
       localStorage.setItem("localReviews", JSON.stringify(currentLocalReviews));
+      props.updateLocalReviews((prev) => prev + 1);
     } else {
       // insert an object into an array
       const allReviews = [currentReview];
       // Set this array to localStorage
       localStorage.setItem("localReviews", JSON.stringify(allReviews));
+      props.updateLocalReviews((prev) => prev + 1);
     }
 
     // Clear All states and close modal
