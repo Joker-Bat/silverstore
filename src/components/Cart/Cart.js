@@ -14,8 +14,8 @@ const Cart = () => {
   return (
     <div className={classes.Cart}>
       <div className={classes.CartItemsContainer}>
-        {products.map((item) => {
-          return <CartItem {...item} />;
+        {products.map((item, index) => {
+          return <CartItem key={`CartItem${index}`} {...item} />;
         })}
       </div>
       <div className={classes.PriceContainer}>

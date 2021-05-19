@@ -13,13 +13,21 @@ import { Link } from "react-router-dom";
 
 // Redux toolkit
 import { useDispatch, useSelector } from "react-redux";
-import { removeCartItem } from "../../../store/cart/cartSlice";
+import {
+  removeCartItem,
+  increaseProductCount,
+  decreaseProductCount,
+} from "../../../store/cart/cartSlice";
 
 const CartItem = ({ id, name, image, price, subTotal }) => {
   // Redux toolkit
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.cart);
   const count = products.filter((item) => item.id === id)[0].count;
+
+  // Increase or decrease count in Cart
+  const increaseCount = () => dispatch(increaseProductCount(id));
+  const decreaseCount = () => dispatch(decreaseProductCount(id));
 
   return (
     <div className={classes.CartItem}>
@@ -39,7 +47,11 @@ const CartItem = ({ id, name, image, price, subTotal }) => {
         </h1>
 
         <div className={classes.CountContainer}>
-          <ProductCounter count={count} />
+          <ProductCounter
+            count={count}
+            increaseCounter={increaseCount}
+            decreaseCounter={decreaseCount}
+          />
         </div>
 
         <div className={classes.RemoveItemContainer}>

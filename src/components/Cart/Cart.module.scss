@@ -5,6 +5,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: 700px minmax(200px, 1fr);
+  margin-top: 2rem;
+  padding: 0 3rem;
 
   @include respond($TABLET) {
     grid-template-columns: 1fr;
