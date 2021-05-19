@@ -1,0 +1,12 @@
+@import "../../styles/Variables.scss";
+@import "../../styles/ResponsiveSheet.scss";
+
+.Cart {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 700px minmax(200px, 1fr);
+
+  @include respond($TABLET) {
+    grid-template-columns: 1fr;
+  }
+}

@@ -8,6 +8,9 @@ import NumberFormat from "react-number-format";
 import DeleteButton from "../../UI/DeleteButton/DeleteButton";
 import ProductCounter from "../../UI/ProductCounter/ProductCounter";
 
+// React Router
+import { Link } from "react-router-dom";
+
 // Redux toolkit
 import { useDispatch, useSelector } from "react-redux";
 import { removeCartItem } from "../../../store/cart/cartSlice";
@@ -20,9 +23,9 @@ const CartItem = ({ id, name, image, price, subTotal }) => {
 
   return (
     <div className={classes.CartItem}>
-      <div className={classes.CartItemImage}>
+      <Link to={`/products/${id}`} className={classes.CartItemImage}>
         <img src={image} alt={name} />
-      </div>
+      </Link>
       <div className={classes.CartItemDetails}>
         <h1 className={classes.Title}>{name}</h1>
         <h1 className={classes.Price}>
