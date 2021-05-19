@@ -1,0 +1,101 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
+.CartItem {
+  width: 95%;
+  max-width: 700px;
+  height: auto;
+  display: grid;
+  grid-template-columns: 250px minmax(200px, 1fr);
+  gap: 3rem;
+  border-radius: 4px;
+  margin-bottom: 4rem;
+  border: 0.5px solid var(--tertiary);
+  padding: 1rem 0;
+  background-color: var(--white);
+  transition: outline 0.1s ease;
+
+  @include respond($TABLET) {
+    margin: auto;
+    margin-bottom: 4rem;
+    align-items: center;
+    grid-template-columns: 150px 1fr;
+  }
+
+  @include respond($MOBILE) {
+    gap: 1.5rem;
+    grid-template-columns: 120px 1fr;
+  }
+
+  &:hover,
+  &:active {
+    outline: 3px dashed var(--main);
+    outline-offset: 0.5rem;
+  }
+
+  .CartItemImage {
+    background-color: var(--white);
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    border-right: 1px solid var(--text-dark);
+
+    @include respond($TABLET) {
+      height: 150px;
+    }
+
+    @include respond($MOBILE) {
+      height: 100px;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  .CartItemDetails {
+    color: var(--text-dark);
+    padding: 0 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .Title {
+      color: var(--main);
+      font-size: 2.3rem;
+      font-weight: 500;
+      line-height: 150%;
+      margin-bottom: 1rem;
+
+      @include respond($MOBILE) {
+        font-size: 2rem;
+      }
+    }
+
+    .Price {
+      font-size: 2rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+
+    .CountContainer {
+      flex: 1;
+    }
+
+    .RemoveItemContainer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .SubTotal {
+        color: var(--main);
+        font-size: 2rem;
+        font-weight: 400;
+      }
+    }
+  }
+}

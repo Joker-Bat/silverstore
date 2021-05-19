@@ -1,7 +1,10 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
+
 .CounterContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 
   button {
     appearance: none;
@@ -13,6 +16,10 @@
     cursor: pointer;
     transition: color 0.2s ease, background-color 0.2s ease;
 
+    @include respond($TABLET) {
+      padding: 0.5rem;
+    }
+
     &:hover,
     &:active {
       color: var(--white);
@@ -21,10 +28,16 @@
 
     &:nth-child(1) {
       margin-right: 2rem;
+      @include respond($TABLET) {
+        margin-right: 1rem;
+      }
     }
 
     &:last-child {
       margin-left: 2rem;
+      @include respond($TABLET) {
+        margin-left: 1rem;
+      }
     }
 
     svg {
@@ -33,7 +46,12 @@
   }
 
   .Count {
+    margin-top: -0.4rem;
     font-size: 4rem;
     font-weight: 500;
+
+    @include respond($TABLET) {
+      font-size: 3.3rem;
+    }
   }
 }

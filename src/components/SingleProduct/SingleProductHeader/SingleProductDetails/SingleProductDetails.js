@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Styles
 import classes from "./SingleProductDetails.module.scss";
@@ -7,9 +7,36 @@ import classes from "./SingleProductDetails.module.scss";
 import NumberFormat from "react-number-format";
 import Button from "../../../UI/Button/Button";
 import Stars from "./Stars/Stars";
-import ProductCounter from "./ProductCounter/ProductCounter";
+import ProductCounter from "../../../UI/ProductCounter/ProductCounter";
+
+//Redux toolkit
+import { useDispatch } from "react-redux";
+import { addCartItem } from "../../../../store/cart/cartSlice";
+
+/*
+Main Component
+*/
 
 const SingleProductDetails = (props) => {
+  // Redux toolkit
+  const dispatch = useDispatch();
+  // Counter for a product
+  const [count, setCount] = useState(1);
+
+  const increaseCounter = () => {
+    setCount((prev) => prev + 1);
+  };
+
+  const decreaseCounter = () => {
+    setCount((prev) => {
+      if (prev > 1) {
+        return prev - 1;
+      } else {
+        return prev;
+      }
+    });
+  };
+
   const noOfRatings = props.ratings.length;
   const averageRating =
     props.ratings
@@ -21,6 +48,12 @@ const SingleProductDetails = (props) => {
   const discountPercentage = Math.round(
     ((props.realPrice - props.price) / props.realPrice) * 100
   );
+
+  // Add products to cart
+  const addToCart = () => {
+    const currentProductState = { id: props.id, count };
+    dispatch(addCartItem(currentProductState));
+  };
 
   return (
     <div className={classes.SingleProductDetails}>
@@ -78,10 +111,20 @@ const SingleProductDetails = (props) => {
         </div>
       </div>
       {/* Counter for product */}
-      <ProductCounter />
+      <ProductCounter
+        count={count}
+        increaseCounter={increaseCounter}
+        decreaseCounter={decreaseCounter}
+      />
       {/* Add to cart button */}
       <div className={classes.AddToCartBtn}>
-        <Button large name="add to cart" uppercase route="/cart" />
+        <Button
+          large
+          name="add to cart"
+          uppercase
+          clicked={addToCart}
+          route="/cart"
+        />
       </div>
     </div>
   );

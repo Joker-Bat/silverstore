@@ -12,6 +12,7 @@ const SingleProductHeader = (props) => {
     <header className={classes.SingleProductHeader}>
       <SingleProductImage name={props.name} images={props.images} />
       <SingleProductDetails
+        id={props.id}
         name={props.name}
         ratings={props.ratings}
         price={props.price}

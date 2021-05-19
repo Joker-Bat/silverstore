@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 // Components
 import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
+import CartItems from "../../components/Cart/Cart";
 
 const Cart = () => {
   useEffect(() => {
@@ -10,7 +11,7 @@ const Cart = () => {
   return (
     <section>
       <BreadCrumb title="cart" />
-      <h1>CART</h1>
+      <CartItems />
     </section>
   );
 };

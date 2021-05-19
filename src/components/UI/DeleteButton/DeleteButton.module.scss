@@ -1,0 +1,24 @@
+.DeleteButton {
+  appearance: none;
+  border: 1px solid var(--danger);
+  background-color: transparent;
+  padding: 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover,
+  &:active {
+    background-color: var(--danger);
+
+    svg {
+      color: var(--white);
+    }
+  }
+
+  svg {
+    color: var(--black);
+    font-size: 1.8rem;
+    transition: color 0.2s ease;
+  }
+}

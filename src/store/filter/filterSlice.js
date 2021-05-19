@@ -13,7 +13,7 @@ const categoryState = arrayToObjectState(categroryList, false);
 //Max price
 const maxPrice = Math.max(...data.map((item) => +item.price));
 
-export const filterSlice = createSlice({
+const filterSlice = createSlice({
   name: "filter",
   initialState: {
     categorys: categoryState,

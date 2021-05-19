@@ -48,6 +48,7 @@ const SingleProduct = (props) => {
       <BreadCrumb title={truncateWords(currentProduct.name, 18)} product />
       <main>
         <SingleProductHeader
+          id={currentProduct.id}
           name={currentProduct.name}
           images={currentProduct.images}
           ratings={currentProduct.ratings}

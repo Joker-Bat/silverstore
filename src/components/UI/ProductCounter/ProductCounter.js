@@ -1,25 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Styles
 import classes from "./ProductCounter.module.scss";
 
-const ProductCounter = () => {
-  const [count, setCount] = useState(1);
-
-  const increaseCounter = () => {
-    setCount((prev) => prev + 1);
-  };
-
-  const decreaseCounter = () => {
-    setCount((prev) => {
-      if (prev > 1) {
-        return prev - 1;
-      } else {
-        return prev;
-      }
-    });
-  };
-
+const ProductCounter = ({ count, increaseCounter, decreaseCounter }) => {
   return (
     <div className={classes.CounterContainer}>
       <button onClick={decreaseCounter}>
