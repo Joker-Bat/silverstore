@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 // HelperFunctions
 import { truncateWords } from "../../utilities/helperFunctions";
+import { getLocalReviews } from "./model/getLocalReviews";
 
 // Components
 import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
@@ -24,15 +25,10 @@ const SingleProduct = (props) => {
   const [localReviews, setLocalReviews] = useState(0);
 
   useEffect(() => {
-    const currentLocalReviewsList = JSON.parse(
-      localStorage.getItem("localReviews")
-    );
+    const currentLocalReviewsList = getLocalReviews(currentProduct.id);
     if (currentLocalReviewsList) {
-      // Filter reviews for current product
-      const currentLocalReviews = currentLocalReviewsList?.filter(
-        (item) => item.id === currentProduct.id
-      );
-      const currentReviews = [...ratings, ...currentLocalReviews];
+      // Add current localReviews to the state
+      const currentReviews = [...ratings, ...currentLocalReviewsList];
       // Prevent from adding same local reviews again again when render
       const filteredLocalReviews = currentReviews.filter((item, index, arr) => {
         if (item.reviewId) {
@@ -41,7 +37,6 @@ const SingleProduct = (props) => {
           return item;
         }
       });
-
       // Set filtered local reviews
       setRatings(filteredLocalReviews);
     }
