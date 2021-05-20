@@ -11,16 +11,7 @@ import SimpleButton from "../../UI/SimpleButton/SimpleButton";
 // import {} from "../../../store/cart/cartSlice";
 import { useSelector } from "react-redux";
 
-const PriceCard = () => {
-  const { products } = useSelector((state) => state.cart);
-  const totalPrice = products.reduce((acc, item) => {
-    return (acc += item.subTotal);
-  }, 0);
-
-  const totalProducts = products.reduce((acc, item) => {
-    return (acc += item.count);
-  }, 0);
-
+const PriceCard = ({ totalPrice, totalProducts }) => {
   return (
     <div className={classes.PriceCard}>
       <div className={classes.TotalProducts}>
