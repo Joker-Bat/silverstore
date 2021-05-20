@@ -111,11 +111,14 @@ const SingleProductDetails = (props) => {
         </div>
       </div>
       {/* Counter for product */}
-      <ProductCounter
-        count={count}
-        increaseCounter={increaseCounter}
-        decreaseCounter={decreaseCounter}
-      />
+      <div className={classes.ProductCounterContainer}>
+        <ProductCounter
+          count={count}
+          increaseCounter={increaseCounter}
+          decreaseCounter={decreaseCounter}
+        />
+      </div>
+
       {/* Add to cart button */}
       <div className={classes.AddToCartBtn}>
         <Button
