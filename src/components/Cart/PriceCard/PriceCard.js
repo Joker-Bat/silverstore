@@ -7,9 +7,9 @@ import classes from "./PriceCard.module.scss";
 import NumberFormat from "react-number-format";
 import SimpleButton from "../../UI/SimpleButton/SimpleButton";
 
-// Redux Toolkit
-// import {} from "../../../store/cart/cartSlice";
-import { useSelector } from "react-redux";
+/*
+Main Component
+*/
 
 const PriceCard = ({ totalPrice, totalProducts }) => {
   return (
