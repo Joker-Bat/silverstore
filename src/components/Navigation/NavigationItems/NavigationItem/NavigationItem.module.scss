@@ -44,7 +44,6 @@
     flex-direction: column;
 
     text-decoration: none;
-    color: var(--text-dark);
 
     @include respond($TABLET) {
       color: var(--white);
@@ -54,7 +53,7 @@
 
     svg {
       margin-right: 1rem;
-      color: var(--white);
+      color: var(--grey);
       font-size: 3.5rem;
       transition: font-size 0.2s ease, color 0.2s ease-in;
       transition: .2s ease;
@@ -96,7 +95,7 @@
 
   .ActiveLink {
     svg {
-      color: var(--black);
+      color: var(--white);
 
       @include respond($TABLET) {
         color: var(--main);

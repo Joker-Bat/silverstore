@@ -13,7 +13,7 @@ const NavigationItems = (props) => {
     <ul className={classes.NavigationItems}>
       <NavigationItem
         path="/products"
-        icon="fab fa-product-hunt"
+        icon="fas fa-shopping-bag"
         name="Products"
         closeBackdrop={props.closeBackdrop}
         shrink={props.shrink}

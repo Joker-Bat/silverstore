@@ -11,9 +11,10 @@ export const NavigationItem = (props) => {
   const NavItemClass = [classes.NavItem, props.shrink && classes.ShrinkNavItem];
 
   return (
-    <li className={NavItemClass.join(' ')} onClick={props.closeBackdrop}>
+    <li className={NavItemClass.join(" ")} onClick={props.closeBackdrop}>
       <NavLink
         to={props.path}
+        exact
         activeClassName={classes.ActiveLink}
         className={classes.NavLink}
       >
