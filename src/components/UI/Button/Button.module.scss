@@ -11,9 +11,9 @@
   transition: transform 0.2s ease, filter 0.2s ease-in;
 
   &.Small {
-    padding: 0.5rem 1rem;
-    font-size: 2rem;
-    border-radius: 0.3rem;
+    padding: .8rem 1.8rem;
+    font-size: 1.8rem;
+    border-radius: 4px;
 
     @include respond($TABLET) {
       font-size: 1.6rem;
@@ -21,13 +21,17 @@
   }
 
   &.Large {
-    padding: 0.5rem 2rem;
-    font-size: 2.3rem;
+    padding: 1rem 2.5rem;
+    font-size: 1.8rem;
     border-radius: 0.5rem;
   }
 
   &.Uppercase {
     text-transform: uppercase;
+  }
+
+  &.Capitalize {
+    text-transform: capitalize;
   }
 
   &:hover {

@@ -11,23 +11,24 @@
   transition: transform 0.2s ease, filter 0.2s ease-in;
 
   &.Small {
-    padding: 0.5rem 1rem;
-    font-size: 2rem;
-    border-radius: 0.3rem;
+    padding: 0.8rem 1.8rem;
+    font-size: 1.8rem;
+    border-radius: 4px;
 
     @include respond($TABLET) {
       font-size: 1.6rem;
+      padding: 0.8rem 1.6rem;
     }
 
     @include respond($MOBILE) {
       font-size: 1.8rem;
-      padding: 0.8rem 1rem;
+      padding: 1rem 1.8rem;
     }
   }
 
   &.Large {
-    padding: 0.8rem 2rem;
-    font-size: 2.3rem;
+    padding: 1.2rem 2.3rem;
+    font-size: 2rem;
     border-radius: 0.5rem;
   }
 

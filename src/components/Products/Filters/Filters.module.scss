@@ -134,22 +134,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    button {
-      cursor: pointer;
-      appearance: none;
-      border: none;
-      background-color: var(--main);
-      color: var(--white);
-      padding: 0.5rem 0.8rem;
-      font-size: 1.8rem;
-      border-radius: 4px;
-      transition: transform 0.2s ease, filter 0.2s ease-in;
-
-      &:hover {
-        transform: scale(0.98);
-        filter: brightness(120%);
-      }
-    }
   }
 }
