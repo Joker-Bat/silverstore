@@ -5,7 +5,7 @@ import classes from "./SingleProductDetails.module.scss";
 
 // Components
 import NumberFormat from "react-number-format";
-import Button from "../../../UI/Button/Button";
+import SimpleButton from "../../../UI/SimpleButton/SimpleButton";
 import Stars from "./Stars/Stars";
 import ProductCounter from "../../../UI/ProductCounter/ProductCounter";
 
@@ -121,13 +121,7 @@ const SingleProductDetails = (props) => {
 
       {/* Add to cart button */}
       <div className={classes.AddToCartBtn}>
-        <Button
-          large
-          name="add to cart"
-          uppercase
-          clicked={addToCart}
-          route="/cart"
-        />
+        <SimpleButton large name="add to cart" uppercase clicked={addToCart} />
       </div>
     </div>
   );

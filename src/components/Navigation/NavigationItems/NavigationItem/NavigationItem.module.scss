@@ -4,7 +4,7 @@
 .NavItem {
   font-size: 2rem;
   position: relative;
-  transition: .2s ease;
+  transition: 0.2s ease;
 
   @include respond($TABLET) {
     width: 200px;
@@ -27,11 +27,16 @@
     }
 
     .NavLink {
-
-      svg {
-        font-size: 2.5rem;
+      .IconContainer {
+        svg {
+          font-size: 2.5rem;
+        }
+        .CartCount {
+          width: 2rem;
+          height: 2rem;
+        }
       }
-      
+
       p {
         display: none;
       }
@@ -51,17 +56,44 @@
       align-items: center;
     }
 
-    svg {
-      margin-right: 1rem;
-      color: var(--grey);
-      font-size: 3.5rem;
-      transition: font-size 0.2s ease, color 0.2s ease-in;
-      transition: .2s ease;
+    .IconContainer {
+      position: relative;
 
-      @include respond($TABLET) {
-        margin-right: 2rem;
-        margin-bottom: 2rem;
-        transform: translateY(20%);
+      svg {
+        margin-right: 1rem;
+        color: var(--grey);
+        font-size: 3.5rem;
+        transition: font-size 0.2s ease, color 0.2s ease-in;
+        transition: 0.2s ease;
+
+        @include respond($TABLET) {
+          margin-right: 2rem;
+          margin-bottom: 2rem;
+          transform: translateY(20%);
+        }
+      }
+      .CartCount {
+        width: 2.5rem;
+        height: 2.5rem;
+        color: var(--black);
+        font-size: 1.4rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -38%;
+        right: 2%;
+        background-color: var(--white);
+        border-radius: 50%;
+        line-height: 100%;
+        z-index: 2;
+
+        @include respond($TABLET) {
+          top: -10%;
+          right: 15%;
+          font-size: 1.5rem;
+        }
       }
     }
 
@@ -94,11 +126,13 @@
   }
 
   .ActiveLink {
-    svg {
-      color: var(--white);
+    .IconContainer {
+      svg {
+        color: var(--white);
 
-      @include respond($TABLET) {
-        color: var(--main);
+        @include respond($TABLET) {
+          color: var(--main);
+        }
       }
     }
   }
