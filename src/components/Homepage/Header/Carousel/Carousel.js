@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-
-// Data
-import data from "../../../../data/data";
+// Axios
+import axios from "../../../../axios-base";
 
 // Carousel
 import { Carousel } from "react-responsive-carousel";
@@ -14,17 +13,31 @@ import "./Carousel.scss";
 const CarouselSet = () => {
   const [banners, setBanners] = useState([]);
 
-  const listOfBanners = [];
-
-  const getBannerImages = () => {
-    data.forEach((item) => {
-      item.bannerImage && listOfBanners.push(item);
+  const getBannerImages = (products) => {
+    const listOfBanners = [];
+    products.forEach((item) => {
+      item.bannerImage &&
+        listOfBanners.push({
+          image: `https://freeestoreapi.herokuapp.com/images/products/${item.bannerImage}`,
+          name: item.name,
+          id: item.id,
+        });
     });
-    setBanners(listOfBanners);
+    return listOfBanners;
   };
 
   useEffect(() => {
-    getBannerImages();
+    const fetchData = async () => {
+      const res = await axios.get("/api/v1/products", {
+        params: {
+          fields: "name, id, bannerImage",
+        },
+      });
+      const products = await res.data.data.products;
+      const bannerImages = getBannerImages(products);
+      setBanners(bannerImages);
+    };
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,14 +52,10 @@ const CarouselSet = () => {
       useKeyboardArrows={true}
       autoFocus={true}
     >
-      {banners.map((item) => {
+      {banners.map((item, index) => {
         return (
-          <div className={classes.Slide} key={item.id}>
-            <img
-              src={item.bannerImage}
-              alt={item.name}
-              className={classes.Banner}
-            />
+          <div className={classes.Slide} key={`banner${item.id}${index}`}>
+            <img src={item.image} alt={item.name} className={classes.Banner} />
           </div>
         );
       })}
