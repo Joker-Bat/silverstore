@@ -19,3 +19,29 @@ export const getDaysBefore = (date) => {
   }
   return currentDate;
 };
+
+export const getRandomThree = (products) => {
+  let gen_nums = [];
+
+  function in_array(array, el) {
+    for (let i = 0; i < array.length; i++) if (array[i] === el) return true;
+    return false;
+  }
+
+  function get_rand(array) {
+    let rand = array[Math.floor(Math.random() * array.length)];
+    if (!in_array(gen_nums, rand)) {
+      gen_nums.push(rand);
+      return rand;
+    }
+    return get_rand(array);
+  }
+
+  for (let i = 0; i < 3; i++) {
+    get_rand(products);
+  }
+
+  return gen_nums;
+};
+
+// var nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
