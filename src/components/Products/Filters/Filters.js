@@ -5,7 +5,7 @@ import classes from "./Filters.module.scss";
 // Helperfunctions
 import getCompanysFromCategorys from "./getCompanysFromCategorys";
 // Data
-import data from "../../../data/data";
+// import data from "../../../data/data";
 // Components
 import Checkbox from "./Checkbox/Checkbox";
 import RangeSlider from "./RangeSlider/RangeSlider";
@@ -15,30 +15,30 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   resetFilter,
   setCompanys,
-  updataPrice,
+  updatePrice,
 } from "../../../store/filter/filterSlice";
 import { resetProducts } from "../../../store/products/productsSlice";
 
-// List of Categorys and its uses as state to control the companys to choose
-const categroryList = [...new Set(data.map((item) => item.type))];
-
-// Min and Max price
-const minPrice = Math.min(...data.map((item) => +item.price));
-const maxPrice = Math.max(...data.map((item) => +item.price));
 /*  
-
   Main Component
-
 */
 const Filters = (props) => {
   // Redux toolkit
   const dispatch = useDispatch();
-  const { categorys, companys, openFilter, price } = useSelector(
-    (state) => state.filter
-  );
+  const {
+    categoryRef,
+    categorys,
+    companys,
+    openFilter,
+    price,
+    priceRef,
+    minPrice,
+  } = useSelector((state) => state.filter);
+
+  const { productRef } = useSelector((state) => state.products);
 
   const setPrice = (event, value) => {
-    dispatch(updataPrice(value));
+    dispatch(updatePrice(value));
   };
 
   const clearFilters = () => {
@@ -50,13 +50,13 @@ const Filters = (props) => {
     const filteredCompanys = getCompanysFromCategorys(
       categorys,
       companys,
-      data
+      productRef
     );
     dispatch(setCompanys(filteredCompanys));
     // eslint-disable-next-line
   }, [categorys, dispatch]);
 
-  const categoryToShow = categroryList.map((item, index) => {
+  const categoryToShow = Object.keys(categoryRef).map((item, index) => {
     return (
       <Checkbox key={"CategoryCheckBox" + index} value={item} type="category" />
     );
@@ -90,7 +90,7 @@ const Filters = (props) => {
         <div className={classes.PriceLabels}>
           <p>{minPrice}</p>
           <p>₹</p>
-          <p>{maxPrice}</p>
+          <p>{priceRef}</p>
         </div>
       </div>
 

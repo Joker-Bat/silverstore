@@ -1,24 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Helper function
-import { arrayToObjectState } from "../../utilities/helperFunctions";
-
-// Data
-import data from "../../data/data";
-
-// List of Categorys and its uses as state to control the companys to choose
-const categroryList = [...new Set(data.map((item) => item.type))];
-const categoryState = arrayToObjectState(categroryList, false);
-
-//Max price
-const maxPrice = Math.max(...data.map((item) => +item.price));
-
 const filterSlice = createSlice({
   name: "filter",
   initialState: {
-    categorys: categoryState,
+    categoryRef: {},
+    priceRef: 0,
+    // Above for reference
+    categorys: {},
     companys: {},
-    price: maxPrice,
+    minPrice: 0,
+    price: 0,
     openFilter: false,
     listView: false,
   },
@@ -29,20 +20,29 @@ const filterSlice = createSlice({
     companyCheckboxChangedHandler: (state, { payload }) => {
       state.companys[payload] = !state.companys[payload];
     },
+    setCategory: (state, { payload }) => {
+      state.categorys = payload;
+      state.categoryRef = payload;
+    },
     setCompanys: (state, { payload }) => {
       state.companys = payload;
     },
     toggleFilter: (state) => {
       state.openFilter = !state.openFilter;
     },
-    updataPrice: (state, { payload }) => {
+    setPrice: (state, { payload }) => {
+      state.priceRef = payload.maxPrice;
+      state.price = payload.maxPrice;
+      state.minPrice = payload.minPrice;
+    },
+    updatePrice: (state, { payload }) => {
       state.price = payload;
     },
     resetFilter: (state) => {
-      state.categorys = categoryState;
+      state.categorys = state.categoryRef;
       state.companys = {};
       state.openFilter = false;
-      state.price = maxPrice;
+      state.price = state.priceRef;
     },
     setListView: (state) => {
       state.listView = true;
@@ -56,9 +56,11 @@ const filterSlice = createSlice({
 export const {
   categoryCheckboxChangedHandler,
   companyCheckboxChangedHandler,
+  setCategory,
   setCompanys,
   toggleFilter,
-  updataPrice,
+  setPrice,
+  updatePrice,
   resetFilter,
   setListView,
   removeListView,

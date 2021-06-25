@@ -33,8 +33,8 @@ const ProductsTop = () => {
   return (
     <div className={classes.ProductsTop}>
       <h1 className={classes.ProductsCount}>
-        <span className={classes.Count}>{products.length}</span>
-        Product{products.length > 1 ? "s " : " "}
+        <span className={classes.Count}>{products?.length}</span>
+        Product{products?.length > 1 ? "s " : " "}
         Found
       </h1>
       <hr />

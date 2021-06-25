@@ -8,7 +8,12 @@ import "react-responsive-carousel/lib/styles/carousel.css";
 import classes from "./Carousel.module.scss";
 import "./Carousel.scss";
 
-const CarouselSet = ({ bannerImages }) => {
+// React Redux
+import { useSelector } from "react-redux";
+
+const CarouselSet = () => {
+  const { bannerImages } = useSelector((state) => state.products);
+
   return (
     <Carousel
       interval="3000"

@@ -1,23 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// data
-import data from "../../data/data";
-
 const productsSlice = createSlice({
   name: "products",
   initialState: {
-    products: data,
+    // ProductList is for reference not to mutate
+    productRef: [],
+    products: [],
+    bannerImages: [],
+    featuredProducts: [],
   },
   reducers: {
+    setProducts: (state, { payload }) => {
+      state.products = payload;
+      state.productRef = payload;
+    },
+    setBannerImages: (state, { payload }) => {
+      state.bannerImages = payload;
+    },
+    setFeaturedProducts: (state, { payload }) => {
+      state.featuredProducts = payload;
+    },
     updateProducts: (state, { payload }) => {
       state.products = payload;
     },
     resetProducts: (state) => {
-      state.products = data;
+      state.products = state.productRef;
     },
   },
 });
 
-export const { updateProducts, resetProducts } = productsSlice.actions;
+export const {
+  updateProducts,
+  resetProducts,
+  setProducts,
+  setBannerImages,
+  setFeaturedProducts,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;

@@ -8,7 +8,12 @@ import Title from "../../UI/Title/Title";
 import Product from "../../UI/Product/Product";
 import Button from "../../UI/Button/Button";
 
-const FeaturedProducts = ({ featuredProducts }) => {
+// React Redux
+import { useSelector } from "react-redux";
+
+const FeaturedProducts = () => {
+  const { featuredProducts } = useSelector((state) => state.products);
+
   return (
     <section className={classes.FeaturedProducts}>
       <Title name="featured products" />

@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 // Styles
 import classes from "./ProductsList.module.scss";
-// Data
-import data from "../../../data/data";
+
 // Component
 import ProductsTop from "./ProductsTop/ProductsTop";
 import Product from "../../UI/Product/Product";
 import ListView from "../../UI/ListView/ListView";
+
 // Redux toolkit
 import { useSelector, useDispatch } from "react-redux";
 
@@ -14,12 +14,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { getFilteredProductsByChoices } from "./model/getFilteredProducts";
 import { updateProducts } from "../../../store/products/productsSlice";
 
+/*
+  Code 
+*/
+
 const ProductsList = () => {
   // Redux toolkit
   const { categorys, companys, price, listView } = useSelector(
     (state) => state.filter
   );
-  const { products } = useSelector((state) => state.products);
+  const { products, productRef } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   // UseEffect
@@ -28,7 +32,7 @@ const ProductsList = () => {
       categorys,
       companys,
       price,
-      data
+      productRef
     );
     dispatch(updateProducts(filteredProductsByPrice));
 
@@ -45,13 +49,14 @@ const ProductsList = () => {
     <div className={classes.ProductsContainer}>
       <ProductsTop />
       <div className={ProductListClass}>
-        {products.map((item) => {
+        {products?.map((item) => {
+          const image = `https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`;
           return listView ? (
             <ListView
               key={"ProductsListView" + item.id}
               id={item.id}
               name={item.name}
-              image={item.images[0]}
+              image={image}
               price={item.price}
               highlights={item.highlights}
             />
@@ -60,7 +65,7 @@ const ProductsList = () => {
               key={"ProductsList" + item.id}
               id={item.id}
               name={item.name}
-              image={item.images[0]}
+              image={image}
               price={item.price}
             />
           );
