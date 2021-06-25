@@ -31,7 +31,7 @@ const RandomProduct = () => {
       <Title name={"dont know where to start"} />
       {product ? (
         <Product
-          id={product.id}
+          id={product.slug}
           image={`https://freeestoreapi.herokuapp.com/images/products/${product.images[0]}`}
           name={product.name}
           price={product.price}

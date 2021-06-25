@@ -6,11 +6,12 @@ export const getLocalReviews = (id) => {
     localStorage.getItem("localReviews")
   );
 
-  if (currentLocalReviewsList) {
+  if (currentLocalReviewsList.length !== 0) {
     // Filter reviews for current product
     const currentLocalReviews = currentLocalReviewsList?.filter(
       (item) => item.id === id
     );
+
     // Change dates to how long days before from now
     currentLocalReviews.forEach((item) => {
       const currentDate = getDaysBefore(item.daysBefore);

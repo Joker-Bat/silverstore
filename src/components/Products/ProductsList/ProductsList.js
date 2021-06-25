@@ -54,7 +54,7 @@ const ProductsList = () => {
           return listView ? (
             <ListView
               key={"ProductsListView" + item.id}
-              id={item.id}
+              id={item.slug}
               name={item.name}
               image={image}
               price={item.price}
@@ -63,7 +63,7 @@ const ProductsList = () => {
           ) : (
             <Product
               key={"ProductsList" + item.id}
-              id={item.id}
+              id={item.slug}
               name={item.name}
               image={image}
               price={item.price}

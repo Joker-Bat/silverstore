@@ -22,7 +22,7 @@ const FeaturedProducts = () => {
           return (
             <Product
               key={"FeaturedProduct" + item.id}
-              id={item.id}
+              id={item.slug}
               image={`https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`}
               name={item.name}
               price={item.price}

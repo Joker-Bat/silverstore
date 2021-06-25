@@ -11,6 +11,7 @@ import { truncateWords } from "../../../utilities/helperFunctions";
 
 const Product = ({ name, image, price, searchingAnimation, id, history }) => {
   const handleClick = (curID) => {
+    console.log(curID);
     history.push(`/products/${curID}`);
   };
 

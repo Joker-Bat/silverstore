@@ -13,7 +13,7 @@ const SingleProductImage = (props) => {
   // const id = props.match.params.id;
   // const currentProduct = data.filter((item) => item.id === id)[0];
 
-  const [mainImage, setMainImage] = useState(props.images[0]);
+  const [mainImage, setMainImage] = useState(props?.images[0]);
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
@@ -30,7 +30,10 @@ const SingleProductImage = (props) => {
       <div className={classes.SingleProductImage}>
         <div className={classes.ImageContainer}>
           <div className={classes.MainImage} onClick={() => setPopupOpen(true)}>
-            <img src={mainImage} alt={props.name} />
+            <img
+              src={`https://freeestoreapi.herokuapp.com/images/products/${mainImage}`}
+              alt={props.name}
+            />
           </div>
           <div className={classes.SmallImageContainer}>
             {props.images.map((item, index) => {
@@ -43,7 +46,10 @@ const SingleProductImage = (props) => {
                   ].join(" ")}
                   onClick={() => setMainImage(item)}
                 >
-                  <img src={item} alt="smallImage" />
+                  <img
+                    src={`https://freeestoreapi.herokuapp.com/images/products/${item}`}
+                    alt="smallImage"
+                  />
                 </div>
               );
             })}

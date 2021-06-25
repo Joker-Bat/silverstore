@@ -5,7 +5,7 @@ export const arrayToObjectState = (arr, value) => {
 };
 
 export const truncateWords = (word, count) => {
-  return word.length > count ? word.substring(0, count - 3) + "..." : word;
+  return word?.length > count ? word.substring(0, count - 3) + "..." : word;
 };
 
 export const getDaysBefore = (date) => {

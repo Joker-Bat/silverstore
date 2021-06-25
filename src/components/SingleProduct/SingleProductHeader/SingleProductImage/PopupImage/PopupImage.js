@@ -19,7 +19,11 @@ const PopupImage = ({ popupOpen, setPopupOpen, mainImage }) => {
         <div className={classes.CloseIcon} onClick={() => setPopupOpen(false)}>
           <i className="fas fa-times"></i>
         </div>
-        <img src={mainImage} alt="mainImage" className={classes.PopupImage} />
+        <img
+          src={`https://freeestoreapi.herokuapp.com/images/products/${mainImage}`}
+          alt="mainImage"
+          className={classes.PopupImage}
+        />
       </div>
     </div>
   );
