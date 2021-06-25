@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// Data
-import data from "../../../data/data";
+// Axios
+import axios from "../../../axios-base";
 
 // Style
 import classes from "./RandomProduct.module.scss";
@@ -12,38 +12,32 @@ import Product from "../../UI/Product/Product";
 import SimpleButton from "../../UI/SimpleButton/SimpleButton";
 
 const RandomProduct = () => {
-  const [product, setProduct] = useState(data[8]);
+  const [product, setProduct] = useState("");
   const [searching, setSearching] = useState(false);
-  const totalProducts = data.length;
 
-  const getRandomProduct = () => {
-    let searchTimer;
-    let loadingTimer;
+  const getRandomProduct = async () => {
     setSearching(true);
-    for (let i = 0; i <= 10; i++) {
-      searchTimer = setTimeout(() => {
-        const randomNumberFromList = Math.floor(Math.random() * totalProducts);
-        const currentProduct = data[randomNumberFromList];
-        setProduct(currentProduct);
-      }, i * 100);
-      loadingTimer = setTimeout(() => {
-        setSearching(false);
-      }, 1000);
-    }
-    clearTimeout(searchTimer);
-    clearTimeout(loadingTimer);
+    const res = await axios.get("/api/v1/products/random");
+    setProduct(res.data.data.product[0]);
+    setSearching(false);
   };
+
+  useEffect(() => {
+    getRandomProduct();
+  }, []);
 
   return (
     <section className={classes.RandomProduct}>
       <Title name={"dont know where to start"} />
-      <Product
-        id={product.id}
-        image={product.images[0]}
-        name={product.name}
-        price={product.price}
-        searchingAnimation={searching}
-      />
+      {product ? (
+        <Product
+          id={product.id}
+          image={`https://freeestoreapi.herokuapp.com/images/products/${product.images[0]}`}
+          name={product.name}
+          price={product.price}
+          searchingAnimation={searching}
+        />
+      ) : null}
       <SimpleButton
         name={"get random"}
         clicked={getRandomProduct}
@@ -55,3 +49,22 @@ const RandomProduct = () => {
 };
 
 export default RandomProduct;
+
+// const getRandomProduct = () => {
+
+//   let searchTimer;
+//   let loadingTimer;
+//   setSearching(true);
+//   for (let i = 0; i <= 10; i++) {
+//     searchTimer = setTimeout(() => {
+//       const randomNumberFromList = Math.floor(Math.random() * totalProducts);
+//       const currentProduct = data[randomNumberFromList];
+//       setProduct(currentProduct);
+//     }, i * 100);
+//     loadingTimer = setTimeout(() => {
+//       setSearching(false);
+//     }, 1000);
+//   }
+//   clearTimeout(searchTimer);
+//   clearTimeout(loadingTimer);
+// };
