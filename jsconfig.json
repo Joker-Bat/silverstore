@@ -6,7 +6,8 @@
       "@containers/*": ["./containers/*"],
       "@hoc/*": ["./hoc/*"],
       "@store/*": ["./store/*"],
-      "@utilities/*": ["./utilities/*"]
+      "@utilities/*": ["./utilities/*"],
+      "@src/*": ["/*"]
     }
   }
 }

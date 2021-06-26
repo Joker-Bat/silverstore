@@ -8,7 +8,6 @@ import SearchBar from "../SearchBar/SearchBar";
 import classes from "./NavigationItems.module.scss";
 
 const NavigationItems = (props) => {
-  // console.log(props.shrink);
   return (
     <ul className={classes.NavigationItems}>
       <NavigationItem

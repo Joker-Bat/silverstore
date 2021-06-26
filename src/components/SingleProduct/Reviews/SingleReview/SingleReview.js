@@ -4,7 +4,6 @@ import React from "react";
 import classes from "./SingleReview.module.scss";
 
 const SingleReview = ({ item }) => {
-  // console.log(item);
   return (
     <div className={classes.Review}>
       <div className={classes.UserIcon}>

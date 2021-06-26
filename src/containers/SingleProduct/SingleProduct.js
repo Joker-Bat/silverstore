@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-
 // Axios
 import axios from "../../axios-base";
-
 // React Router
 import { useParams } from "react-router-dom";
-
 // HelperFunctions
 import { truncateWords } from "../../utilities/helperFunctions";
 import { getLocalReviews } from "./model/getLocalReviews";
-
 // Components
 import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
 import SingleProductHeader from "../../components/SingleProduct/SingleProductHeader/SingleProductHeader";
@@ -40,7 +36,7 @@ const SingleProduct = (props) => {
     };
     fetchData();
     // eslint-disable-next-line
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (Object.keys(currentProduct).length !== 0) {
@@ -49,7 +45,6 @@ const SingleProduct = (props) => {
       if (currentLocalReviewsList) {
         // Add current localReviews to the state
         const currentReviews = [...ratings, ...currentLocalReviewsList];
-        console.log(currentReviews);
         // Prevent from adding same local reviews again again when render
         const filteredLocalReviews = currentReviews.filter(
           (item, index, arr) => {

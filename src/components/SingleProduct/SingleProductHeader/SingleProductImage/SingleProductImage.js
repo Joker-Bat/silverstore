@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
-
 // Styles
 import classes from "./SingleProductImage.module.scss";
-
 // Components
 import PopupImage from "./PopupImage/PopupImage";
-
 /*
   Main Component
 */
 const SingleProductImage = (props) => {
-  // const id = props.match.params.id;
-  // const currentProduct = data.filter((item) => item.id === id)[0];
-
-  const [mainImage, setMainImage] = useState(props?.images[0]);
+  const [mainImage, setMainImage] = useState(props.images[0]);
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
+    setMainImage(props.images[0]);
     window.scrollTo(0, 0);
-  }, []);
+  }, [props.images]);
 
   return (
     <div className={classes.SingleProductImageContainer}>
       <PopupImage
-        mainImage={mainImage}
+        mainImage={mainImage ? mainImage : props.images[0]}
         popupOpen={popupOpen}
         setPopupOpen={setPopupOpen}
       />

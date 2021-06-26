@@ -77,7 +77,6 @@ const AddReview = (props) => {
     if (currentLocalReviews) {
       currentLocalReviews.push(currentReview);
       localStorage.setItem("localReviews", JSON.stringify(currentLocalReviews));
-      console.log("added");
       props.updateLocalReviews((prev) => prev + 1);
     } else {
       // insert an object into an array

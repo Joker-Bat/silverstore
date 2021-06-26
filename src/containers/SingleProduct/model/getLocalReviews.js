@@ -6,7 +6,7 @@ export const getLocalReviews = (id) => {
     localStorage.getItem("localReviews")
   );
 
-  if (currentLocalReviewsList.length !== 0) {
+  if (currentLocalReviewsList && currentLocalReviewsList.length !== 0) {
     // Filter reviews for current product
     const currentLocalReviews = currentLocalReviewsList?.filter(
       (item) => item.id === id
