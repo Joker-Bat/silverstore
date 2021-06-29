@@ -1,22 +1,14 @@
 import React, { useEffect } from "react";
 
-// Axios
-import axios from "../../axios-base";
-
 // Helper function
-import {
-  getRandomThree,
-  arrayToObjectState,
-} from "../../utilities/helperFunctions";
+import { getRandomThree } from "../../utilities/helperFunctions";
 
 // Redux Toolkit
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setProducts,
   setBannerImages,
   setFeaturedProducts,
 } from "../../store/products/productsSlice";
-import { setCategory, setPrice } from "../../store/filter/filterSlice";
 
 // Components
 import Header from "../../components/Homepage/Header/Header";
@@ -31,7 +23,7 @@ import PopularBrands from "../../components/Homepage/PopularBrands/PopularBrands
 const Homepage = () => {
   const dispatch = useDispatch();
 
-  const { bannerImages } = useSelector((state) => state.products);
+  const { bannerImages, productRef } = useSelector((state) => state.products);
 
   // Get banner images
   const getBannerImages = (products) => {
@@ -48,28 +40,11 @@ const Homepage = () => {
     dispatch(setFeaturedProducts(randomThreeProducts));
   };
 
-  // Get Category State
-  const getProductsPageDetails = (products) => {
-    // Categorys
-    const categroryList = [...new Set(products.map((item) => item.type))];
-    const categoryState = arrayToObjectState(categroryList, false);
-    //Max price
-    const maxPrice = Math.max(...products.map((item) => +item.price));
-    const minPrice = Math.min(...products.map((item) => +item.price));
-    dispatch(setPrice({ maxPrice, minPrice }));
-    dispatch(setCategory(categoryState));
-  };
-
   useEffect(() => {
     if (bannerImages.length === 0) {
-      const fetchData = async () => {
-        const res = await axios.get("/api/v1/products");
-        const products = await res.data.data.products;
-        getBannerImages(products);
-        getRandomThreeProducts(products);
-        // For Products page
-        dispatch(setProducts(products));
-        getProductsPageDetails(products);
+      const fetchData = () => {
+        getBannerImages(productRef);
+        getRandomThreeProducts(productRef);
       };
       fetchData();
     }
@@ -77,7 +52,7 @@ const Homepage = () => {
     // Scroll to top
     window.scrollTo(0, 0);
     // eslint-disable-next-line
-  }, []);
+  }, [productRef]);
 
   return (
     <section>

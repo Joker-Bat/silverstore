@@ -11,6 +11,7 @@ const parseTrueValuesFromObject = (obj) => {
 
 // Get Products below the current price
 const getFilteredProductsByChoices = (categorys, companys, price, data) => {
+  if (!data) return false;
   const selectedCompanys = parseTrueValuesFromObject(companys);
   const selectedCategorys = parseTrueValuesFromObject(categorys);
 
@@ -32,7 +33,7 @@ const getFilteredProductsByChoices = (categorys, companys, price, data) => {
   }
 
   const filteredProducts = currentProducts.filter((item) => {
-    return item.price <= price;
+    return price === 0 ? true : item.price <= price;
   });
 
   return filteredProducts;

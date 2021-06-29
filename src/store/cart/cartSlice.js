@@ -1,11 +1,12 @@
 // Data
-import data from "../../data/data";
+// import data from "../../data/data";
 
 import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
+    productRef: [],
     products: [],
     totalProducts: 0,
     totalPrice: 0,
@@ -23,10 +24,13 @@ const cartSlice = createSlice({
         existingProduct.subTotal =
           existingProduct.count * existingProduct.price;
       } else {
-        const currentProduct = data.filter((item) => item.id === id)[0];
+        const currentProduct = state.productRef.filter(
+          (item) => item.id === id
+        )[0];
         state.products.push({
           id,
           count,
+          slug: currentProduct.slug,
           name: currentProduct.name,
           image: currentProduct.images[0],
           price: currentProduct.price,
@@ -51,6 +55,9 @@ const cartSlice = createSlice({
         currentProduct.subTotal = currentProduct.count * currentProduct.price;
       }
     },
+    setAllProducts: (state, { payload }) => {
+      state.productRef = payload;
+    },
   },
 });
 
@@ -59,6 +66,7 @@ export const {
   removeCartItem,
   increaseProductCount,
   decreaseProductCount,
+  setAllProducts,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

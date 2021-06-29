@@ -21,27 +21,17 @@ export const getDaysBefore = (date) => {
 };
 
 export const getRandomThree = (products) => {
+  const refArr = [...products];
   let gen_nums = [];
 
-  function in_array(array, el) {
-    for (let i = 0; i < array.length; i++) if (array[i] === el) return true;
-    return false;
-  }
-
-  function get_rand(array) {
-    let rand = array[Math.floor(Math.random() * array.length)];
-    if (!in_array(gen_nums, rand)) {
-      gen_nums.push(rand);
-      return rand;
-    }
-    return get_rand(array);
+  function get_rand() {
+    let rand = Math.floor(Math.random() * refArr.length);
+    gen_nums.push(refArr.splice(rand, 1));
   }
 
   for (let i = 0; i < 3; i++) {
-    get_rand(products);
+    get_rand();
   }
 
-  return gen_nums;
+  return gen_nums.flat();
 };
-
-// var nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];

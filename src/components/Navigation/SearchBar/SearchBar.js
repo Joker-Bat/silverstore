@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 // Axios
 import axios from "../../../axios-base";
+// Helper function
+import { arrayToObjectState } from "../../../utilities/helperFunctions";
+
 // React Router
 import { withRouter } from "react-router-dom";
 // Styles
@@ -8,6 +11,8 @@ import classes from "./SearchBar.module.scss";
 // Redux toolkit
 import { setProducts } from "../../../store/products/productsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { setCategory, setPrice } from "../../../store/filter/filterSlice";
+import { setAllProducts } from "../../../store/cart/cartSlice";
 // Components
 import SuggestionItem from "./SuggestionItem/SuggestionItem";
 
@@ -74,6 +79,18 @@ const SearchBar = (props) => {
     }
   };
 
+  // Get Category State
+  const getProductsPageDetails = (products) => {
+    // Categorys
+    const categroryList = [...new Set(products.map((item) => item.type))];
+    const categoryState = arrayToObjectState(categroryList, false);
+    //Max price
+    const maxPrice = Math.max(...products.map((item) => +item.price));
+    const minPrice = Math.min(...products.map((item) => +item.price));
+    dispatch(setPrice({ maxPrice, minPrice }));
+    dispatch(setCategory(categoryState));
+  };
+
   useEffect(() => {
     if (productRef.length === 0) {
       const fetchData = async () => {
@@ -81,6 +98,10 @@ const SearchBar = (props) => {
         const products = res.data.data.products;
         dispatch(setProducts(products));
         setProductList(products);
+        // For Single Product page
+        getProductsPageDetails(products);
+        // For Cart
+        dispatch(setAllProducts(products));
       };
       fetchData();
     }

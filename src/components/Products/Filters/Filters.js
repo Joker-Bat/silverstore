@@ -86,7 +86,12 @@ const Filters = (props) => {
 
       <div className={classes.PriceContainer}>
         <h1 className={classes.PriceTitle}>Price</h1>
-        <RangeSlider price={price} setPrice={setPrice} />
+        <RangeSlider
+          price={price}
+          setPrice={setPrice}
+          minPrice={minPrice}
+          maxPrice={priceRef}
+        />
         <div className={classes.PriceLabels}>
           <p>{minPrice}</p>
           <p>₹</p>

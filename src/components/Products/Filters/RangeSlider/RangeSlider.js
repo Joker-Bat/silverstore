@@ -1,15 +1,8 @@
 import React from "react";
 
-// data
-import data from "../../../../data/data";
-
 // Material ui
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
-
-// Min and Max price
-const minPrice = Math.min(...data.map((item) => +item.price));
-const maxPrice = Math.max(...data.map((item) => +item.price));
 
 const CustomSlider = withStyles({
   root: {
@@ -47,7 +40,7 @@ const CustomSlider = withStyles({
   },
 })(Slider);
 
-const RangeSlider = ({ price, setPrice }) => {
+const RangeSlider = ({ price, setPrice, minPrice, maxPrice }) => {
   return (
     <CustomSlider
       value={price}

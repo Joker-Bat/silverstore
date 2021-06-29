@@ -17,19 +17,24 @@ const FeaturedProducts = () => {
   return (
     <section className={classes.FeaturedProducts}>
       <Title name="featured products" />
-      <div className={classes.ProductsContainer}>
-        {featuredProducts.map((item) => {
-          return (
-            <Product
-              key={"FeaturedProduct" + item.id}
-              id={item.slug}
-              image={`https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`}
-              name={item.name}
-              price={item.price}
-            />
-          );
-        })}
-      </div>
+      {featuredProducts.length === 0 ? (
+        <h1>Loading</h1>
+      ) : (
+        <div className={classes.ProductsContainer}>
+          {featuredProducts.map((item) => {
+            return (
+              <Product
+                key={"FeaturedProduct" + item.id}
+                id={item.slug}
+                image={`https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`}
+                name={item.name}
+                price={item.price}
+              />
+            );
+          })}
+        </div>
+      )}
+
       <Button name="all products" route="/products" large uppercase />
     </section>
   );

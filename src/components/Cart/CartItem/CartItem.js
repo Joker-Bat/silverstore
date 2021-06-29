@@ -19,7 +19,7 @@ import {
   decreaseProductCount,
 } from "../../../store/cart/cartSlice";
 
-const CartItem = ({ id, name, image, price, subTotal }) => {
+const CartItem = ({ id, name, image, price, subTotal, slug }) => {
   // Redux toolkit
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.cart);
@@ -31,8 +31,11 @@ const CartItem = ({ id, name, image, price, subTotal }) => {
 
   return (
     <div className={classes.CartItem}>
-      <Link to={`/products/${id}`} className={classes.CartItemImage}>
-        <img src={image} alt={name} />
+      <Link to={`/products/${slug}`} className={classes.CartItemImage}>
+        <img
+          src={`https://freeestoreapi.herokuapp.com/images/products/${image}`}
+          alt={name}
+        />
       </Link>
       <div className={classes.CartItemDetails}>
         <h1 className={classes.Title}>{name}</h1>
