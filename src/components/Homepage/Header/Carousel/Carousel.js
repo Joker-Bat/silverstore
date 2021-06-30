@@ -19,7 +19,6 @@ const CarouselSet = (props) => {
 
   const handleClick = (index) => {
     const currentProductSlug = bannerImages[index].slug;
-    console.log(currentProductSlug);
     props.history.push(`/products/${currentProductSlug}`);
   };
 

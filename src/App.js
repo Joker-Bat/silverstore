@@ -6,6 +6,7 @@ import Layout from "./hoc/Layout";
 import Homepage from "./containers/Homepage/Homepage";
 import Cart from "./containers/Cart/Cart";
 import Login from "./containers/Login/Login";
+import Signup from "./containers/Signup/Signup";
 import Products from "./containers/Products/Products";
 import SingleProduct from "./containers/SingleProduct/SingleProduct";
 
@@ -20,6 +21,7 @@ class App extends Component {
         <Route path="/products" component={Products} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
         <Route path="/" component={Homepage} />
         <Route path="*" component={Homepage} />
       </Switch>
