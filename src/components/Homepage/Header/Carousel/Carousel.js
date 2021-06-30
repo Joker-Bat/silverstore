@@ -8,11 +8,20 @@ import "react-responsive-carousel/lib/styles/carousel.css";
 import classes from "./Carousel.module.scss";
 import "./Carousel.scss";
 
+// React Router
+import { withRouter } from "react-router-dom";
+
 // React Redux
 import { useSelector } from "react-redux";
 
-const CarouselSet = () => {
+const CarouselSet = (props) => {
   const { bannerImages } = useSelector((state) => state.products);
+
+  const handleClick = (index) => {
+    const currentProductSlug = bannerImages[index].slug;
+    console.log(currentProductSlug);
+    props.history.push(`/products/${currentProductSlug}`);
+  };
 
   return (
     <Carousel
@@ -21,6 +30,7 @@ const CarouselSet = () => {
       showThumbs={false}
       showStatus={false}
       autoPlay={true}
+      onClickItem={handleClick}
       emulateTouch={true}
       useKeyboardArrows={true}
       autoFocus={true}
@@ -40,4 +50,4 @@ const CarouselSet = () => {
   );
 };
 
-export default CarouselSet;
+export default withRouter(CarouselSet);

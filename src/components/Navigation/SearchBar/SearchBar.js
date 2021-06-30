@@ -57,7 +57,7 @@ const SearchBar = (props) => {
   };
 
   const handleClick = () => {
-    props.closeBackdrop();
+    props.closeBackdrop && props.closeBackdrop();
     searchInput.current.blur();
     props.history.push(`/products/${filteredProducts[cursor].slug}`);
     hideSuggestion();
