@@ -6,13 +6,35 @@ import classes from "./Login.module.scss";
 // React Router
 import { Link } from "react-router-dom";
 
+// Redux Toolkit
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../store/user/userSlice";
+
+// Firebase
+import { auth } from "../../firebase";
+
 const Login = () => {
+  const dispatch = useDispatch();
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted");
+
+    try {
+      setLoading(true);
+      const user = await auth.signInWithEmailAndPassword(
+        emailInput,
+        passwordInput
+      );
+      console.log(user);
+      // dispatch(loginUser(user));
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
 
     // Clear Input Fields
     setEmailInput("");
@@ -21,6 +43,7 @@ const Login = () => {
 
   return (
     <div className={classes.LoginContainer}>
+      {loading && <h1>Processing...</h1>}
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
         <div className={classes.InputGroup}>
           <label htmlFor="email">Email</label>

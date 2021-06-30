@@ -4,17 +4,35 @@ import React, { useState } from "react";
 import classes from "./Signup.module.scss";
 
 // React Router
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-const Signup = () => {
+// Firebase
+import { auth } from "../../firebase";
+
+const Signup = (props) => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
   const [passwordEqual, setPasswordEqual] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sign UP");
+    if (passwordInput !== passwordConfirmInput) return false;
+
+    try {
+      setLoading(true);
+      const user = await auth.createUserWithEmailAndPassword(
+        emailInput,
+        passwordInput
+      );
+      console.log(user);
+      setLoading(false);
+      props.history.push("/");
+    } catch (err) {
+      setLoading(false);
+      console.log("Error", err.message);
+    }
 
     // Clear Input Fields
     setEmailInput("");
@@ -31,6 +49,7 @@ const Signup = () => {
 
   return (
     <div className={classes.SignupContainer}>
+      {loading && <h1>Processing...</h1>}
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
         <div className={classes.InputGroup}>
           <label htmlFor="email">Email</label>
@@ -90,4 +109,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withRouter(Signup);

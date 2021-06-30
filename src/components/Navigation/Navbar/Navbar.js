@@ -8,8 +8,26 @@ import NavigationItems from "../NavigationItems/NavigationItems";
 import Logo from "../../Logo/Logo";
 import NavbarToggler from "../NavbarToggler/NavbarToggler";
 
+// Firebase
+import { auth } from "../../../firebase";
+
+// Redux Toolkit
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../store/user/userSlice";
+
 const Navbar = (props) => {
+  const dispatch = useDispatch();
   const [shrinkedNavbar, setShrinkedNavbar] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      console.log(user);
+      dispatch(setUser(user));
+    });
+
+    return unsubscribe;
+    //eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     window.onscroll = () => {
