@@ -27,6 +27,7 @@ const SearchBar = (props) => {
 
   const [productList, setProductList] = useState(productRef);
   const searchContainer = useRef(null);
+  const searchInput = useRef(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isVisble, setIsVisible] = useState(false);
   const [searchWord, setSearchWord] = useState("");
@@ -56,6 +57,8 @@ const SearchBar = (props) => {
   };
 
   const handleClick = () => {
+    props.closeBackdrop();
+    searchInput.current.blur();
     props.history.push(`/products/${filteredProducts[cursor].slug}`);
     hideSuggestion();
     setFilteredProducts([]);
@@ -125,6 +128,7 @@ const SearchBar = (props) => {
           type="search"
           name="name"
           placeholder="Search Product here..."
+          ref={searchInput}
           value={searchWord}
           autoComplete="off"
           onClick={showSuggestion}
