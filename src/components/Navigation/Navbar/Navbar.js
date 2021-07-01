@@ -21,11 +21,12 @@ const Navbar = (props) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log(user);
-      dispatch(setUser(user));
+      if (user !== null || user.displayName !== null) {
+        dispatch(setUser({ email: user.email, name: user.displayName }));
+      }
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
     //eslint-disable-next-line
   }, []);
 

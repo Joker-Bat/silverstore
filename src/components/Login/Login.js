@@ -4,21 +4,17 @@ import React, { useState } from "react";
 import classes from "./Login.module.scss";
 
 // React Router
-import { Link } from "react-router-dom";
-
-// Redux Toolkit
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../store/user/userSlice";
+import { Link, withRouter } from "react-router-dom";
 
 // Firebase
 import { auth } from "../../firebase";
 
-const Login = () => {
-  const dispatch = useDispatch();
+const Login = (props) => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -27,19 +23,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      const user = await auth.signInWithEmailAndPassword(
-        emailInput,
-        passwordInput
-      );
-      console.log(user);
-      // dispatch(loginUser(user));
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      console.log(err);
-    }
+    setLoading(true);
+    auth
+      .signInWithEmailAndPassword(emailInput, passwordInput)
+      .then(() => {
+        setLoading(false);
+        props.history.push("/");
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
 
     // Clear Input Fields
     setEmailInput("");
@@ -50,6 +44,13 @@ const Login = () => {
     <div className={classes.LoginContainer}>
       {loading && <h1>Processing...</h1>}
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
+        {error ? (
+          <div className={classes.ErrorMessage}>
+            <p>{error}</p>
+          </div>
+        ) : (
+          ""
+        )}
         <div className={classes.InputGroup}>
           <label htmlFor="email">Email</label>
           <input
@@ -106,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

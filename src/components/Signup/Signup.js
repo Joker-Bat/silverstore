@@ -6,41 +6,56 @@ import classes from "./Signup.module.scss";
 // React Router
 import { Link, withRouter } from "react-router-dom";
 
+// Redux toolkit
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/user/userSlice";
+
 // Firebase
 import { auth } from "../../firebase";
 
 const Signup = (props) => {
+  const dispatch = useDispatch();
+
   const [emailInput, setEmailInput] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
   const [passwordEqual, setPasswordEqual] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (passwordInput !== passwordConfirmInput) return false;
 
-    try {
-      setLoading(true);
-      const user = await auth.createUserWithEmailAndPassword(
-        emailInput,
-        passwordInput
-      );
-      console.log(user);
-      setLoading(false);
-      props.history.push("/");
-    } catch (err) {
-      setLoading(false);
-      console.log("Error", err.message);
-    }
+    setError("");
+    setLoading(true);
+    auth
+      .createUserWithEmailAndPassword(emailInput, passwordInput)
+      .then((res) => {
+        res.user
+          .updateProfile({
+            displayName: usernameInput,
+          })
+          .then(() => {
+            dispatch(setUser({ email: emailInput, name: usernameInput }));
+            setLoading(false);
+            props.history.push("/");
+          });
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(err.message);
+      });
 
     // Clear Input Fields
     setEmailInput("");
+    setUsernameInput("");
     setPasswordInput("");
     setPasswordConfirmInput("");
   };
@@ -56,6 +71,14 @@ const Signup = (props) => {
     <div className={classes.SignupContainer}>
       {loading && <h1>Processing...</h1>}
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
+        {error ? (
+          <div className={classes.ErrorMessage}>
+            <p>{error}</p>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className={classes.InputGroup}>
           <label htmlFor="email">Email</label>
           <input
@@ -66,6 +89,20 @@ const Signup = (props) => {
             name="email"
             autoComplete="off"
             placeholder="Email"
+            required
+          />
+        </div>
+
+        <div className={classes.InputGroup}>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={usernameInput}
+            onChange={(e) => setUsernameInput(e.target.value)}
+            name="username"
+            autoComplete="off"
+            placeholder="Username"
             required
           />
         </div>
