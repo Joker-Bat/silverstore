@@ -28,7 +28,8 @@
     justify-content: center;
     align-items: center;
 
-    .ErrorMessage {
+    .ErrorMessage,
+    .SuccessMessage {
       font-size: 1.4rem;
       text-align: center;
       word-wrap: normal;
@@ -40,6 +41,10 @@
       border-radius: 4px;
     }
 
+    .SuccessMessage {
+      background-color: var(--success);
+    }
+
     .InputGroup {
       width: 100%;
       display: flex;
@@ -47,7 +52,7 @@
       margin-bottom: 1.5rem;
 
       label {
-        color: var(--text-dark);
+        color: var(--black);
         font-size: 1.3rem;
         margin-bottom: 0.5rem;
       }
@@ -74,6 +79,8 @@
     }
 
     button {
+      width: 40%;
+      height: 40px;
       appearance: none;
       border: none;
       background-color: var(--main);
@@ -82,8 +89,39 @@
       cursor: pointer;
       transition: transform 0.2s ease, filter 0.2s ease-in;
       padding: 0.8rem 1.8rem;
-      font-size: 1.8rem;
+      font-size: 2rem;
       border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.Disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+
+        &:hover {
+          transform: none;
+          filter: none;
+        }
+      }
+
+      .Spinner {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border-top: 2px solid var(--white);
+        animation: rotate 0.5s infinite linear;
+
+        @keyframes rotate {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
 
       &:hover {
         transform: scale(0.98);

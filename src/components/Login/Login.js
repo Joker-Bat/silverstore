@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 // Styles
 import classes from "./Login.module.scss";
-
 // React Router
 import { Link, withRouter } from "react-router-dom";
-
+// Components
+import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
 // Firebase
 import { auth } from "../../firebase";
+
+/**
+ * Main Component
+ */
 
 const Login = (props) => {
   const [emailInput, setEmailInput] = useState("");
@@ -15,38 +18,66 @@ const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-    auth
-      .signInWithEmailAndPassword(emailInput, passwordInput)
-      .then(() => {
-        setLoading(false);
-        props.history.push("/");
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-
-    // Clear Input Fields
+  const clearInputFields = () => {
     setEmailInput("");
     setPasswordInput("");
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!loading) {
+      setLoading(true);
+      auth
+        .signInWithEmailAndPassword(emailInput, passwordInput)
+        .then(() => {
+          clearInputFields();
+          setLoading(false);
+          setLoggedIn(true);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading(false);
+        });
+    }
+  };
+
+  // Show a success message for 1500ms
+  useEffect(() => {
+    let timer;
+    if (loggedIn) {
+      timer = setTimeout(() => {
+        setLoggedIn(false);
+        props.history.push("/");
+      }, 1500);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line
+  }, [loggedIn]);
+
   return (
     <div className={classes.LoginContainer}>
-      {loading && <h1>Processing...</h1>}
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
         {error ? (
           <div className={classes.ErrorMessage}>
             <p>{error}</p>
+          </div>
+        ) : (
+          ""
+        )}
+
+        {loggedIn ? (
+          <div className={classes.SuccessMessage}>
+            <p>Successfully Logged In</p>
           </div>
         ) : (
           ""
@@ -95,7 +126,9 @@ const Login = (props) => {
           </label>
         </div>
 
-        <button type="submit">Log In</button>
+        <button type="submit" className={loading ? classes.Disabled : ""}>
+          {loading ? <ButtonLoader /> : "Log In"}
+        </button>
       </form>
 
       <div className={classes.BottomText}>

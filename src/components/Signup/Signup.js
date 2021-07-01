@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 // Style
 import classes from "./Signup.module.scss";
-
 // React Router
 import { Link, withRouter } from "react-router-dom";
-
+// Components
+import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
 // Redux toolkit
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/user/userSlice";
-
 // Firebase
 import { auth } from "../../firebase";
+
+/**
+ * Main Component
+ */
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -24,41 +26,62 @@ const Signup = (props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
+  };
+
+  const clearInputFields = () => {
+    setEmailInput("");
+    setUsernameInput("");
+    setPasswordInput("");
+    setPasswordConfirmInput("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (passwordInput !== passwordConfirmInput) return false;
 
-    setError("");
-    setLoading(true);
-    auth
-      .createUserWithEmailAndPassword(emailInput, passwordInput)
-      .then((res) => {
-        res.user
-          .updateProfile({
-            displayName: usernameInput,
-          })
-          .then(() => {
-            dispatch(setUser({ email: emailInput, name: usernameInput }));
-            setLoading(false);
-            props.history.push("/");
-          });
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(err.message);
-      });
-
-    // Clear Input Fields
-    setEmailInput("");
-    setUsernameInput("");
-    setPasswordInput("");
-    setPasswordConfirmInput("");
+    if (!loading) {
+      setError("");
+      setLoading(true);
+      auth
+        .createUserWithEmailAndPassword(emailInput, passwordInput)
+        .then((res) => {
+          res.user
+            .updateProfile({
+              displayName: usernameInput,
+            })
+            .then(() => {
+              clearInputFields();
+              dispatch(setUser({ email: emailInput, name: usernameInput }));
+              setLoading(false);
+              setLoggedIn(true);
+            });
+        })
+        .catch((err) => {
+          setLoading(false);
+          setError(err.message);
+        });
+    }
   };
+
+  // Show a success message for 1500ms
+  useEffect(() => {
+    let timer;
+    if (loggedIn) {
+      timer = setTimeout(() => {
+        setLoggedIn(false);
+        props.history.push("/");
+      }, 1500);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line
+  }, [loggedIn]);
 
   const checkIsPasswordEqual = (e) => {
     setPasswordConfirmInput(e.target.value);
@@ -69,11 +92,18 @@ const Signup = (props) => {
 
   return (
     <div className={classes.SignupContainer}>
-      {loading && <h1>Processing...</h1>}
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
         {error ? (
           <div className={classes.ErrorMessage}>
             <p>{error}</p>
+          </div>
+        ) : (
+          ""
+        )}
+
+        {loggedIn ? (
+          <div className={classes.SuccessMessage}>
+            <p>Successfully Created Account</p>
           </div>
         ) : (
           ""
@@ -155,7 +185,9 @@ const Signup = (props) => {
           </label>
         </div>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" className={loading ? classes.Disabled : ""}>
+          {loading ? <ButtonLoader /> : "Sign Up"}
+        </button>
       </form>
 
       <div className={classes.BottomText}>
