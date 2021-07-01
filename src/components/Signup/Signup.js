@@ -15,6 +15,11 @@ const Signup = (props) => {
   const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
   const [passwordEqual, setPasswordEqual] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +73,7 @@ const Signup = (props) => {
         <div className={classes.InputGroup}>
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
@@ -86,7 +91,7 @@ const Signup = (props) => {
         >
           <label htmlFor="passwordConfirm">Confirm Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="passwordConfirm"
             value={passwordConfirmInput}
             onChange={checkIsPasswordEqual}
@@ -95,6 +100,22 @@ const Signup = (props) => {
             placeholder="Confirm Password"
             required
           />
+        </div>
+
+        <div className={classes.ShowPassword}>
+          <input
+            checked={showPassword}
+            onChange={handleShowPassword}
+            type="checkbox"
+            name="showPassword"
+            id="showPassword"
+            className={classes.Checkbox}
+          />
+
+          <label htmlFor="showPassword" className={classes.Label}>
+            <span className={classes.Checkmark}></span>
+            Show password
+          </label>
         </div>
 
         <button type="submit">Sign Up</button>

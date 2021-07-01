@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.module.scss";
 
 // Components
 import Layout from "./hoc/Layout";

@@ -18,6 +18,11 @@ const Login = () => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +67,7 @@ const Login = () => {
         <div className={classes.InputGroup}>
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             id="password"
@@ -71,6 +76,22 @@ const Login = () => {
             placeholder="Password"
             required
           />
+        </div>
+
+        <div className={classes.ShowPassword}>
+          <input
+            checked={showPassword}
+            onChange={handleShowPassword}
+            type="checkbox"
+            name="showPassword"
+            id="showPassword"
+            className={classes.Checkbox}
+          />
+
+          <label htmlFor="showPassword" className={classes.Label}>
+            <span className={classes.Checkmark}></span>
+            Show password
+          </label>
         </div>
 
         <button type="submit">Log In</button>
