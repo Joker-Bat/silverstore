@@ -1,0 +1,25 @@
+.Loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  & > span {
+    transform: scale(2);
+    margin-bottom: 25%;
+    span:first-child {
+      border-left: 25px solid var(--main);
+      border-bottom: 25px solid var(--main);
+    }
+
+    span:nth-child(2) {
+      border-top: 25px solid var(--main);
+      border-left: 25px solid var(--main);
+    }
+
+    span:nth-child(n + 3) {
+      background-color: var(--main);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 
 // Helper function
 import { getRandomThree } from "../../utilities/helperFunctions";
@@ -26,19 +26,25 @@ const Homepage = () => {
   const { bannerImages, productRef } = useSelector((state) => state.products);
 
   // Get banner images
-  const getBannerImages = (products) => {
-    const listOfBanners = [];
-    products.forEach((item) => {
-      item.bannerImage && listOfBanners.push(item);
-    });
-    dispatch(setBannerImages(listOfBanners));
-  };
+  const getBannerImages = useCallback(
+    (products) => {
+      const listOfBanners = [];
+      products.forEach((item) => {
+        item.bannerImage && listOfBanners.push(item);
+      });
+      dispatch(setBannerImages(listOfBanners));
+    },
+    [dispatch]
+  );
 
   // Random three products for featured
-  const getRandomThreeProducts = (products) => {
-    const randomThreeProducts = getRandomThree(products);
-    dispatch(setFeaturedProducts(randomThreeProducts));
-  };
+  const getRandomThreeProducts = useCallback(
+    (products) => {
+      const randomThreeProducts = getRandomThree(products);
+      dispatch(setFeaturedProducts(randomThreeProducts));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (bannerImages.length === 0) {
@@ -48,11 +54,14 @@ const Homepage = () => {
       };
       fetchData();
     }
-
     // Scroll to top
     window.scrollTo(0, 0);
-    // eslint-disable-next-line
-  }, [productRef]);
+  }, [
+    productRef,
+    getRandomThreeProducts,
+    getBannerImages,
+    bannerImages.length,
+  ]);
 
   return (
     <section>

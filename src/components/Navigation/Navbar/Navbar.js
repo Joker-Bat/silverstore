@@ -21,14 +21,12 @@ const Navbar = (props) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user !== null || user.displayName !== null) {
+      if (user !== null && user.displayName !== null) {
         dispatch(setUser({ email: user.email, name: user.displayName }));
       }
     });
-
     return () => unsubscribe();
-    //eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     window.onscroll = () => {

@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 // Axios
 import axios from "../../../axios-base";
 // Helper function
 import { arrayToObjectState } from "../../../utilities/helperFunctions";
-
 // React Router
 import { withRouter } from "react-router-dom";
 // Styles
@@ -83,23 +82,28 @@ const SearchBar = (props) => {
   };
 
   // Get Category State
-  const getProductsPageDetails = (products) => {
-    // Categorys
-    const categroryList = [...new Set(products.map((item) => item.type))];
-    const categoryState = arrayToObjectState(categroryList, false);
-    //Max price
-    const maxPrice = Math.max(...products.map((item) => +item.price));
-    const minPrice = Math.min(...products.map((item) => +item.price));
-    dispatch(setPrice({ maxPrice, minPrice }));
-    dispatch(setCategory(categoryState));
-  };
+  const getProductsPageDetails = useCallback(
+    (products) => {
+      // Categorys
+      const categroryList = [...new Set(products.map((item) => item.type))];
+      const categoryState = arrayToObjectState(categroryList, false);
+      //Max price
+      const maxPrice = Math.max(...products.map((item) => +item.price));
+      const minPrice = Math.min(...products.map((item) => +item.price));
+      dispatch(setPrice({ maxPrice, minPrice }));
+      dispatch(setCategory(categoryState));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (productRef.length === 0) {
       const fetchData = async () => {
         const res = await axios.get("/api/v1/products");
         const products = res.data.data.products;
-        dispatch(setProducts(products));
+        if (productRef.length === 0) {
+          dispatch(setProducts(products));
+        }
         setProductList(products);
         // For Single Product page
         getProductsPageDetails(products);
@@ -107,9 +111,8 @@ const SearchBar = (props) => {
         dispatch(setAllProducts(products));
       };
       fetchData();
-    }
-    // eslint-disable-next-line
-  }, []);
+    } else return;
+  }, [productRef, dispatch, getProductsPageDetails]);
 
   useEffect(() => {
     window.addEventListener("mousedown", handleOutsideClick);

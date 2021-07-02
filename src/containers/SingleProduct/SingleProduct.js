@@ -12,6 +12,8 @@ import SingleProductHeader from "../../components/SingleProduct/SingleProductHea
 import SingleProductSpecs from "../../components/SingleProduct/SingleProductSpecs/SingleProductSpecs";
 import Reviews from "../../components/SingleProduct/Reviews/Reviews";
 
+import Loading from "../../components/UI/Loading/Loading";
+
 /*
   Main Component
 */
@@ -26,6 +28,10 @@ const SingleProduct = (props) => {
   const [localReviews, setLocalReviews] = useState(0);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(`/api/v1/products/${id}`);
       const product = await res.data.data.product[0];
@@ -35,7 +41,6 @@ const SingleProduct = (props) => {
       });
     };
     fetchData();
-    // eslint-disable-next-line
   }, [id]);
 
   useEffect(() => {
@@ -57,7 +62,6 @@ const SingleProduct = (props) => {
             }
           }
         );
-
         // Set filtered local reviews
         setRatings(filteredLocalReviews);
       }
@@ -93,7 +97,7 @@ const SingleProduct = (props) => {
           </main>
         </>
       ) : (
-        <h1>Loading</h1>
+        <Loading />
       )}
     </div>
   );
