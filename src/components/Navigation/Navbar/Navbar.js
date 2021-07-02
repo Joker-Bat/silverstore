@@ -21,9 +21,7 @@ const Navbar = (props) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user !== null && user.displayName !== null) {
-        dispatch(setUser({ email: user.email, name: user.displayName }));
-      }
+      dispatch(setUser({ email: user.email, uid: user.uid }));
     });
     return () => unsubscribe();
   }, [dispatch]);
