@@ -5,7 +5,6 @@ import classes from "./Loading.module.scss";
 import SyncLoader from "react-spinners/SyncLoader";
 
 /**
- *
  * @returns a Loading Component
  */
 

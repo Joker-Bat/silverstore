@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 // Filter Reducer
 import filterReducer from "./filter/filterSlice";
 // Products Reducer
