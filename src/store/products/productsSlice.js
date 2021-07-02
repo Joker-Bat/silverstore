@@ -8,6 +8,7 @@ const productsSlice = createSlice({
     products: [],
     bannerImages: [],
     featuredProducts: [],
+    globalLoading: false,
   },
   reducers: {
     setProducts: (state, { payload }) => {
@@ -26,6 +27,9 @@ const productsSlice = createSlice({
     resetProducts: (state) => {
       state.products = state.productRef;
     },
+    setGlobalLoading: (state, { payload }) => {
+      state.globalLoading = payload;
+    },
   },
 });
 
@@ -35,6 +39,7 @@ export const {
   setProducts,
   setBannerImages,
   setFeaturedProducts,
+  setGlobalLoading,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

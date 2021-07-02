@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-
 // Styles
 import classes from "./Navbar.module.scss";
-
 // Components
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Logo from "../../Logo/Logo";
 import NavbarToggler from "../NavbarToggler/NavbarToggler";
-
 // Firebase
 import { auth } from "../../../firebase";
-
 // Redux Toolkit
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/user/userSlice";
+
+/**
+ * Main Component
+ */
 
 const Navbar = (props) => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import React from "react";
 // Style
 import classes from "./Loading.module.scss";
 // React Spinners
-import PacmanLoader from "react-spinners/PacmanLoader";
+import SyncLoader from "react-spinners/SyncLoader";
 
 /**
  *
@@ -12,7 +12,7 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 const Loading = () => {
   return (
     <div className={classes.Loading}>
-      <PacmanLoader />
+      <SyncLoader />
     </div>
   );
 };

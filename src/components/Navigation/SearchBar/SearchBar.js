@@ -5,6 +5,8 @@ import axios from "../../../axios-base";
 import { arrayToObjectState } from "../../../utilities/helperFunctions";
 // React Router
 import { withRouter } from "react-router-dom";
+// React Redux
+import { setGlobalLoading } from "../../../store/products/productsSlice";
 // Styles
 import classes from "./SearchBar.module.scss";
 // Redux toolkit
@@ -99,6 +101,7 @@ const SearchBar = (props) => {
   useEffect(() => {
     if (productRef.length === 0) {
       const fetchData = async () => {
+        dispatch(setGlobalLoading(true));
         const res = await axios.get("/api/v1/products");
         const products = res.data.data.products;
         if (productRef.length === 0) {
@@ -109,9 +112,10 @@ const SearchBar = (props) => {
         getProductsPageDetails(products);
         // For Cart
         dispatch(setAllProducts(products));
+        dispatch(setGlobalLoading(false));
       };
       fetchData();
-    } else return;
+    }
   }, [productRef, dispatch, getProductsPageDetails]);
 
   useEffect(() => {
