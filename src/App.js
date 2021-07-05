@@ -8,6 +8,7 @@ import Login from "./containers/Login/Login";
 import Signup from "./containers/Signup/Signup";
 import Products from "./containers/Products/Products";
 import SingleProduct from "./containers/SingleProduct/SingleProduct";
+import User from "./containers/User/User";
 
 // Router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -21,6 +22,7 @@ class App extends Component {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/user" component={User} />
         <Route path="/" component={Homepage} />
         <Route path="*" component={Homepage} />
       </Switch>

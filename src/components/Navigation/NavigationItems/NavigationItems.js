@@ -1,9 +1,7 @@
 import React from "react";
-
 // Components
 import NavigationItem from "./NavigationItem/NavigationItem";
 import SearchBar from "../SearchBar/SearchBar";
-
 // Styles
 import classes from "./NavigationItems.module.scss";
 
@@ -33,6 +31,14 @@ const NavigationItems = (props) => {
         closeBackdrop={props.closeBackdrop}
         shrink={props.shrink}
       />
+
+      {/* <NavigationItem
+        path="/user"
+        icon="fas fa-user"
+        name="Profile"
+        closeBackdrop={props.closeBackdrop}
+        shrink={props.shrink}
+      /> */}
 
       <SearchBar closeBackdrop={props.closeBackdrop} shrink={props.shrink} />
     </ul>

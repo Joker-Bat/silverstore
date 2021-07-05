@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // Styles
 import classes from "./Login.module.scss";
 // React Router
 import { Link, withRouter } from "react-router-dom";
 // Components
 import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
-// Firebase
-import { auth } from "../../firebase";
 
 /**
  * Main Component
@@ -31,38 +29,8 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!loading) {
-      setLoading(true);
-      auth
-        .signInWithEmailAndPassword(emailInput, passwordInput)
-        .then(() => {
-          clearInputFields();
-          setLoading(false);
-          setLoggedIn(true);
-        })
-        .catch((err) => {
-          setError(err.message);
-          setLoading(false);
-        });
-    }
+    clearInputFields();
   };
-
-  // Show a success message for 1500ms
-  useEffect(() => {
-    let timer;
-    if (loggedIn) {
-      timer = setTimeout(() => {
-        setLoggedIn(false);
-        props.history.push("/");
-      }, 1500);
-    }
-
-    return () => {
-      clearTimeout(timer);
-    };
-    // eslint-disable-next-line
-  }, [loggedIn]);
 
   return (
     <div className={classes.LoginContainer}>

@@ -5,26 +5,13 @@ import classes from "./Navbar.module.scss";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Logo from "../../Logo/Logo";
 import NavbarToggler from "../NavbarToggler/NavbarToggler";
-// Firebase
-import { auth } from "../../../firebase";
-// Redux Toolkit
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../store/user/userSlice";
 
 /**
  * Main Component
  */
 
 const Navbar = (props) => {
-  const dispatch = useDispatch();
   const [shrinkedNavbar, setShrinkedNavbar] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      dispatch(setUser({ email: user.email, uid: user.uid }));
-    });
-    return () => unsubscribe();
-  }, [dispatch]);
 
   useEffect(() => {
     window.onscroll = () => {
