@@ -5,6 +5,8 @@ import classes from "./Login.module.scss";
 import { Link, withRouter } from "react-router-dom";
 // Components
 import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
+// Axios
+import axios from "axios";
 
 /**
  * Main Component
@@ -27,8 +29,15 @@ const Login = (props) => {
     setPasswordInput("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const user = { email: emailInput, password: passwordInput };
+      const res = await axios.post("http://localhost:8000/", user);
+      console.log(res.data);
+    } catch (err) {
+      console.log("Error", err.message);
+    }
     clearInputFields();
   };
 
