@@ -10,7 +10,6 @@ const NavigationItems = (props) => {
     <ul className={classes.NavigationItems}>
       <NavigationItem
         path="/products"
-        icon="fas fa-shopping-bag"
         name="Products"
         closeBackdrop={props.closeBackdrop}
         shrink={props.shrink}
@@ -18,7 +17,6 @@ const NavigationItems = (props) => {
 
       <NavigationItem
         path="/cart"
-        icon="fas fa-shopping-cart"
         name="Cart"
         closeBackdrop={props.closeBackdrop}
         shrink={props.shrink}
@@ -26,7 +24,6 @@ const NavigationItems = (props) => {
 
       <NavigationItem
         path="/login"
-        icon="fas fa-sign-in-alt"
         name="Login"
         closeBackdrop={props.closeBackdrop}
         shrink={props.shrink}
@@ -34,7 +31,6 @@ const NavigationItems = (props) => {
 
       {/* <NavigationItem
         path="/user"
-        icon="fas fa-user"
         name="Profile"
         closeBackdrop={props.closeBackdrop}
         shrink={props.shrink}

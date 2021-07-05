@@ -1,9 +1,10 @@
 import React from "react";
-
 // Styles
 import classes from "./Stars.module.scss";
+// Icons
+import { FaStar } from "react-icons/fa";
 
-const Stars = ({averageRating}) => {
+const Stars = ({ averageRating }) => {
   return (
     <div className={classes.Rating}>
       {Array(5)
@@ -15,7 +16,7 @@ const Stars = ({averageRating}) => {
           ];
           return (
             <span key={`Rating${item}${index}`} className={starClass.join(" ")}>
-              <i className="fas fa-star"></i>
+              <FaStar />
             </span>
           );
         })}

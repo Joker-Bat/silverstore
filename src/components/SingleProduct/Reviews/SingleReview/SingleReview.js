@@ -1,13 +1,15 @@
 import React from "react";
-
 // Styles
 import classes from "./SingleReview.module.scss";
+// Icons
+import { FaStar } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 
 const SingleReview = ({ item }) => {
   return (
     <div className={classes.Review}>
       <div className={classes.UserIcon}>
-        <i className="fas fa-user"></i>
+        <FaUser />
       </div>
       <div className={classes.ReviewDetail}>
         <div className={classes.UserDetails}>
@@ -18,7 +20,7 @@ const SingleReview = ({ item }) => {
           <div className={classes.UserStar}>
             <p>
               <span>{item.stars}</span>
-              <i className="fas fa-star"></i>
+              <FaStar />
             </p>
           </div>
         </div>

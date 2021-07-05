@@ -1,13 +1,15 @@
 import React from "react";
-
 // Styles
 import classes from "./NavigationItem.module.scss";
-
 // Router
 import { NavLink } from "react-router-dom";
-
 // Redux toolkit
 import { useSelector } from "react-redux";
+// Icons
+import { FaShoppingBag } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaSignInAlt } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 
 const NavigationItem = (props) => {
   // Redux toolkit
@@ -17,6 +19,24 @@ const NavigationItem = (props) => {
   const NavItemClass = [classes.NavItem, props.shrink && classes.ShrinkNavItem];
 
   const cartCount = <span className={classes.CartCount}>{noOfProducts}</span>;
+
+  let icon = null;
+  switch (props.name) {
+    case "Products":
+      icon = <FaShoppingBag />;
+      break;
+    case "Cart":
+      icon = <FaShoppingCart />;
+      break;
+    case "Login":
+      icon = <FaSignInAlt />;
+      break;
+    case "Profile":
+      icon = <FaUser />;
+      break;
+    default:
+      break;
+  }
 
   return (
     <li className={NavItemClass.join(" ")} onClick={props.closeBackdrop}>
@@ -28,7 +48,7 @@ const NavigationItem = (props) => {
       >
         <div className={classes.IconContainer}>
           {props.name === "Cart" ? cartCount : ""}
-          <i className={props.icon}></i>
+          {icon}
         </div>
         <p>{props.name}</p>
       </NavLink>

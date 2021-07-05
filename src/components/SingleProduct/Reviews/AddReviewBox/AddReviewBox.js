@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-
 // Styles
 import classes from "./AddReviewBox.module.scss";
-
 // Components
 import SimpleButton from "../../../UI/SimpleButton/SimpleButton";
+// Icons
+import { FaStar } from "react-icons/fa";
 
 // HelperFunctions
 const getTitleByRating = (value) => {
@@ -152,7 +152,7 @@ const AddReview = (props) => {
               onMouseLeave={() => starMouseLeaveHandler()}
               onClick={() => starClickHandler(index + 1)}
             >
-              <i className="fas fa-star"></i>
+              <FaStar />
             </span>
           );
         })}

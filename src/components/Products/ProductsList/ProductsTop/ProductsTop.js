@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-
 // Styles
 import classes from "./ProductsTop.module.scss";
-
 // React Toolkit
 import {
   setListView,
@@ -10,6 +8,9 @@ import {
 } from "../../../../store/filter/filterSlice";
 // Get Product Count
 import { useSelector, useDispatch } from "react-redux";
+// Icons
+import { FaList } from "react-icons/fa";
+import { FaTh } from "react-icons/fa";
 
 /*
 Main Component
@@ -46,7 +47,7 @@ const ProductsTop = () => {
             dispatch(setListView());
           }}
         >
-          <i className="fas fa-list"></i>
+          <FaList />
           <span>list view</span>
         </button>
         <button
@@ -56,7 +57,7 @@ const ProductsTop = () => {
             dispatch(removeListView());
           }}
         >
-          <i className="fas fa-th"></i>
+          <FaTh />
           <span>grid view</span>
         </button>
       </div>

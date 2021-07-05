@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-
 // Emoji
 import eyeClick from "../../images/emoji/eyeClick.webp";
-
 // styles
 import classes from "./Logo.module.scss";
-
 // Router
 import { withRouter } from "react-router-dom";
+// Icons
+import { FaThinkPeaks } from "react-icons/fa";
 
 const Logo = (props) => {
   const [popup, setPopup] = useState(false);
@@ -64,7 +63,7 @@ const Logo = (props) => {
       <p className={PopupClass.join(" ")}>
         Try Double Tap <img src={eyeClick} alt="emoji" width="20px" />
       </p>
-      <i className="fab fa-think-peaks"></i>
+      <FaThinkPeaks />
     </div>
   );
 };

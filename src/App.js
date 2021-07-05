@@ -1,31 +1,38 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 
 // Components
 import Layout from "./hoc/Layout";
-import Homepage from "./containers/Homepage/Homepage";
-import Cart from "./containers/Cart/Cart";
-import Login from "./containers/Login/Login";
-import Signup from "./containers/Signup/Signup";
-import Products from "./containers/Products/Products";
-import SingleProduct from "./containers/SingleProduct/SingleProduct";
-import User from "./containers/User/User";
+import Loading from "./components/UI/Loading/Loading";
 
 // Router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+// Lazy Loading Products
+const lazySingleProduct = lazy(() =>
+  import("./containers/SingleProduct/SingleProduct")
+);
+const lazyProducts = lazy(() => import("./containers/Products/Products"));
+const lazyCart = lazy(() => import("./containers/Cart/Cart"));
+const lazyLogin = lazy(() => import("./containers/Login/Login"));
+const lazySignup = lazy(() => import("./containers/Signup/Signup"));
+const lazyUser = lazy(() => import("./containers/User/User"));
+const lazyHomepage = lazy(() => import("./containers/Homepage/Homepage"));
+
 class App extends Component {
   render() {
     let routes = (
-      <Switch>
-        <Route path="/products/:id" exact component={SingleProduct} />
-        <Route path="/products" component={Products} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/user" component={User} />
-        <Route path="/" component={Homepage} />
-        <Route path="*" component={Homepage} />
-      </Switch>
+      <Suspense fallback={<Loading />}>
+        <Switch>
+          <Route path="/products/:id" exact component={lazySingleProduct} />
+          <Route path="/products" component={lazyProducts} />
+          <Route path="/cart" component={lazyCart} />
+          <Route path="/login" component={lazyLogin} />
+          <Route path="/signup" component={lazySignup} />
+          <Route path="/user" component={lazyUser} />
+          <Route path="/" component={lazyHomepage} />
+          <Route path="*" component={lazyHomepage} />
+        </Switch>
+      </Suspense>
     );
 
     return (

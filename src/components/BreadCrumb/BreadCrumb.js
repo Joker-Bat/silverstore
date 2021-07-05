@@ -1,24 +1,22 @@
 import React from "react";
-
 // Router
 import { Link } from "react-router-dom";
-
 // Styles
 import classes from "./BreadCrumb.module.scss";
+// Icons
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 const BreadCrumb = ({ title, product }) => {
   return (
     <div className={classes.BreadCrumb}>
-      <Link to="/">
-        home
-      </Link>
+      <Link to="/">home</Link>
       {product && (
         <Link to="/products">
-          <i className="fas fa-long-arrow-alt-right"></i> products
+          <FaLongArrowAltRight /> products
         </Link>
       )}
       <span>
-        <i className="fas fa-long-arrow-alt-right"></i>
+        <FaLongArrowAltRight />
         {title}
       </span>
     </div>
