@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -24,16 +25,6 @@ const userSchema = mongoose.Schema({
     required: [true, "User must have a password..."],
     select: false,
   },
-  passwordConfirm: {
-    type: String,
-    required: [true, "User must have a passwordConfirm..."],
-    validate: {
-      validator: function (val) {
-        return this.password === val;
-      },
-      message: "Password are not equal",
-    },
-  },
   active: {
     type: Boolean,
     default: true,
@@ -43,9 +34,9 @@ const userSchema = mongoose.Schema({
 
 // Encrypt the password before saving in database
 userSchema.pre("save", async function (next) {
+  // Only bcrypt if its modified from previous value
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
-  // No need to store password confirm in DB
-  this.passwordConfirm = undefined;
   next();
 });
 
@@ -55,11 +46,14 @@ userSchema.pre(/^find/, function (next) {
   next();
 });
 
-userSchema.methods.correctPassword = async function (
-  candidatePassword,
-  userPassword
-) {
-  return await bcrypt.compare(candidatePassword, userPassword);
+userSchema.methods.matchPasswords = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.getSignToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_TOKEN, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
 };
 
 const User = mongoose.model("User", userSchema);

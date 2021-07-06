@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+dotenv.config({ path: "./config.env" });
 
 process.on("uncaughtException", (err, origin) => {
   console.log("uncaughtException");
@@ -7,8 +9,6 @@ process.on("uncaughtException", (err, origin) => {
   console.log("Origin: ", origin);
   process.exit(1);
 });
-
-dotenv.config({ path: "./config.env" });
 
 const app = require("./app");
 
