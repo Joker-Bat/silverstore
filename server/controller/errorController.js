@@ -1,3 +1,17 @@
+const AppError = require("../utils/appError");
+
+const handleDuplicateFields = (err) => {
+  const message = `This Email is already used please use another email...`;
+  return new AppError(message, 400);
+};
+
+const handleValidationError = (err) => {
+  const errors = Object.values(err.errors).map((error) => error.message);
+
+  const message = `Invalid input data. ${errors.join(". ")}`;
+  return new AppError(message, 400);
+};
+
 const sendErrorDev = (err, req, res) => {
   if (req.originalUrl.startsWith("/api")) {
     return res.status(err.statusCode).json({
@@ -44,6 +58,13 @@ module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === "production") {
-    sendErrorProd(err, req, res);
+    let error = { ...err };
+
+    error.message = err.message;
+
+    if (err.name === "ValidationError") error = handleValidationError(error);
+    if (err.code === 11000) error = handleDuplicateFields(error);
+
+    sendErrorProd(error, req, res);
   }
 };

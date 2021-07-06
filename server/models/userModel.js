@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -23,9 +24,9 @@ const userSchema = mongoose.Schema({
     required: [true, "User must have a password..."],
     select: false,
   },
-  passwordConform: {
+  passwordConfirm: {
     type: String,
-    required: [true, "User must have a passwordConform..."],
+    required: [true, "User must have a passwordConfirm..."],
     validate: {
       validator: function (val) {
         return this.password === val;
@@ -40,12 +41,27 @@ const userSchema = mongoose.Schema({
   },
 });
 
+// Encrypt the password before saving in database
+userSchema.pre("save", async function (next) {
+  this.password = await bcrypt.hash(this.password, 12);
+  // No need to store password confirm in DB
+  this.passwordConfirm = undefined;
+  next();
+});
+
 userSchema.pre(/^find/, function (next) {
   // Only active users when finding2
   this.find({ active: { $ne: false } });
   next();
 });
 
-const User = mongoose.Model("User", userSchema);
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

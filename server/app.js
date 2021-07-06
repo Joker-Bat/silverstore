@@ -6,6 +6,7 @@ const compression = require("compression");
 // Our modules
 const globalErrorController = require("./controller/errorController");
 const AppError = require("./utils/appError");
+const userRouter = require("./routes/userRoute");
 
 const app = express();
 
@@ -23,22 +24,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.get("/", (req, res, next) => {
-  res.status(200).json({
-    status: "success",
-    message: "Its working",
-  });
-});
-
-app.post("/", (req, res, next) => {
-  const body = req.body;
-  console.log(body);
-  res.status(200).json({
-    status: "success",
-    message: "Posted",
-    data: body,
-  });
-});
+// Routes
+app.use("/api/v1/users", userRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
