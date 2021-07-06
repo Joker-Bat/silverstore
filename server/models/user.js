@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -25,6 +26,8 @@ const userSchema = mongoose.Schema({
     required: [true, "User must have a password..."],
     select: false,
   },
+  passwordResetToken: String,
+  resetTokenExpires: Date,
   active: {
     type: Boolean,
     default: true,
@@ -54,6 +57,20 @@ userSchema.methods.getSignToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_TOKEN, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
+};
+
+userSchema.methods.getPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // Valid for 10min
+  this.resetTokenExpires = Date.now() + 10 * (60 * 1000);
+
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);

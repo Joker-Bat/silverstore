@@ -60,7 +60,29 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
-  res.send("Works");
+  const { email } = req.body;
+
+  if (!email) return next(new AppError("Provide a email...", 401));
+  const user = await User.findOne({ email });
+
+  if (!user) return next(new AppError("There is no user with that email", 404));
+
+  const resetToken = user.getPasswordResetToken();
+
+  await user.save();
+
+  const resetUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/users/resetPassword/${resetToken}`;
+
+  const message = `
+    <h1>You have requested for password reset</h1>
+    <p>Please click the link below to further processing</p>
+    <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+
+    <h2>Ignore this email if haven't asked for password reset.</h2>
+    <p>This link only valid of 10min</p>
+  `;
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
