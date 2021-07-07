@@ -1,6 +1,9 @@
+const crypto = require("crypto");
+
 const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const Email = require("../utils/email");
 
 const createSendToken = (user, statusCode, res) => {
   const token = user.getSignToken();
@@ -37,6 +40,15 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // Dont show active on Response
   newUser.active = undefined;
+  const url = `${req.protocol}://${req.get("host")}/api/v1/users/profile`;
+  const message = `
+    <h3>Successfully signed up to SilverStore</h3>
+    <p>Thank you for signing up for SilverStore account</p>
+    <p>Click link below to go to you profile</p>
+    <a href=${url} clicktracking="off">${url}</a>
+  `;
+
+  await new Email(newUser, message).sendWelcome();
 
   createSendToken(newUser, 201, res);
 });
@@ -59,6 +71,10 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(curUser, 200, res);
 });
 
+/**
+ * Forgot Password
+ */
+
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
 
@@ -71,20 +87,62 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  const resetUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/users/resetPassword/${resetToken}`;
+  try {
+    const resetUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/users/resetpassword/${resetToken}`;
 
-  const message = `
-    <h1>You have requested for password reset</h1>
-    <p>Please click the link below to further processing</p>
-    <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+    const message = `
+      <h3>Hi ${user.name} you have requested for password reset</h3>
+      <p>Please click the link below to further processing</p>
+      <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+  
+      <h6>Ignore this email if haven't asked for password reset.</h6>
+      <p>This link only valid for 10min</p>
+    `;
 
-    <h2>Ignore this email if haven't asked for password reset.</h2>
-    <p>This link only valid of 10min</p>
-  `;
+    await new Email(user, message).sendPasswordResetToken();
+
+    res.status(200).json({
+      status: "success",
+      message: "Reset password URL send to email",
+    });
+  } catch (err) {
+    user.passwordResetToken = undefined;
+    user.resetTokenExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return next(
+      new AppError("There was an error sending the email. Try again later", 500)
+    );
+  }
 });
 
+/**
+ * ResetPassword
+ */
+
 exports.resetPassword = catchAsync(async (req, res, next) => {
-  res.send("Works");
+  const { token } = req.params;
+  const { password } = req.body;
+
+  if (!token) return next(new AppError("Token invalid or expired!", 400));
+  if (!password) return next(new AppError("Provide your new password", 400));
+
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    resetTokenExpires: { $gt: Date.now() },
+  });
+
+  if (!user) return next(new AppError("Token invalid or expired!", 400));
+
+  user.password = password;
+  user.passwordResetToken = undefined;
+  user.resetTokeExpires = undefined;
+
+  await user.save();
+
+  createSendToken(user, 200, res);
 });
