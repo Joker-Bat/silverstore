@@ -5,6 +5,8 @@ import classes from "./Signup.module.scss";
 import { Link, withRouter } from "react-router-dom";
 // Components
 import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
+// Axios
+import axios from "axios";
 
 /**
  * Main Component
@@ -35,8 +37,25 @@ const Signup = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (passwordInput !== passwordConfirmInput) {
-      setError("Passwords not matching");
-      return false;
+      return setError("Passwords not matching");
+    }
+    try {
+      setSignedUp(false);
+      setError("");
+      setLoading(true);
+      const user = {
+        name: usernameInput,
+        email: emailInput,
+        password: passwordInput,
+      };
+      const res = await axios.post("/api/v1/users/signup", user);
+      console.log(res.data);
+      setSignedUp(true);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
+      setLoading(false);
     }
     clearInputFields();
   };
@@ -47,15 +66,6 @@ const Signup = (props) => {
       setPasswordEqual(true);
     } else setPasswordEqual(false);
   };
-
-  useEffect(() => {
-    let timer;
-    timer = setTimeout(() => {
-      setError("");
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [error]);
 
   return (
     <div className={classes.SignupContainer}>

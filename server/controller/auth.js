@@ -32,10 +32,15 @@ const createSendToken = (user, statusCode, req, res) => {
  */
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password)
+    return next(new AppError("Provide name, email and password", 400));
+
   const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
+    name,
+    email,
+    password,
   });
 
   // Dont show active on Response

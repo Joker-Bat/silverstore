@@ -32,11 +32,18 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setError("");
+      setLoggedIn(false);
+      setLoading(true);
       const user = { email: emailInput, password: passwordInput };
-      const res = await axios.post("http://localhost:8000/", user);
+      const res = await axios.post("/api/v1/users/login", user);
       console.log(res.data);
+      setLoading(false);
+      setLoggedIn(true);
     } catch (err) {
       console.log("Error", err.message);
+      setError(err.message);
+      setLoading(false);
     }
     clearInputFields();
   };
@@ -70,6 +77,7 @@ const Login = (props) => {
             autoComplete="off"
             placeholder="Email"
             required
+            tabIndex="1"
           />
         </div>
 
@@ -84,7 +92,9 @@ const Login = (props) => {
             autoComplete="off"
             placeholder="Password"
             required
+            tabIndex="2"
           />
+          <Link to="/forgotpassword">Forgot password?</Link>
         </div>
 
         <div className={classes.ShowPassword}>
@@ -103,7 +113,11 @@ const Login = (props) => {
           </label>
         </div>
 
-        <button type="submit" className={loading ? classes.Disabled : ""}>
+        <button
+          type="submit"
+          tabIndex="3"
+          className={loading ? classes.Disabled : ""}
+        >
           {loading ? <ButtonLoader /> : "Log In"}
         </button>
       </form>
