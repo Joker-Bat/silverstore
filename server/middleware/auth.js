@@ -25,6 +25,12 @@ exports.protect = catchAsync(async (req, res, next) => {
   const user = await User.findById(decoded.id);
   if (!user) return next(new AppError("Token Expired or invalid", 401));
 
+  // Check if user changed password after token issued
+  if (user.checkPasswordChangedAfterToken(decoded.iat))
+    return next(
+      new AppError("This user recently changed password login again.", 401)
+    );
+
   req.user = user;
   next();
 });

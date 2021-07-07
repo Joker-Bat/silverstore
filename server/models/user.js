@@ -26,6 +26,7 @@ const userSchema = mongoose.Schema({
     required: [true, "User must have a password..."],
     select: false,
   },
+  passwordChangedAt: Date,
   passwordResetToken: String,
   resetTokenExpires: Date,
   active: {
@@ -40,6 +41,14 @@ userSchema.pre("save", async function (next) {
   // Only bcrypt if its modified from previous value
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+// Only update the password Changed for current user change password
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password") || this.isNew) return next();
+  // This takes some time so we use simple 1s past hack
+  this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 
@@ -71,6 +80,18 @@ userSchema.methods.getPasswordResetToken = function () {
   this.resetTokenExpires = Date.now() + 10 * (60 * 1000);
 
   return resetToken;
+};
+
+userSchema.methods.checkPasswordChangedAfterToken = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  return false;
 };
 
 const User = mongoose.model("User", userSchema);
