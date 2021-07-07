@@ -5,7 +5,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Email = require("../utils/email");
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = user.getSignToken();
   // Send as cookie
   res.cookie("jwt", token, {
@@ -50,7 +50,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   await new Email(newUser, message).sendWelcome();
 
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 /**
@@ -65,10 +65,10 @@ exports.login = catchAsync(async (req, res, next) => {
   const curUser = await User.findOne({ email }).select("+password");
 
   // If no user present for that email
-  if (!curUser || !(await curUser.matchPasswords(password)))
+  if (!curUser || !(await curUser.matchPasswords(password, curUser.password)))
     return next(new AppError("Email and password does not match!", 401));
 
-  createSendToken(curUser, 200, res);
+  createSendToken(curUser, 200, req, res);
 });
 
 /**
@@ -144,5 +144,41 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
+});
+
+/**
+ * Logout
+ */
+
+exports.logout = (req, res, next) => {
+  res.cookie("jwt", "loggedOut", {
+    maxAge: Date.now() + 10 * 1000,
+    httpOnly: true,
+  });
+  res.status(200).json({ status: "success" });
+};
+
+/**
+ * UpdatePassword
+ */
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword)
+    return next(new AppError("Provide your old and new password"));
+
+  const { user } = req;
+  const curUser = await User.findById(user.id).select("+password");
+  if (
+    !curUser ||
+    !(await curUser.matchPasswords(oldPassword, curUser.password))
+  )
+    return next(new AppError("passwords does not match", 401));
+
+  curUser.password = newPassword;
+  await curUser.save();
+
+  createSendToken(curUser, 200, req, res);
 });

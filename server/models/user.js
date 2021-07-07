@@ -58,8 +58,8 @@ userSchema.pre(/^find/, function (next) {
   next();
 });
 
-userSchema.methods.matchPasswords = async function (password) {
-  return await bcrypt.compare(password, this.password);
+userSchema.methods.matchPasswords = async function (password, curPassword) {
+  return await bcrypt.compare(password, curPassword);
 };
 
 userSchema.methods.getSignToken = function () {
