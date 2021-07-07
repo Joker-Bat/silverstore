@@ -16,11 +16,14 @@ const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
-router.get("/logout", protect, logout);
 router.post("/forgotpassword", forgotPassword);
 router.patch("/resetpassword/:token", resetPassword);
 
-router.get("/profile", protect, profile);
-router.patch("/updatepassword", protect, updatePassword);
+// Below routes are protected
+router.use(protect);
+
+router.get("/logout", logout);
+router.get("/profile", profile);
+router.patch("/updatepassword", updatePassword);
 
 module.exports = router;
