@@ -7,27 +7,26 @@ import { removeToken } from "../../store/auth/authSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState("");
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get("/api/v1/users/profile");
-      setUserName(res.data.data.userName);
+      setUser(res.data.data.user);
     };
 
     fetchData();
   }, []);
 
   const handleLogout = async () => {
-    const res = await axios.get("/api/v1/users/logout");
-    console.log(res.data);
+    await axios.get("/api/v1/users/logout");
     dispatch(removeToken());
   };
 
   return (
     <div>
       <h1>Profile Page</h1>
-      <h2>{userName} Welcome to your profile</h2>
+      <h2>{user.name} Welcome to your profile</h2>
 
       <button onClick={handleLogout}>Logout</button>
     </div>
