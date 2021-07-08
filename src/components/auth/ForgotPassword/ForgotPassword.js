@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 // Styles
-import classes from "./ForgotPassword.module.scss";
+import classes from "../Authentication.module.scss";
 // React Router
 import { Link, withRouter } from "react-router-dom";
 // Components
-import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
+import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
 // Axios
 import axios from "axios";
 
@@ -29,8 +29,7 @@ const ForgotPassword = (props) => {
       setTokenSended(false);
       setLoading(true);
       const user = { email: emailInput };
-      const res = await axios.post("/api/v1/users/forgotpassword", user);
-      console.log(res.data);
+      await axios.post("/api/v1/users/forgotpassword", user);
       setLoading(false);
       setTokenSended(true);
     } catch (err) {
@@ -42,7 +41,7 @@ const ForgotPassword = (props) => {
   };
 
   return (
-    <div className={classes.LoginContainer}>
+    <div className={classes.AuthContainer}>
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
         {error ? (
           <div className={classes.ErrorMessage}>

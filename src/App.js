@@ -13,15 +13,15 @@ const lazySingleProduct = lazy(() =>
 );
 const lazyProducts = lazy(() => import("./containers/Products/Products"));
 const lazyCart = lazy(() => import("./containers/Cart/Cart"));
-const lazyLogin = lazy(() => import("./containers/Login/Login"));
-const lazySignup = lazy(() => import("./containers/Signup/Signup"));
+const lazyLogin = lazy(() => import("./containers/Auth/Login/Login"));
+const lazySignup = lazy(() => import("./containers/Auth/Signup/Signup"));
 const lazyUser = lazy(() => import("./containers/User/User"));
 const lazyHomepage = lazy(() => import("./containers/Homepage/Homepage"));
 const lazyForgotPassword = lazy(() =>
-  import("./containers/ForgotPassword/ForgotPassword")
+  import("./containers/Auth/ForgotPassword/ForgotPassword")
 );
 const lazyResetPassword = lazy(() =>
-  import("./containers/ResetPassword/ResetPassword")
+  import("./containers/Auth/ResetPassword/ResetPassword")
 );
 
 class App extends Component {

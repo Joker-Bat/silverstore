@@ -1,7 +1,7 @@
 @import "../../styles/Variables.scss";
 @import "../../styles/ResponsiveSheet.scss";
 
-.SignupContainer {
+.AuthContainer {
   width: 100%;
   max-width: 500px;
   margin: auto;
@@ -84,10 +84,18 @@
           border-bottom: 2px solid var(--main);
         }
       }
+
+      a {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        text-decoration: none;
+        color: var(--main);
+      }
     }
 
     button {
-      width: 40%;
+      width: auto;
+      min-width: 40%;
       height: 40px;
       appearance: none;
       border: none;

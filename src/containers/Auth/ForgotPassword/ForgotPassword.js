@@ -1,8 +1,8 @@
 import React from "react";
 
 // Components
-import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
-import ForgotPasswordContainer from "../../components/ForgotPassword/ForgotPassword";
+import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
+import ForgotPasswordContainer from "../../../components/auth/ForgotPassword/ForgotPassword";
 
 const ForgotPassword = () => {
   return (

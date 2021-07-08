@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-// Styles
-import classes from "./Login.module.scss";
+// Style
+import classes from "../Authentication.module.scss";
 // React Router
 import { Link, withRouter } from "react-router-dom";
 // Components
-import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
+import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
 // Axios
 import axios from "axios";
 
@@ -12,13 +12,16 @@ import axios from "axios";
  * Main Component
  */
 
-const Login = (props) => {
+const Signup = (props) => {
   const [emailInput, setEmailInput] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
+  const [passwordEqual, setPasswordEqual] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [signedUp, setSignedUp] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -26,40 +29,55 @@ const Login = (props) => {
 
   const clearInputFields = () => {
     setEmailInput("");
+    setUsernameInput("");
     setPasswordInput("");
+    setPasswordConfirmInput("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (passwordInput !== passwordConfirmInput) {
+      return setError("Passwords not matching");
+    }
     try {
+      setSignedUp(false);
       setError("");
-      setLoggedIn(false);
       setLoading(true);
-      const user = { email: emailInput, password: passwordInput };
-      const res = await axios.post("/api/v1/users/login", user);
-      console.log(res.data);
+      const user = {
+        name: usernameInput,
+        email: emailInput,
+        password: passwordInput,
+      };
+      await axios.post("/api/v1/users/signup", user);
+      setSignedUp(true);
       setLoading(false);
-      setLoggedIn(true);
     } catch (err) {
-      console.log("Error", err.message);
+      console.log(err);
       setError(err.message);
       setLoading(false);
     }
     clearInputFields();
   };
 
+  const checkIsPasswordEqual = (e) => {
+    setPasswordConfirmInput(e.target.value);
+    if (e.target.value === passwordInput) {
+      setPasswordEqual(true);
+    } else setPasswordEqual(false);
+  };
+
   useEffect(() => {
     let timer;
-    if (loggedIn) {
+    if (signedUp) {
       timer = setTimeout(() => {
         props.history.push("/");
       }, 2000);
     }
     return () => clearTimeout(timer);
-  }, [loggedIn, props.history]);
+  }, [signedUp, props.history]);
 
   return (
-    <div className={classes.LoginContainer}>
+    <div className={classes.AuthContainer}>
       <form className={classes.FormContainer} onSubmit={handleSubmit}>
         {error ? (
           <div className={classes.ErrorMessage}>
@@ -69,25 +87,39 @@ const Login = (props) => {
           ""
         )}
 
-        {loggedIn ? (
+        {signedUp ? (
           <div className={classes.SuccessMessage}>
-            <p>Successfully Logged In</p>
+            <p>Successfully Created Account</p>
           </div>
         ) : (
           ""
         )}
+
         <div className={classes.InputGroup}>
           <label htmlFor="email">Email</label>
           <input
             type="email"
+            id="email"
             value={emailInput}
             onChange={(e) => setEmailInput(e.target.value)}
-            id="email"
             name="email"
             autoComplete="off"
             placeholder="Email"
             required
-            tabIndex="1"
+          />
+        </div>
+
+        <div className={classes.InputGroup}>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={usernameInput}
+            onChange={(e) => setUsernameInput(e.target.value)}
+            name="username"
+            autoComplete="off"
+            placeholder="Username"
+            required
           />
         </div>
 
@@ -95,16 +127,32 @@ const Login = (props) => {
           <label htmlFor="password">Password</label>
           <input
             type={showPassword ? "text" : "password"}
+            id="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
-            id="password"
             name="password"
             autoComplete="off"
             placeholder="Password"
             required
-            tabIndex="2"
           />
-          <Link to="/forgotpassword">Forgot password?</Link>
+        </div>
+
+        <div
+          className={[classes.InputGroup, !passwordEqual && classes.Error].join(
+            " "
+          )}
+        >
+          <label htmlFor="passwordConfirm">Confirm Password</label>
+          <input
+            type={showPassword ? "text" : "password"}
+            id="passwordConfirm"
+            value={passwordConfirmInput}
+            onChange={checkIsPasswordEqual}
+            name="password"
+            autoComplete="off"
+            placeholder="Confirm Password"
+            required
+          />
         </div>
 
         <div className={classes.ShowPassword}>
@@ -123,22 +171,18 @@ const Login = (props) => {
           </label>
         </div>
 
-        <button
-          type="submit"
-          tabIndex="3"
-          className={loading ? classes.Disabled : ""}
-        >
-          {loading ? <ButtonLoader /> : "Log In"}
+        <button type="submit" className={loading ? classes.Disabled : ""}>
+          {loading ? <ButtonLoader /> : "Sign Up"}
         </button>
       </form>
 
       <div className={classes.BottomText}>
         <p>
-          Don't have an account? <Link to="/signup">Create Account</Link>
+          Already have an account? <Link to="/login">Log in</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default withRouter(Login);
+export default withRouter(Signup);
