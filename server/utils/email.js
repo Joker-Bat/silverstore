@@ -38,4 +38,8 @@ module.exports = class Email {
   async sendWelcome() {
     await this.send("Successfully created account!");
   }
+
+  async sendResetPasswordSuccess() {
+    await this.send("Successfully changed your password");
+  }
 };

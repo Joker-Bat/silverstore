@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // Styles
 import classes from "./Login.module.scss";
 // React Router
@@ -47,6 +47,16 @@ const Login = (props) => {
     }
     clearInputFields();
   };
+
+  useEffect(() => {
+    let timer;
+    if (loggedIn) {
+      timer = setTimeout(() => {
+        props.history.push("/");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [loggedIn, props.history]);
 
   return (
     <div className={classes.LoginContainer}>

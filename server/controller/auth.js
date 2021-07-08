@@ -45,7 +45,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // Dont show active on Response
   newUser.active = undefined;
-  const url = `${req.protocol}://${req.get("host")}/api/v1/users/profile`;
+  const url = `http://localhost:3000/profile`;
   const message = `
     <h3>Successfully signed up to SilverStore</h3>
     <p>Thank you for signing up for SilverStore account</p>
@@ -93,9 +93,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   try {
-    const resetUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/api/v1/users/resetpassword/${resetToken}`;
+    const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
 
     const message = `
       <h3>Hi ${user.name} you have requested for password reset</h3>
@@ -107,6 +105,12 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     `;
 
     await new Email(user, message).sendPasswordResetToken();
+
+    // Clear JWT Cookie
+    res.cookie("jwt", "loggedOut", {
+      maxAge: Date.now() + 5 * 1000,
+      httpOnly: true,
+    });
 
     res.status(200).json({
       status: "success",
@@ -149,7 +153,20 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  createSendToken(user, 200, req, res);
+  const url = `http://localhost:3000/profile`;
+
+  const message = `
+    <h3>Hi ${user.name} Successfully Changed your password</h3>
+    <p>Click link below to go to your profile</p>
+    <a href=${url} clicktracking="off">${url}</a>
+  `;
+
+  await new Email(user, message).sendResetPasswordSuccess();
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully changed your password",
+  });
 });
 
 /**
@@ -158,7 +175,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.logout = (req, res, next) => {
   res.cookie("jwt", "loggedOut", {
-    maxAge: Date.now() + 10 * 1000,
+    maxAge: Date.now() + 5 * 1000,
     httpOnly: true,
   });
   res.status(200).json({ status: "success" });

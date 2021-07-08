@@ -20,6 +20,9 @@ const lazyHomepage = lazy(() => import("./containers/Homepage/Homepage"));
 const lazyForgotPassword = lazy(() =>
   import("./containers/ForgotPassword/ForgotPassword")
 );
+const lazyResetPassword = lazy(() =>
+  import("./containers/ResetPassword/ResetPassword")
+);
 
 class App extends Component {
   render() {
@@ -29,6 +32,7 @@ class App extends Component {
           <Route path="/products/:id" exact component={lazySingleProduct} />
           <Route path="/products" component={lazyProducts} />
           <Route path="/forgotpassword" component={lazyForgotPassword} />
+          <Route path="/resetpassword/:token" component={lazyResetPassword} />
           <Route path="/cart" component={lazyCart} />
           <Route path="/login" component={lazyLogin} />
           <Route path="/signup" component={lazySignup} />

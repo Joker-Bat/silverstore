@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 // Style
-import classes from "./Signup.module.scss";
+import classes from "./ResetPassword.module.scss";
 // React Router
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useParams } from "react-router-dom";
 // Components
 import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
 // Axios
@@ -12,24 +12,22 @@ import axios from "axios";
  * Main Component
  */
 
-const Signup = (props) => {
-  const [emailInput, setEmailInput] = useState("");
-  const [usernameInput, setUsernameInput] = useState("");
+const ResetPassword = (props) => {
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
   const [passwordEqual, setPasswordEqual] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [signedUp, setSignedUp] = useState(false);
+  const [resetedPassword, setResetedPassword] = useState(false);
+
+  const { token } = useParams();
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
 
   const clearInputFields = () => {
-    setEmailInput("");
-    setUsernameInput("");
     setPasswordInput("");
     setPasswordConfirmInput("");
   };
@@ -39,18 +37,22 @@ const Signup = (props) => {
     if (passwordInput !== passwordConfirmInput) {
       return setError("Passwords not matching");
     }
+
+    if (!token) return setError("Not a valid token");
+
     try {
-      setSignedUp(false);
+      setResetedPassword(false);
       setError("");
       setLoading(true);
       const user = {
-        name: usernameInput,
-        email: emailInput,
         password: passwordInput,
       };
-      const res = await axios.post("/api/v1/users/signup", user);
+      const res = await axios.patch(
+        `/api/v1/users/resetpassword/${token}`,
+        user
+      );
       console.log(res.data);
-      setSignedUp(true);
+      setResetedPassword(true);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -69,13 +71,13 @@ const Signup = (props) => {
 
   useEffect(() => {
     let timer;
-    if (signedUp) {
+    if (resetedPassword) {
       timer = setTimeout(() => {
-        props.history.push("/");
-      }, 2000);
+        props.history.push("/login");
+      }, [2000]);
     }
     return () => clearTimeout(timer);
-  }, [signedUp, props.history]);
+  }, [resetedPassword, props.history]);
 
   return (
     <div className={classes.SignupContainer}>
@@ -88,44 +90,16 @@ const Signup = (props) => {
           ""
         )}
 
-        {signedUp ? (
+        {resetedPassword ? (
           <div className={classes.SuccessMessage}>
-            <p>Successfully Created Account</p>
+            <p>Successfully Changed your password</p>
           </div>
         ) : (
           ""
         )}
 
         <div className={classes.InputGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={emailInput}
-            onChange={(e) => setEmailInput(e.target.value)}
-            name="email"
-            autoComplete="off"
-            placeholder="Email"
-            required
-          />
-        </div>
-
-        <div className={classes.InputGroup}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={usernameInput}
-            onChange={(e) => setUsernameInput(e.target.value)}
-            name="username"
-            autoComplete="off"
-            placeholder="Username"
-            required
-          />
-        </div>
-
-        <div className={classes.InputGroup}>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">New password</label>
           <input
             type={showPassword ? "text" : "password"}
             id="password"
@@ -133,7 +107,7 @@ const Signup = (props) => {
             onChange={(e) => setPasswordInput(e.target.value)}
             name="password"
             autoComplete="off"
-            placeholder="Password"
+            placeholder="New password"
             required
           />
         </div>
@@ -143,7 +117,7 @@ const Signup = (props) => {
             " "
           )}
         >
-          <label htmlFor="passwordConfirm">Confirm Password</label>
+          <label htmlFor="passwordConfirm">Confirm new password</label>
           <input
             type={showPassword ? "text" : "password"}
             id="passwordConfirm"
@@ -151,7 +125,7 @@ const Signup = (props) => {
             onChange={checkIsPasswordEqual}
             name="password"
             autoComplete="off"
-            placeholder="Confirm Password"
+            placeholder="Confirm new password"
             required
           />
         </div>
@@ -173,17 +147,17 @@ const Signup = (props) => {
         </div>
 
         <button type="submit" className={loading ? classes.Disabled : ""}>
-          {loading ? <ButtonLoader /> : "Sign Up"}
+          {loading ? <ButtonLoader /> : "Reset Password"}
         </button>
       </form>
 
       <div className={classes.BottomText}>
         <p>
-          Already have an account? <Link to="/login">Log in</Link>
+          Remember your password now? <Link to="/login">Log in</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default withRouter(Signup);
+export default withRouter(ResetPassword);
