@@ -33,8 +33,7 @@ const ForgotPassword = (props) => {
       setLoading(false);
       setTokenSended(true);
     } catch (err) {
-      console.log("Error", err.message);
-      setError(err.message);
+      setError(err.response.data.error.message);
       setLoading(false);
     }
     clearInputFields();

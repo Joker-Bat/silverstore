@@ -51,8 +51,7 @@ const ResetPassword = (props) => {
       setResetedPassword(true);
       setLoading(false);
     } catch (err) {
-      console.log(err);
-      setError(err.message);
+      setError(err.response.data.error.message);
       setLoading(false);
     }
     clearInputFields();

@@ -51,12 +51,11 @@ const Signup = (props) => {
       await axios.post("/api/v1/users/signup", user);
       setSignedUp(true);
       setLoading(false);
+      clearInputFields();
     } catch (err) {
-      console.log(err);
-      setError(err.message);
+      setError(err.response.data.error.message);
       setLoading(false);
     }
-    clearInputFields();
   };
 
   const checkIsPasswordEqual = (e) => {
@@ -75,6 +74,10 @@ const Signup = (props) => {
     }
     return () => clearTimeout(timer);
   }, [signedUp, props.history]);
+
+  useEffect(() => {
+    clearInputFields();
+  }, []);
 
   return (
     <div className={classes.AuthContainer}>

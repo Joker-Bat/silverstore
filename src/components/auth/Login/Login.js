@@ -39,12 +39,11 @@ const Login = (props) => {
       await axios.post("/api/v1/users/login", user);
       setLoading(false);
       setLoggedIn(true);
+      clearInputFields();
     } catch (err) {
-      console.log("Error", err.message);
-      setError(err.message);
+      setError(err.response.data.error.message);
       setLoading(false);
     }
-    clearInputFields();
   };
 
   useEffect(() => {
@@ -56,6 +55,10 @@ const Login = (props) => {
     }
     return () => clearTimeout(timer);
   }, [loggedIn, props.history]);
+
+  useEffect(() => {
+    clearInputFields();
+  }, []);
 
   return (
     <div className={classes.AuthContainer}>
