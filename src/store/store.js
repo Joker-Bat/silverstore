@@ -6,13 +6,13 @@ import productsReducer from "./products/productsSlice";
 // Cart Reducer
 import cartReducer from "./cart/cartSlice";
 // User Reducer
-import userReducer from "./user/userSlice";
+import authReducer from "./auth/authSlice";
 
 export default configureStore({
   reducer: {
     filter: filterReducer,
     products: productsReducer,
     cart: cartReducer,
-    user: userReducer,
+    auth: authReducer,
   },
 });

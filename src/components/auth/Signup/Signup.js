@@ -7,12 +7,17 @@ import { Link, withRouter } from "react-router-dom";
 import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
 // Axios
 import axios from "axios";
+// Redux toolkit
+import { useDispatch } from "react-redux";
+import { setToken } from "../../../store/auth/authSlice";
 
 /**
  * Main Component
  */
 
 const Signup = (props) => {
+  const dispatch = useDispatch();
+
   const [emailInput, setEmailInput] = useState("");
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
@@ -34,6 +39,10 @@ const Signup = (props) => {
     setPasswordConfirmInput("");
   };
 
+  const setTokenToLocalAndState = (token) => {
+    dispatch(setToken({ token }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (passwordInput !== passwordConfirmInput) {
@@ -48,7 +57,8 @@ const Signup = (props) => {
         email: emailInput,
         password: passwordInput,
       };
-      await axios.post("/api/v1/users/signup", user);
+      const res = await axios.post("/api/v1/users/signup", user);
+      setTokenToLocalAndState(res.data.token);
       setSignedUp(true);
       setLoading(false);
       clearInputFields();

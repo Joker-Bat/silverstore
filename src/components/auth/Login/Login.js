@@ -7,12 +7,17 @@ import { Link, withRouter } from "react-router-dom";
 import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
 // Axios
 import axios from "axios";
+// Redux toolkit
+import { useDispatch } from "react-redux";
+import { setToken } from "../../../store/auth/authSlice";
 
 /**
  * Main Component
  */
 
 const Login = (props) => {
+  const dispatch = useDispatch();
+
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,6 +34,10 @@ const Login = (props) => {
     setPasswordInput("");
   };
 
+  const setTokenToLocalAndState = (token) => {
+    dispatch(setToken({ token }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -36,7 +45,8 @@ const Login = (props) => {
       setLoggedIn(false);
       setLoading(true);
       const user = { email: emailInput, password: passwordInput };
-      await axios.post("/api/v1/users/login", user);
+      const res = await axios.post("/api/v1/users/login", user);
+      setTokenToLocalAndState(res.data.token);
       setLoading(false);
       setLoggedIn(true);
       clearInputFields();
@@ -51,7 +61,7 @@ const Login = (props) => {
     if (loggedIn) {
       timer = setTimeout(() => {
         props.history.push("/");
-      }, 2000);
+      }, 3000);
     }
     return () => clearTimeout(timer);
   }, [loggedIn, props.history]);
