@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // Styles
 import classes from "../Authentication.module.scss";
 // React Router
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 // Components
 import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
 // Axios
@@ -24,6 +24,13 @@ const Login = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  let timer;
+
+  const setTokenToLocalAndState = (token) => {
+    timer = setTimeout(() => {
+      dispatch(setToken({ token }));
+    }, 2000);
+  };
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -32,10 +39,6 @@ const Login = (props) => {
   const clearInputFields = () => {
     setEmailInput("");
     setPasswordInput("");
-  };
-
-  const setTokenToLocalAndState = (token) => {
-    dispatch(setToken({ token }));
   };
 
   const handleSubmit = async (e) => {
@@ -57,18 +60,9 @@ const Login = (props) => {
   };
 
   useEffect(() => {
-    let timer;
-    if (loggedIn) {
-      timer = setTimeout(() => {
-        props.history.push("/");
-      }, 3000);
-    }
-    return () => clearTimeout(timer);
-  }, [loggedIn, props.history]);
-
-  useEffect(() => {
     clearInputFields();
-  }, []);
+    return () => clearTimeout(timer);
+  }, [timer]);
 
   return (
     <div className={classes.AuthContainer}>
@@ -153,4 +147,4 @@ const Login = (props) => {
   );
 };
 
-export default withRouter(Login);
+export default Login;
