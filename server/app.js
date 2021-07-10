@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 // Our modules
 const globalErrorController = require("./middleware/error");
@@ -17,6 +18,9 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 app.use(cors());
+
+// Static Files
+app.use(express.static(path.join(__dirname, "public")));
 
 // Parse cookies to req.cookies
 app.use(cookieParser());
