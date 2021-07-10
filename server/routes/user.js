@@ -9,8 +9,9 @@ const {
   updatePassword,
 } = require("../controller/auth");
 
-const { profile } = require("../controller/user");
+const { profile, updateProfilePicture } = require("../controller/user");
 const { protect } = require("../middleware/auth");
+const { upload, resize } = require("../middleware/upload");
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use(protect);
 router.get("/logout", logout);
 router.get("/profile", profile);
 router.patch("/updatepassword", updatePassword);
+router.patch("/updateprofilepicture", upload, resize, updateProfilePicture);
 
 module.exports = router;
