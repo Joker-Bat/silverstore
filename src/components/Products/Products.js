@@ -1,15 +1,14 @@
 import React from "react";
-
 // Components
 import Filters from "./Filters/Filters";
 import ProductsList from "./ProductsList/ProductsList";
-
 // Styles
 import classes from "./Products.module.scss";
-
 // Redux toolkit
 import { useDispatch } from "react-redux";
 import { toggleFilter } from "../../store/filter/filterSlice";
+// Icons
+import { FaFilter } from "react-icons/fa";
 
 const Products = (props) => {
   // Redux toolkit
@@ -22,7 +21,7 @@ const Products = (props) => {
         className={classes.FilterIcon}
         onClick={() => dispatch(toggleFilter())}
       >
-        <i className="fas fa-filter"></i>
+        <FaFilter />
       </button>
     </div>
   );

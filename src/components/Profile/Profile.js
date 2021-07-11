@@ -311,7 +311,7 @@ const Profile = () => {
               </button>
             </form>
           </div>
-          <SimpleButton name="logout" small capitalize />
+          <SimpleButton name="logout" clicked={handleLogout} small capitalize />
         </div>
       </div>
       {/* <h2>{user.name} Welcome to your profile</h2>
