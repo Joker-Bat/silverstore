@@ -28,7 +28,6 @@ const Profile = () => {
   const [newPic, setNewPic] = useState(null);
   const [newFilename, setNewFilename] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState("0%");
-  const [profileUpdated, setProfileUpdated] = useState(false);
   // For user detail update
   const [profileName, setProfileName] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
@@ -39,6 +38,9 @@ const Profile = () => {
   const [profileSuccess, setProfileSuccess] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
 
+  // Common State for All update
+  const [profileUpdated, setProfileUpdated] = useState(false);
+
   const fillStateValues = (user) => {
     setProfileName(user.name);
     setProfileNameRef(user.name);
@@ -47,7 +49,7 @@ const Profile = () => {
     setCurrentPic(user.photo);
   };
 
-  const successfullyUpdated = () => {
+  const successfullyPictureUpdated = () => {
     setProfileUpdated(true);
     setPictureSuccess(true);
     setNewFilename("");
@@ -73,17 +75,30 @@ const Profile = () => {
           );
         },
       });
-      successfullyUpdated();
+      successfullyPictureUpdated();
     } catch (err) {
       setPictureLoading(false);
-      console.log(err.response.data);
+      setPictureError(err.response.data.message);
     }
   };
 
-  const handleProfileUpdate = (e) => {
+  const handleProfileUpdate = async (e) => {
     e.preventDefault();
     if (profileUpdateDisabled) {
       return setProfileError("Change data before update");
+    }
+    try {
+      setProfileLoading(true);
+      await axios.patch("/api/v1/users/updateprofile/", {
+        name: profileName,
+        email: profileEmail,
+      });
+      setProfileSuccess(true);
+      setProfileLoading(false);
+      setProfileUpdated(true);
+    } catch (err) {
+      setProfileLoading(false);
+      console.log(err.response.data);
     }
   };
 

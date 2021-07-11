@@ -21,8 +21,7 @@ exports.updateProfilePicture = catchAsync(async (req, res, next) => {
   if (!file)
     return next(new AppError("Select any image to update profile", 400));
 
-  console.log(file);
-  const user = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     id,
     { photo: file.filename },
     { new: true, runValidators: true }
@@ -30,8 +29,25 @@ exports.updateProfilePicture = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    data: {
-      user,
-    },
+    message: "Successfully updated profile picture",
+  });
+});
+
+exports.updateProfile = catchAsync(async (req, res, next) => {
+  const { id } = req.user;
+  const { name, email } = req.body;
+
+  if (!name || !email)
+    return next(new AppError("Provide email or name to update profile", 400));
+
+  await User.findByIdAndUpdate(
+    id,
+    { name: name, email: email },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully updated profile",
   });
 });

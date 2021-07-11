@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // Styles
 import classes from "./UpdatePassword.module.scss";
+// Axios
+import axios from "axios";
 // Components
 import ErrorMessage from "../../UI/ErrorMessage/ErrorMessage";
 import SuccessMessage from "../../UI/SuccessMessage/SuccessMessage";
@@ -24,10 +26,30 @@ const UpdatePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handlePasswordUpdate = (e) => {
+  const clearInputFields = () => {
+    setOldPassword("");
+    setNewPassword("");
+    setNewPasswordConfirm("");
+  };
+
+  const handlePasswordUpdate = async (e) => {
     e.preventDefault();
     if (newPassword !== newPasswordConfirm)
       return setPasswordError("New Passwords not match");
+
+    try {
+      setPasswordLoading(true);
+      await axios.patch("/api/v1/users/updatepassword", {
+        oldPassword,
+        newPassword,
+      });
+      setPasswordLoading(false);
+      setPasswordSuccess(true);
+      clearInputFields();
+    } catch (err) {
+      setPasswordLoading(false);
+      setPasswordError(err.response.data.message);
+    }
   };
 
   const handlePasswordEqual = (e) => {
@@ -36,16 +58,32 @@ const UpdatePassword = () => {
     else return setPasswordsEqual(false);
   };
 
+  useEffect(() => {
+    let timer;
+    timer = setTimeout(() => {
+      setPasswordError("");
+      setPasswordSuccess(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [passwordError, passwordSuccess]);
+
   return (
     <div className={classes.UpdatePasswordContainer}>
       <h2>update password</h2>
       {passwordError ? <ErrorMessage message={passwordError} /> : ""}
       {passwordSuccess ? (
-        <SuccessMessage message="Profile updated password" />
+        <SuccessMessage message="Password updated try login again" />
       ) : (
         ""
       )}
       <form onSubmit={handlePasswordUpdate}>
+        {/* Below input field is for accesability */}
+        <input
+          type="text"
+          style={{ display: "none" }}
+          autoComplete="username"
+        />
         <div className={classes.InputGroup}>
           <label htmlFor="oldPassword">old password</label>
           <input
