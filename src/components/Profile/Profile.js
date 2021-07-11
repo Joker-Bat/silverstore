@@ -12,6 +12,7 @@ import Title from "../UI/Title/Title";
 import ErrorMessage from "../UI/ErrorMessage/ErrorMessage";
 import SuccessMessage from "../UI/SuccessMessage/SuccessMessage";
 import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
+import UpdatePassword from "./UpdatePassword/UpdatePassword";
 
 /**
  * Main Component
@@ -37,15 +38,6 @@ const Profile = () => {
   const [profileError, setProfileError] = useState("");
   const [profileSuccess, setProfileSuccess] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
-  // For password update
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
-  const [passwordsEqual, setPasswordsEqual] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
-  const [passwordSuccess, setPasswordSuccess] = useState(false);
-  const [passwordLoading, setPasswordLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const fillStateValues = (user) => {
     setProfileName(user.name);
@@ -55,13 +47,16 @@ const Profile = () => {
     setCurrentPic(user.photo);
   };
 
+  const successfullyUpdated = () => {
+    setProfileUpdated(true);
+    setPictureSuccess(true);
+    setNewFilename("");
+    setPictureLoading(false);
+  };
+
   const handleLogout = async () => {
     await axios.get("/api/v1/users/logout");
     dispatch(removeToken());
-  };
-
-  const handleShowPassword = () => {
-    setShowPassword((prevState) => !prevState);
   };
 
   const handlePictureUpdate = async (e) => {
@@ -76,16 +71,9 @@ const Profile = () => {
           setUploadPercentage(
             `${Math.round((progressEvent.loaded / progressEvent.total) * 100)}%`
           );
-          console.log(
-            "Uploading: ",
-            Math.round((progressEvent.loaded / progressEvent.total) * 100)
-          );
         },
       });
-      setProfileUpdated(true);
-      setPictureSuccess(true);
-      setNewFilename("");
-      setPictureLoading(false);
+      successfullyUpdated();
     } catch (err) {
       setPictureLoading(false);
       console.log(err.response.data);
@@ -97,18 +85,6 @@ const Profile = () => {
     if (profileUpdateDisabled) {
       return setProfileError("Change data before update");
     }
-  };
-
-  const handlePasswordUpdate = (e) => {
-    e.preventDefault();
-    if (newPassword !== newPasswordConfirm)
-      return setPasswordError("New Passwords not match");
-  };
-
-  const handlePasswordEqual = (e) => {
-    setNewPasswordConfirm(e.target.value);
-    if (e.target.value === newPassword) return setPasswordsEqual(true);
-    else return setPasswordsEqual(false);
   };
 
   const handleFileChange = (e) => {
@@ -155,23 +131,21 @@ const Profile = () => {
     let timer;
     timer = setTimeout(() => {
       setProfileError("");
-      setPasswordError("");
       setPictureError("");
     }, 4000);
 
     return () => clearTimeout(timer);
-  }, [pictureError, profileError, passwordError]);
+  }, [pictureError, profileError]);
 
   useEffect(() => {
     let timer;
     timer = setTimeout(() => {
       setPictureSuccess(false);
-      setPasswordSuccess(false);
       setProfileSuccess(false);
     }, 4000);
 
     return () => clearTimeout(timer);
-  }, [pictureSuccess, passwordSuccess, profileSuccess]);
+  }, [pictureSuccess, profileSuccess]);
 
   return (
     <div className={classes.Profile}>
@@ -207,6 +181,7 @@ const Profile = () => {
             >
               {pictureLoading ? <ButtonLoader /> : "Upload"}
             </button>
+            <small>Choose only square image</small>
           </form>
         </div>
         <div className={classes.UpdateDetailContainer}>
@@ -243,80 +218,10 @@ const Profile = () => {
               </button>
             </form>
           </div>
-          <div className={classes.UpdatePasswordContainer}>
-            <h2>update password</h2>
-            {passwordError ? <ErrorMessage message={passwordError} /> : ""}
-            {passwordSuccess ? (
-              <SuccessMessage message="Profile updated password" />
-            ) : (
-              ""
-            )}
-            <form onSubmit={handlePasswordUpdate}>
-              <div className={classes.InputGroup}>
-                <label htmlFor="oldPassword">old password</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={oldPassword}
-                  onChange={(e) => setOldPassword(e.target.value)}
-                  autoComplete="current-password"
-                  id="oldPassword"
-                  required
-                />
-              </div>
-              <div className={classes.InputGroup}>
-                <label htmlFor="newPassword">new password</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  id="newPassword"
-                  autoComplete="new-password"
-                />
-              </div>
-              <div
-                className={[
-                  classes.InputGroup,
-                  !passwordsEqual && classes.Error,
-                ].join(" ")}
-              >
-                <label htmlFor="newPasswordConfirm">new password confirm</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={newPasswordConfirm}
-                  onChange={handlePasswordEqual}
-                  id="newPasswordConfirm"
-                  autoComplete="new-password"
-                />
-              </div>
-              <div className={classes.ShowPassword}>
-                <input
-                  type="checkbox"
-                  value={showPassword}
-                  onChange={handleShowPassword}
-                  name="showPassword"
-                  id="showPassword"
-                  className={classes.Checkbox}
-                />
-
-                <label htmlFor="showPassword" className={classes.Label}>
-                  <span className={classes.Checkmark}></span>
-                  Show password
-                </label>
-              </div>
-              <button
-                type="submit"
-                className={passwordLoading ? classes.Disabled : ""}
-              >
-                {passwordLoading ? <ButtonLoader /> : "Update password"}
-              </button>
-            </form>
-          </div>
+          <UpdatePassword />
           <SimpleButton name="logout" clicked={handleLogout} small capitalize />
         </div>
       </div>
-      {/* <h2>{user.name} Welcome to your profile</h2>
-
-      <button onClick={handleLogout}>Logout</button> */}
     </div>
   );
 };
