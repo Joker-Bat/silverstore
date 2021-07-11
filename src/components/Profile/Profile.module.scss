@@ -1,0 +1,329 @@
+@import "../../styles/Variables.scss";
+@import "../../styles/ResponsiveSheet.scss";
+
+.Profile {
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem auto;
+  padding: 2rem 0;
+
+  @include respond($MOBILE) {
+    padding: 2rem 3rem;
+  }
+
+  .Title {
+    font-size: 2.8rem;
+    text-align: center;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--main);
+    border-bottom: 2px solid var(--main);
+    padding-bottom: 0.4rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.ProfileContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 40% 1fr;
+
+  @include respond($MOBILE) {
+    grid-template-columns: 1fr;
+  }
+
+  .UpdateProfileContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include respond($MOBILE) {
+      margin-bottom: 4rem;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .ProfilePictureContainer {
+      background-color: var(--white);
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+
+      @include respond($MOBILE) {
+        width: 120px;
+        height: 120px;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      input[type="file"] {
+        display: none;
+      }
+
+      label {
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+        display: block;
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        border: 1px solid var(--main);
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+          box-shadow: inset 0 0 3px var(--main);
+        }
+
+        @include respond($MOBILE) {
+          max-width: 150px;
+        }
+
+        .Progress {
+          overflow: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 100%;
+          background-color: var(--main);
+          z-index: -1;
+        }
+      }
+    }
+  }
+
+  .UpdateDetailContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .UpdateUserContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 3rem;
+
+      @include respond($MOBILE) {
+        align-items: center;
+      }
+      h2 {
+        font-size: 2.5rem;
+        text-transform: capitalize;
+        color: var(--main);
+        margin-bottom: 2rem;
+      }
+
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        @include respond($MOBILE) {
+          align-items: center;
+        }
+
+        input {
+          width: 100%;
+          max-width: 300px;
+          background-color: transparent;
+          border: none;
+          color: var(--primary);
+          border-bottom: 2px solid var(--main);
+          padding: 0.8rem 1.2rem;
+          font-size: 1.8rem;
+          margin-bottom: 1.5rem;
+          @include respond($MOBILE) {
+            font-size: 2rem;
+            margin-bottom: 1.8rem;
+          }
+
+          &:nth-child(2) {
+            margin-bottom: 3rem;
+          }
+
+          &:focus {
+            outline: none;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+
+    .UpdatePasswordContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 5rem;
+
+      @include respond($MOBILE) {
+        align-items: center;
+      }
+      h2 {
+        font-size: 2.5rem;
+        text-transform: capitalize;
+        color: var(--main);
+        margin-bottom: 2rem;
+      }
+
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        @include respond($MOBILE) {
+          align-items: center;
+        }
+
+        .InputGroup {
+          width: auto;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 1.5rem;
+          @include respond($MOBILE) {
+            align-items: center;
+          }
+
+          &.Error {
+            input {
+              &:focus {
+                border-bottom: 2px solid var(--danger);
+              }
+            }
+          }
+
+          label {
+            color: var(--main);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+
+            @include respond($MOBILE) {
+              align-self: flex-start;
+            }
+          }
+
+          input {
+            width: 300px;
+            max-width: 100%;
+            color: var(--primary);
+            border: none;
+            padding: 0.8rem 1.2rem;
+            font-size: 1.6rem;
+            font-weight: 400;
+            background: transparent;
+            border-bottom: 2px solid var(--text-dark);
+            transition: all 0.1s linear;
+
+            @include respond($MOBILE) {
+              font-size: 1.8rem;
+              padding: 1rem 1.5rem;
+            }
+
+            &:focus {
+              outline: none;
+              border-bottom: 2px solid var(--main);
+            }
+          }
+        }
+
+        .ShowPassword {
+          cursor: pointer;
+          align-self: flex-start;
+          margin: 1rem 0 2rem 0;
+
+          @include respond($MOBILE) {
+            width: 300px;
+            max-width: 100%;
+            margin: 2rem auto;
+          }
+
+          .Checkbox {
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
+          }
+
+          .Checkbox:checked + .Label .Checkmark {
+            background-color: var(--main);
+          }
+
+          .Checkbox:checked + .Label .Checkmark::after {
+            display: block;
+          }
+
+          .Label {
+            color: var(--main);
+            cursor: pointer;
+            font-size: 1.4rem;
+            text-transform: capitalize;
+            display: flex;
+            align-items: center;
+
+            @include respond($MOBILE) {
+              font-size: 1.6rem;
+            }
+
+            .Checkmark {
+              display: inline-block;
+              position: relative;
+              height: 1.8rem;
+              width: 1.8rem;
+              margin-right: 0.8rem;
+              border: 1px solid var(--main);
+              border-radius: 50%;
+
+              @include respond($MOBILE) {
+                height: 2rem;
+                width: 2rem;
+              }
+
+              &::after {
+                content: "";
+                position: absolute;
+                left: 20%;
+                top: 50%;
+                width: 3px;
+                height: 8px;
+                border: solid var(--white);
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg) translate(-50%, -50%);
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    & > button {
+      align-self: center;
+    }
+  }
+}
