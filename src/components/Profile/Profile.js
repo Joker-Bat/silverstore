@@ -13,6 +13,7 @@ import ErrorMessage from "../UI/ErrorMessage/ErrorMessage";
 import SuccessMessage from "../UI/SuccessMessage/SuccessMessage";
 import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
 import UpdatePassword from "./UpdatePassword/UpdatePassword";
+import Loading from "../UI/Loading/Loading";
 
 /**
  * Main Component
@@ -20,6 +21,7 @@ import UpdatePassword from "./UpdatePassword/UpdatePassword";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   // For profile pic upload
   const [pictureError, setPictureError] = useState("");
   const [pictureSuccess, setPictureSuccess] = useState(false);
@@ -115,11 +117,13 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const res = await axios.get("/api/v1/users/profile");
       fillStateValues(res.data.data.user);
     };
     fetchData();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -163,81 +167,89 @@ const Profile = () => {
   }, [pictureSuccess, profileSuccess]);
 
   return (
-    <div className={classes.Profile}>
-      <Title name="profile" />
-      <div className={classes.ProfileContainer}>
-        <div className={classes.UpdateProfileContainer}>
-          <div className={classes.ProfilePictureContainer}>
-            <img src={`/images/users/${currentPic}`} alt="emoji" />
-          </div>
-          <form onSubmit={handlePictureUpdate}>
-            {pictureError ? <ErrorMessage message={pictureError} /> : ""}
-            {pictureSuccess ? (
-              <SuccessMessage message="Profile picture updated" />
-            ) : (
-              ""
-            )}
-            <input
-              type="file"
-              id="profilePic"
-              onChange={handleFileChange}
-              accept="image/*"
-            />
-            <label htmlFor="profilePic">
-              {!newFilename ? "Select new profile picture" : newFilename}
-              <span
-                style={{ width: uploadPercentage }}
-                className={classes.Progress}
-              ></span>
-            </label>
-            <button
-              type="submit"
-              className={pictureLoading ? classes.Disabled : ""}
-            >
-              {pictureLoading ? <ButtonLoader /> : "Upload"}
-            </button>
-            <small>Choose only square image</small>
-          </form>
-        </div>
-        <div className={classes.UpdateDetailContainer}>
-          <div className={classes.UpdateUserContainer}>
-            <h2>update profile</h2>
-            {profileError ? <ErrorMessage message={profileError} /> : ""}
-            {profileSuccess ? (
-              <SuccessMessage message="Profile updated successfully" />
-            ) : (
-              ""
-            )}
-            <form onSubmit={handleProfileUpdate}>
+    <>
+      {loading ? <Loading /> : null}
+      <div className={classes.Profile}>
+        <Title name="profile" />
+        <div className={classes.ProfileContainer}>
+          <div className={classes.UpdateProfileContainer}>
+            <div className={classes.ProfilePictureContainer}>
+              <img src={`/images/users/${currentPic}`} alt="emoji" />
+            </div>
+            <form onSubmit={handlePictureUpdate}>
+              {pictureError ? <ErrorMessage message={pictureError} /> : ""}
+              {pictureSuccess ? (
+                <SuccessMessage message="Profile picture updated" />
+              ) : (
+                ""
+              )}
               <input
-                type="text"
-                value={profileName}
-                onChange={(e) => setProfileName(e.target.value)}
-                required
+                type="file"
+                id="profilePic"
+                onChange={handleFileChange}
+                accept="image/*"
               />
-              <input
-                type="email"
-                value={profileEmail}
-                onChange={(e) => setProfileEmail(e.target.value)}
-                required
-              />
+              <label htmlFor="profilePic">
+                {!newFilename ? "Select new profile picture" : newFilename}
+                <span
+                  style={{ width: uploadPercentage }}
+                  className={classes.Progress}
+                ></span>
+              </label>
               <button
                 type="submit"
-                className={
-                  profileLoading || profileUpdateDisabled
-                    ? classes.Disabled
-                    : ""
-                }
+                className={pictureLoading ? classes.Disabled : ""}
               >
-                {profileLoading ? <ButtonLoader /> : "Update"}
+                {pictureLoading ? <ButtonLoader /> : "Upload"}
               </button>
+              <small>Choose only square image</small>
             </form>
           </div>
-          <UpdatePassword />
-          <SimpleButton name="logout" clicked={handleLogout} small capitalize />
+          <div className={classes.UpdateDetailContainer}>
+            <div className={classes.UpdateUserContainer}>
+              <h2>update profile</h2>
+              {profileError ? <ErrorMessage message={profileError} /> : ""}
+              {profileSuccess ? (
+                <SuccessMessage message="Profile updated successfully" />
+              ) : (
+                ""
+              )}
+              <form onSubmit={handleProfileUpdate}>
+                <input
+                  type="text"
+                  value={profileName}
+                  onChange={(e) => setProfileName(e.target.value)}
+                  required
+                />
+                <input
+                  type="email"
+                  value={profileEmail}
+                  onChange={(e) => setProfileEmail(e.target.value)}
+                  required
+                />
+                <button
+                  type="submit"
+                  className={
+                    profileLoading || profileUpdateDisabled
+                      ? classes.Disabled
+                      : ""
+                  }
+                >
+                  {profileLoading ? <ButtonLoader /> : "Update"}
+                </button>
+              </form>
+            </div>
+            <UpdatePassword />
+            <SimpleButton
+              name="logout"
+              clicked={handleLogout}
+              small
+              capitalize
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
