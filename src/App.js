@@ -1,7 +1,9 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect, useCallback } from "react";
 // Components
 import Layout from "./hoc/Layout";
 import Loading from "./components/UI/Loading/Loading";
+// Axios
+import axios from "./axios-base";
 // Router
 import {
   BrowserRouter as Router,
@@ -12,7 +14,11 @@ import {
 // Redux toolkit
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "./store/auth/authSlice";
-
+import { setPrice, setCategory } from "./store/filter/filterSlice";
+import { setAllProducts } from "./store/cart/cartSlice";
+import { setProducts, setGlobalLoading } from "./store/products/productsSlice";
+// Helper function
+import { arrayToObjectState } from "./utilities/helperFunctions";
 // Lazy Loading Products
 const lazySingleProduct = lazy(() =>
   import("./containers/SingleProduct/SingleProduct")
@@ -37,13 +43,50 @@ const lazyResetPassword = lazy(() =>
 const App = () => {
   const dispatch = useDispatch();
   const { authToken } = useSelector((state) => state.auth);
+  const { productRef } = useSelector((state) => state.products);
 
+  // Get auth token if available
   useEffect(() => {
     const token = localStorage.getItem("silvertoken");
     if (token) {
       dispatch(setToken({ token }));
     }
   }, [dispatch]);
+
+  // Get Category State
+  const getProductsPageDetails = useCallback(
+    (products) => {
+      // Categorys
+      const categroryList = [...new Set(products.map((item) => item.type))];
+      const categoryState = arrayToObjectState(categroryList, false);
+      //Max price
+      const maxPrice = Math.max(...products.map((item) => +item.price));
+      const minPrice = Math.min(...products.map((item) => +item.price));
+      dispatch(setPrice({ maxPrice, minPrice }));
+      dispatch(setCategory(categoryState));
+    },
+    [dispatch]
+  );
+
+  // Get all products from API and store in state
+  useEffect(() => {
+    if (productRef.length === 0) {
+      const fetchData = async () => {
+        dispatch(setGlobalLoading(true));
+        const res = await axios.get("/api/v1/products");
+        const products = res.data.data.products;
+        if (productRef.length === 0) {
+          dispatch(setProducts(products));
+        }
+        // For Single Product page
+        getProductsPageDetails(products);
+        // For Cart
+        dispatch(setAllProducts(products));
+        dispatch(setGlobalLoading(false));
+      };
+      fetchData();
+    }
+  }, [productRef, dispatch, getProductsPageDetails]);
 
   let routes = (
     <Suspense fallback={<Loading />}>
