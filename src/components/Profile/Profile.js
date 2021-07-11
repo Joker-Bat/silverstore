@@ -6,8 +6,6 @@ import axios from "axios";
 // Redux toolkit
 import { useDispatch } from "react-redux";
 import { removeToken } from "../../store/auth/authSlice";
-// Temp
-import image from "../../images/emoji/eyeClick.webp";
 // Components
 import SimpleButton from "../UI/SimpleButton/SimpleButton";
 import Title from "../UI/Title/Title";
@@ -21,15 +19,15 @@ import ButtonLoader from "../UI/ButtonLoader/ButtonLoader";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState("");
   // For profile pic upload
   const [pictureError, setPictureError] = useState("");
+  const [pictureSuccess, setPictureSuccess] = useState(false);
   const [pictureLoading, setPictureLoading] = useState(false);
   const [currentPic, setCurrentPic] = useState("");
   const [newPic, setNewPic] = useState(null);
-  const [inputContainsFile, setInputContainsFile] = useState(false);
   const [newFilename, setNewFilename] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState("0%");
+  const [profileUpdated, setProfileUpdated] = useState(false);
   // For user detail update
   const [profileName, setProfileName] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
@@ -49,19 +47,13 @@ const Profile = () => {
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get("/api/v1/users/profile");
-      setUser(res.data.data.user);
-      setProfileName(res.data.data.user.name);
-      setProfileNameRef(res.data.data.user.name);
-      setProfileEmail(res.data.data.user.email);
-      setProfileEmailRef(res.data.data.user.email);
-      setCurrentPic(res.data.data.user.photo);
-    };
-
-    fetchData();
-  }, []);
+  const fillStateValues = (user) => {
+    setProfileName(user.name);
+    setProfileNameRef(user.name);
+    setProfileEmail(user.email);
+    setProfileEmailRef(user.email);
+    setCurrentPic(user.photo);
+  };
 
   const handleLogout = async () => {
     await axios.get("/api/v1/users/logout");
@@ -72,9 +64,32 @@ const Profile = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handlePictureUpdate = (e) => {
+  const handlePictureUpdate = async (e) => {
     e.preventDefault();
     if (!newPic) return setPictureError("Select image to upload");
+    const fd = new FormData();
+    fd.append("photo", newPic);
+    try {
+      setPictureLoading(true);
+      await axios.patch("/api/v1/users/updateprofilepicture", fd, {
+        onUploadProgress: (progressEvent) => {
+          setUploadPercentage(
+            `${Math.round((progressEvent.loaded / progressEvent.total) * 100)}%`
+          );
+          console.log(
+            "Uploading: ",
+            Math.round((progressEvent.loaded / progressEvent.total) * 100)
+          );
+        },
+      });
+      setProfileUpdated(true);
+      setPictureSuccess(true);
+      setNewFilename("");
+      setPictureLoading(false);
+    } catch (err) {
+      setPictureLoading(false);
+      console.log(err.response.data);
+    }
   };
 
   const handleProfileUpdate = (e) => {
@@ -98,7 +113,7 @@ const Profile = () => {
 
   const handleFileChange = (e) => {
     const currentImage = e.target.files[0];
-    if (currentImage.type.split("/")[0] === "image") {
+    if (currentImage?.type.split("/")[0] === "image") {
       setNewPic(currentImage);
       setNewFilename(currentImage.name);
     } else {
@@ -107,6 +122,26 @@ const Profile = () => {
       setNewFilename("");
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get("/api/v1/users/profile");
+      fillStateValues(res.data.data.user);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get("/api/v1/users/profile");
+      fillStateValues(res.data.data.user);
+    };
+    if (profileUpdated) {
+      fetchData();
+      setProfileUpdated(false);
+      setUploadPercentage("0%");
+    }
+  }, [profileUpdated]);
 
   useEffect(() => {
     if (profileName === profileNameRef && profileEmail === profileEmailRef) {
@@ -127,6 +162,17 @@ const Profile = () => {
     return () => clearTimeout(timer);
   }, [pictureError, profileError, passwordError]);
 
+  useEffect(() => {
+    let timer;
+    timer = setTimeout(() => {
+      setPictureSuccess(false);
+      setPasswordSuccess(false);
+      setProfileSuccess(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [pictureSuccess, passwordSuccess, profileSuccess]);
+
   return (
     <div className={classes.Profile}>
       <Title name="profile" />
@@ -137,6 +183,11 @@ const Profile = () => {
           </div>
           <form onSubmit={handlePictureUpdate}>
             {pictureError ? <ErrorMessage message={pictureError} /> : ""}
+            {pictureSuccess ? (
+              <SuccessMessage message="Profile picture updated" />
+            ) : (
+              ""
+            )}
             <input
               type="file"
               id="profilePic"

@@ -2,6 +2,7 @@ const path = require("path");
 const multer = require("multer");
 const sharp = require("sharp");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 const multerStorage = multer.memoryStorage();
 
@@ -20,7 +21,20 @@ const multerUpload = multer({
   },
 });
 
-exports.upload = multerUpload.single("photo");
+exports.upload = (req, res, next) => {
+  const uploadMiddleWare = multerUpload.single("photo");
+  uploadMiddleWare(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return next(new AppError("File is too large", 400));
+    } else if (err) {
+      if (err === "filetype") {
+        return next(new AppError("Select only image files"));
+      }
+      return next(err);
+    }
+    next();
+  });
+};
 
 exports.resize = catchAsync(async (req, res, next) => {
   if (!req.file) return next();

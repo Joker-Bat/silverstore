@@ -18,8 +18,10 @@ exports.updateProfilePicture = catchAsync(async (req, res, next) => {
   const { file } = req;
   const { id } = req.user;
 
-  if (!file) return next(new AppError("Select any image", 400));
+  if (!file)
+    return next(new AppError("Select any image to update profile", 400));
 
+  console.log(file);
   const user = await User.findByIdAndUpdate(
     id,
     { photo: file.filename },
