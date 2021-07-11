@@ -9,6 +9,7 @@ const path = require("path");
 const globalErrorController = require("./middleware/error");
 const AppError = require("./utils/appError");
 const userRouter = require("./routes/user");
+const cartRouter = require("./routes/cart");
 const privateRouter = require("./routes/private");
 
 const app = express();
@@ -34,6 +35,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Routes
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/carts", cartRouter);
 app.use("/api/v1/private", privateRouter);
 
 app.all("*", (req, res, next) => {
