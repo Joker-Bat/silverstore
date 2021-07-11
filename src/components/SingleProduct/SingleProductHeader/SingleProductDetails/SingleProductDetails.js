@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-
 // Styles
 import classes from "./SingleProductDetails.module.scss";
-
+// React Router
+import { withRouter } from "react-router-dom";
 // Components
 import NumberFormat from "react-number-format";
 import SimpleButton from "../../../UI/SimpleButton/SimpleButton";
 import Stars from "./Stars/Stars";
 import ProductCounter from "../../../UI/ProductCounter/ProductCounter";
-
 //Redux toolkit
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCartItem } from "../../../../store/cart/cartSlice";
 
 /*
@@ -20,6 +19,7 @@ Main Component
 const SingleProductDetails = (props) => {
   // Redux toolkit
   const dispatch = useDispatch();
+  const { authToken } = useSelector((state) => state.auth);
   // Counter for a product
   const [count, setCount] = useState(1);
 
@@ -51,8 +51,12 @@ const SingleProductDetails = (props) => {
 
   // Add products to cart
   const addToCart = () => {
-    const currentProductState = { id: props.id, count };
-    dispatch(addCartItem(currentProductState));
+    if (authToken) {
+      const currentProductState = { id: props.id, count };
+      dispatch(addCartItem(currentProductState));
+    } else {
+      props.history.push("/login");
+    }
   };
 
   return (
@@ -127,4 +131,4 @@ const SingleProductDetails = (props) => {
   );
 };
 
-export default SingleProductDetails;
+export default withRouter(SingleProductDetails);

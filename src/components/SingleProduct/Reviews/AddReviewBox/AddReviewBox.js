@@ -5,6 +5,9 @@ import classes from "./AddReviewBox.module.scss";
 import SimpleButton from "../../../UI/SimpleButton/SimpleButton";
 // Icons
 import { FaStar } from "react-icons/fa";
+import { withRouter } from "react-router-dom";
+// React Redux
+import { useSelector } from "react-redux";
 
 // HelperFunctions
 const getTitleByRating = (value) => {
@@ -31,6 +34,7 @@ const maxReviewLength = 150;
 */
 
 const AddReview = (props) => {
+  const { authToken } = useSelector((state) => state.auth);
   // Stars clicked or hover state
   const [currentStar, setCurrentStar] = useState(0);
   const [hoverStar, setHoverStar] = useState(undefined);
@@ -55,40 +59,47 @@ const AddReview = (props) => {
 
   // Post an review to localStorage to render
   const postToLocalStorage = () => {
-    // If no data there then return
-    if (!currentStar || !reviewText) {
-      return false;
-    }
-    // Make details into object
-    const currentReview = {
-      reviewId: new Date().toLocaleString(),
-      id: props.id,
-      userName: "testUser",
-      stars: currentStar,
-      title: reviewTitle,
-      description: reviewText,
-      daysBefore: new Date(),
-    };
-    // Current localReviews in localStorage
-    const currentLocalReviews = JSON.parse(
-      localStorage.getItem("localReviews")
-    );
-    // If already localReview is there then add to them
-    if (currentLocalReviews) {
-      currentLocalReviews.push(currentReview);
-      localStorage.setItem("localReviews", JSON.stringify(currentLocalReviews));
-      props.updateLocalReviews((prev) => prev + 1);
-    } else {
-      // insert an object into an array
-      const allReviews = [currentReview];
-      // Set this array to localStorage
-      localStorage.setItem("localReviews", JSON.stringify(allReviews));
-      props.updateLocalReviews((prev) => prev + 1);
-    }
+    if (authToken) {
+      // If no data there then return
+      if (!currentStar || !reviewText) {
+        return false;
+      }
+      // Make details into object
+      const currentReview = {
+        reviewId: new Date().toLocaleString(),
+        id: props.id,
+        userName: "testUser",
+        stars: currentStar,
+        title: reviewTitle,
+        description: reviewText,
+        daysBefore: new Date(),
+      };
+      // Current localReviews in localStorage
+      const currentLocalReviews = JSON.parse(
+        localStorage.getItem("localReviews")
+      );
+      // If already localReview is there then add to them
+      if (currentLocalReviews) {
+        currentLocalReviews.push(currentReview);
+        localStorage.setItem(
+          "localReviews",
+          JSON.stringify(currentLocalReviews)
+        );
+        props.updateLocalReviews((prev) => prev + 1);
+      } else {
+        // insert an object into an array
+        const allReviews = [currentReview];
+        // Set this array to localStorage
+        localStorage.setItem("localReviews", JSON.stringify(allReviews));
+        props.updateLocalReviews((prev) => prev + 1);
+      }
 
-    // Clear All states and close modal
-    clearAllStates();
-    props.close();
+      // Clear All states and close modal
+      clearAllStates();
+      props.close();
+    } else {
+      props.history.push("/login");
+    }
   };
 
   // Value handler for review textarea
@@ -183,4 +194,4 @@ const AddReview = (props) => {
   );
 };
 
-export default AddReview;
+export default withRouter(AddReview);
