@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const ReviewSchema = mongoose.Schema(
+const ReviewSchema = new mongoose.Schema(
   {
     productId: {
       type: String,
       required: [true, 'Review must have a product Id'],
-      unique: true,
     },
     user: {
       type: mongoose.Schema.ObjectId,
+      ref: 'User',
       required: [true, 'Review must have a user Id'],
     },
     reviewTitle: {
@@ -33,6 +33,15 @@ const ReviewSchema = mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+// Populate user name and photo
+ReviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'name photo -_id',
+  });
+  next();
+});
 
 const Review = mongoose.model('Review', ReviewSchema);
 
