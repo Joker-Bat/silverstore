@@ -6,18 +6,27 @@ const CartSchema = mongoose.Schema({
     ref: 'User',
     required: [true, 'Cart item must have a user'],
   },
-  products: {
-    type: [
-      {
-        productId: String,
-        count: Number,
-      },
-    ],
+  productId: {
+    type: String,
+    required: [true, 'Cart must have a produtc Id'],
+  },
+  count: {
+    type: Number,
+    requird: [true, 'Cart must have a product count'],
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
+});
+
+// Populate User Schema
+CartSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'User',
+    select: 'name',
+  });
+  next();
 });
 
 const Cart = mongoose.model('Cart', CartSchema);
