@@ -11,7 +11,6 @@ const AppError = require('./utils/appError');
 const userRouter = require('./routes/user');
 const cartRouter = require('./routes/cart');
 const reviewRouter = require('./routes/review');
-const privateRouter = require('./routes/private');
 
 const app = express();
 
@@ -38,7 +37,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/carts', cartRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/private', privateRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
