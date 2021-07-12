@@ -1,12 +1,12 @@
-const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
-const Cart = require("../models/cart");
-const User = require("../models/user");
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
+const Cart = require('../models/cart');
+const User = require('../models/user');
 
 exports.getWelcome = (req, res, next) => {
   res.status(200).json({
-    status: "success",
-    message: "Connected",
+    status: 'success',
+    message: 'Connected',
   });
 };
 
@@ -16,7 +16,7 @@ exports.addCart = catchAsync(async (req, res, next) => {
 
   // Check if user available with that id
   const user = await User.findById(id);
-  if (!user) return next(new AppError("No user with that id", 400));
+  if (!user) return next(new AppError('No user with that id', 400));
 
   // Check if user has cart
   const cart = await Cart.findOne({ user: id });
@@ -27,14 +27,11 @@ exports.addCart = catchAsync(async (req, res, next) => {
     // If user have cart then check if the productId is already present
     const curCarts = await Cart.find({
       user: id,
-      "products.productId": productId,
+      'products.productId': productId,
     });
     // If user have cart but not have that product id then create new product and push into products array
     if (curCarts.length === 0) {
-      await Cart.findOneAndUpdate(
-        { user: id },
-        { $push: { products: { productId, count } } }
-      );
+      await Cart.findOneAndUpdate({ user: id }, { $push: { products: { productId, count } } });
       // If user have that productId also then increment that product count only
     } else {
       Cart.findOne({ user: id })
@@ -50,13 +47,13 @@ exports.addCart = catchAsync(async (req, res, next) => {
           doc.save();
         })
         .catch((err) => {
-          console.log("Oh Dark its here", err);
+          console.log('Oh Dark its here', err);
         });
     }
   }
   res.status(200).json({
-    status: "success",
-    message: "Cart Saved",
+    status: 'success',
+    message: 'Cart Saved',
   });
 });
 
@@ -67,7 +64,7 @@ exports.getAllCarts = catchAsync(async (req, res, next) => {
   const products = carts[0].products;
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
       carts: products,
     },

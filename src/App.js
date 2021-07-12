@@ -1,40 +1,29 @@
-import React, { lazy, Suspense, useEffect, useCallback } from "react";
+import React, { lazy, Suspense, useEffect, useCallback } from 'react';
 // Components
-import Layout from "./hoc/Layout";
-import Loading from "./components/UI/Loading/Loading";
+import Layout from './hoc/Layout';
+import Loading from './components/UI/Loading/Loading';
 // Axios
-import axios from "./axios-base";
+import axios from './axios-base';
 // Router
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 // Redux toolkit
-import { useSelector, useDispatch } from "react-redux";
-import { setToken } from "./store/auth/authSlice";
-import { setPrice, setCategory } from "./store/filter/filterSlice";
-import { setAllProducts } from "./store/cart/cartSlice";
-import { setProducts, setGlobalLoading } from "./store/products/productsSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import { setToken } from './store/auth/authSlice';
+import { setPrice, setCategory } from './store/filter/filterSlice';
+import { setAllProducts } from './store/cart/cartSlice';
+import { setProducts, setGlobalLoading } from './store/products/productsSlice';
 // Helper function
-import { arrayToObjectState } from "./utilities/helperFunctions";
+import { arrayToObjectState } from './utilities/helperFunctions';
 // Lazy Loading Products
-const lazySingleProduct = lazy(() =>
-  import("./containers/SingleProduct/SingleProduct")
-);
-const lazyProducts = lazy(() => import("./containers/Products/Products"));
-const lazyCart = lazy(() => import("./containers/Cart/Cart"));
-const lazyLogin = lazy(() => import("./containers/Auth/Login/Login"));
-const lazySignup = lazy(() => import("./containers/Auth/Signup/Signup"));
-const lazyProfile = lazy(() => import("./containers/Profile/Profile"));
-const lazyHomepage = lazy(() => import("./containers/Homepage/Homepage"));
-const lazyForgotPassword = lazy(() =>
-  import("./containers/Auth/ForgotPassword/ForgotPassword")
-);
-const lazyResetPassword = lazy(() =>
-  import("./containers/Auth/ResetPassword/ResetPassword")
-);
+const lazySingleProduct = lazy(() => import('./containers/SingleProduct/SingleProduct'));
+const lazyProducts = lazy(() => import('./containers/Products/Products'));
+const lazyCart = lazy(() => import('./containers/Cart/Cart'));
+const lazyLogin = lazy(() => import('./containers/Auth/Login/Login'));
+const lazySignup = lazy(() => import('./containers/Auth/Signup/Signup'));
+const lazyProfile = lazy(() => import('./containers/Profile/Profile'));
+const lazyHomepage = lazy(() => import('./containers/Homepage/Homepage'));
+const lazyForgotPassword = lazy(() => import('./containers/Auth/ForgotPassword/ForgotPassword'));
+const lazyResetPassword = lazy(() => import('./containers/Auth/ResetPassword/ResetPassword'));
 
 /**
  * Main Component
@@ -47,7 +36,7 @@ const App = () => {
 
   // Get auth token if available
   useEffect(() => {
-    const token = localStorage.getItem("silvertoken");
+    const token = localStorage.getItem('silvertoken');
     if (token) {
       dispatch(setToken({ token }));
     }
@@ -73,7 +62,7 @@ const App = () => {
     if (productRef.length === 0) {
       const fetchData = async () => {
         dispatch(setGlobalLoading(true));
-        const res = await axios.get("/api/v1/products");
+        const res = await axios.get('/api/v1/products');
         const products = res.data.data.products;
         if (productRef.length === 0) {
           dispatch(setProducts(products));
