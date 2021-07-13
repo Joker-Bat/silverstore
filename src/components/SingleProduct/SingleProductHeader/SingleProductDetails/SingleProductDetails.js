@@ -47,19 +47,21 @@ const SingleProductDetails = (props) => {
         return (acc += cur);
       }, 0) / noOfRatings;
 
-  const discountPercentage = Math.round(((props.realPrice - props.price) / props.realPrice) * 100);
+  const discountPercentage = Math.round(
+    ((props.realPrice - props.price) / props.realPrice) * 100
+  );
 
   // Add products to cart
   const addToCart = async () => {
     if (authToken) {
       const currentProductState = { id: props.id, count };
       try {
-        const res = await axios.post('/api/v1/carts/add', { productId: props.id, count });
-        console.log(res);
+        await axios.post('/api/v1/carts/add', { productId: props.id, count });
+        dispatch(addCartItem(currentProductState));
+        setCount(1);
       } catch (err) {
         console.log('Error', err.response);
       }
-      dispatch(addCartItem(currentProductState));
     } else {
       props.history.push('/login');
     }
@@ -122,7 +124,11 @@ const SingleProductDetails = (props) => {
       </div>
       {/* Counter for product */}
       <div className={classes.ProductCounterContainer}>
-        <ProductCounter count={count} increaseCounter={increaseCounter} decreaseCounter={decreaseCounter} />
+        <ProductCounter
+          count={count}
+          increaseCounter={increaseCounter}
+          decreaseCounter={decreaseCounter}
+        />
       </div>
 
       {/* Add to cart button */}
