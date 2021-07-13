@@ -4,14 +4,16 @@ import Layout from './hoc/Layout';
 import Loading from './components/UI/Loading/Loading';
 // Axios
 import axios from './axios-base';
+import pureAxios from 'axios';
 // Router
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 // Redux toolkit
 import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from './store/auth/authSlice';
 import { setPrice, setCategory } from './store/filter/filterSlice';
-import { setAllProducts } from './store/cart/cartSlice';
+import { setAllProducts, setCartProducts } from './store/cart/cartSlice';
 import { setProducts, setGlobalLoading } from './store/products/productsSlice';
+import { removeToken } from './store/auth/authSlice';
 // Helper function
 import { arrayToObjectState } from './utilities/helperFunctions';
 // Lazy Loading Products
@@ -42,6 +44,18 @@ const App = () => {
     }
   }, [dispatch]);
 
+  // At first render check if token is not expired
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await pureAxios.get('/api/v1/users/isloggedin');
+      } catch (err) {
+        dispatch(removeToken());
+      }
+    };
+    fetchData();
+  }, [dispatch]);
+
   // Get Category State
   const getProductsPageDetails = useCallback(
     (products) => {
@@ -70,12 +84,31 @@ const App = () => {
         // For Single Product page
         getProductsPageDetails(products);
         // For Cart
+        console.log(products);
         dispatch(setAllProducts(products));
         dispatch(setGlobalLoading(false));
       };
       fetchData();
     }
   }, [productRef, dispatch, getProductsPageDetails]);
+
+  // To fetch Cart item from server and set to state
+  useEffect(() => {
+    if (authToken) {
+      const fetchData = async () => {
+        try {
+          const res = await pureAxios.get('/api/v1/carts/getall');
+          dispatch(setCartProducts(res.data.data.carts));
+        } catch (err) {
+          console.log('Error', err.response);
+        }
+      };
+
+      fetchData();
+    }
+
+    // Here i am using productRef from productSlice but this wont do any change both are same states
+  }, [productRef, authToken, dispatch]);
 
   let routes = (
     <Suspense fallback={<Loading />}>

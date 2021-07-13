@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // Styles
-import classes from "./SingleProductDetails.module.scss";
+import classes from './SingleProductDetails.module.scss';
 // React Router
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 // Components
-import NumberFormat from "react-number-format";
-import SimpleButton from "../../../UI/SimpleButton/SimpleButton";
-import Stars from "./Stars/Stars";
-import ProductCounter from "../../../UI/ProductCounter/ProductCounter";
+import NumberFormat from 'react-number-format';
+import SimpleButton from '../../../UI/SimpleButton/SimpleButton';
+import Stars from './Stars/Stars';
+import ProductCounter from '../../../UI/ProductCounter/ProductCounter';
 //Redux toolkit
-import { useDispatch, useSelector } from "react-redux";
-import { addCartItem } from "../../../../store/cart/cartSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { addCartItem } from '../../../../store/cart/cartSlice';
+// Axios
+import axios from 'axios';
 
 /*
 Main Component
@@ -45,17 +47,21 @@ const SingleProductDetails = (props) => {
         return (acc += cur);
       }, 0) / noOfRatings;
 
-  const discountPercentage = Math.round(
-    ((props.realPrice - props.price) / props.realPrice) * 100
-  );
+  const discountPercentage = Math.round(((props.realPrice - props.price) / props.realPrice) * 100);
 
   // Add products to cart
-  const addToCart = () => {
+  const addToCart = async () => {
     if (authToken) {
       const currentProductState = { id: props.id, count };
+      try {
+        const res = await axios.post('/api/v1/carts/add', { productId: props.id, count });
+        console.log(res);
+      } catch (err) {
+        console.log('Error', err.response);
+      }
       dispatch(addCartItem(currentProductState));
     } else {
-      props.history.push("/login");
+      props.history.push('/login');
     }
   };
 
@@ -75,10 +81,10 @@ const SingleProductDetails = (props) => {
         <div className={classes.CurrentPrice}>
           <h1>
             <NumberFormat
-              displayType={"text"}
+              displayType={'text'}
               thousandSeparator={true}
-              thousandsGroupStyle={"lakh"}
-              prefix={"₹"}
+              thousandsGroupStyle={'lakh'}
+              prefix={'₹'}
               value={props.price}
             />
           </h1>
@@ -86,10 +92,10 @@ const SingleProductDetails = (props) => {
         <div className={classes.RealPrice}>
           <p>
             <NumberFormat
-              displayType={"text"}
+              displayType={'text'}
               thousandSeparator={true}
-              thousandsGroupStyle={"lakh"}
-              prefix={"₹"}
+              thousandsGroupStyle={'lakh'}
+              prefix={'₹'}
               value={props.realPrice}
             />
           </p>
@@ -116,11 +122,7 @@ const SingleProductDetails = (props) => {
       </div>
       {/* Counter for product */}
       <div className={classes.ProductCounterContainer}>
-        <ProductCounter
-          count={count}
-          increaseCounter={increaseCounter}
-          decreaseCounter={decreaseCounter}
-        />
+        <ProductCounter count={count} increaseCounter={increaseCounter} decreaseCounter={decreaseCounter} />
       </div>
 
       {/* Add to cart button */}
