@@ -1,6 +1,3 @@
-// Data
-// import data from "../../data/data";
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
@@ -15,13 +12,18 @@ const cartSlice = createSlice({
     addCartItem: (state, { payload }) => {
       const { id, count } = payload;
       // Check if that product already exist
-      const filteredProducts = state.products?.findIndex((item) => item.id === id);
+      const filteredProducts = state.products?.findIndex(
+        (item) => item.id === id
+      );
       if (filteredProducts !== -1) {
         const existingProduct = state.products[filteredProducts];
         existingProduct.count += count;
-        existingProduct.subTotal = existingProduct.count * existingProduct.price;
+        existingProduct.subTotal =
+          existingProduct.count * existingProduct.price;
       } else {
-        const currentProduct = state.productRef.filter((item) => item.id === id)[0];
+        const currentProduct = state.productRef.filter(
+          (item) => item.id === id
+        )[0];
         state.products.push({
           id,
           count,
@@ -51,7 +53,6 @@ const cartSlice = createSlice({
       }
     },
     setAllProducts: (state, { payload }) => {
-      console.log(payload);
       state.productRef = [...payload];
     },
     // This function is for initial fetching carts from server

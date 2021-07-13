@@ -6,7 +6,12 @@ import Loading from './components/UI/Loading/Loading';
 import axios from './axios-base';
 import pureAxios from 'axios';
 // Router
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 // Redux toolkit
 import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from './store/auth/authSlice';
@@ -17,15 +22,21 @@ import { removeToken } from './store/auth/authSlice';
 // Helper function
 import { arrayToObjectState } from './utilities/helperFunctions';
 // Lazy Loading Products
-const lazySingleProduct = lazy(() => import('./containers/SingleProduct/SingleProduct'));
+const lazySingleProduct = lazy(() =>
+  import('./containers/SingleProduct/SingleProduct')
+);
 const lazyProducts = lazy(() => import('./containers/Products/Products'));
 const lazyCart = lazy(() => import('./containers/Cart/Cart'));
 const lazyLogin = lazy(() => import('./containers/Auth/Login/Login'));
 const lazySignup = lazy(() => import('./containers/Auth/Signup/Signup'));
 const lazyProfile = lazy(() => import('./containers/Profile/Profile'));
 const lazyHomepage = lazy(() => import('./containers/Homepage/Homepage'));
-const lazyForgotPassword = lazy(() => import('./containers/Auth/ForgotPassword/ForgotPassword'));
-const lazyResetPassword = lazy(() => import('./containers/Auth/ResetPassword/ResetPassword'));
+const lazyForgotPassword = lazy(() =>
+  import('./containers/Auth/ForgotPassword/ForgotPassword')
+);
+const lazyResetPassword = lazy(() =>
+  import('./containers/Auth/ResetPassword/ResetPassword')
+);
 
 /**
  * Main Component
@@ -84,7 +95,6 @@ const App = () => {
         // For Single Product page
         getProductsPageDetails(products);
         // For Cart
-        console.log(products);
         dispatch(setAllProducts(products));
         dispatch(setGlobalLoading(false));
       };

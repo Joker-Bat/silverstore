@@ -51,3 +51,48 @@ exports.removeCart = catchAsync(async (req, res, next) => {
     message: 'Cart successfully removed',
   });
 });
+
+exports.increaseCount = catchAsync(async (req, res, next) => {
+  const { id } = req.user;
+  const { productId } = req.params;
+
+  const cart = await Cart.findOne({ user: id, productId });
+  if (!cart)
+    return next(new AppError('User does not have this product in cart', 400));
+
+  await Cart.findOneAndUpdate({ user: id, productId }, { $inc: { count: 1 } });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Product count increased',
+  });
+});
+
+exports.decreaseCount = catchAsync(async (req, res, next) => {
+  const { id } = req.user;
+  const { productId } = req.params;
+
+  const cart = await Cart.findOne({ user: id, productId });
+  if (!cart)
+    return next(new AppError('User does not have this product in cart', 400));
+
+  const curProduct = await Cart.findOne({ user: id, productId });
+  const curCount = curProduct.count;
+  console.log(typeof curCount);
+  console.log(!(curCount > 1));
+
+  if (!(curCount > 1))
+    return next(
+      new AppError(
+        "Can't Decrease less then one, delete this product instead",
+        400
+      )
+    );
+
+  await Cart.findOneAndUpdate({ user: id, productId }, { $inc: { count: -1 } });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Product count decreased',
+  });
+});
