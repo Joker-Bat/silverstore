@@ -5,7 +5,7 @@ import pureAxios from 'axios';
 // React Router
 import { useParams } from 'react-router-dom';
 // HelperFunctions
-import { truncateWords, getDaysBefore } from '../../utilities/helperFunctions';
+import { truncateWords } from '../../utilities/helperFunctions';
 import { updateReviewStructure } from './model/updateReviewStructure';
 // Redux Toolkit
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,22 +34,17 @@ const SingleProduct = () => {
   const { id } = useParams();
   const [currentProduct, setCurrentProduct] = useState({});
 
-  // const [ratings, setRatings] = useState([]);
-  // A simple dummy state for render when new review added
-  // const [isReviewAdded, setIsReviewAdded] = useState(0);
-
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(setProductId(null));
+  }, [dispatch]);
 
+  // Make a request to API and get a current product details
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(`/api/v1/products/${id}`);
       const product = await res.data.data.product[0];
       setCurrentProduct(product);
-      // setRatings((prev) => {
-      //   return [...product.ratings, ...prev];
-      // });
       dispatch(setAllReviews(product.ratings));
     };
     fetchData();
@@ -59,6 +54,8 @@ const SingleProduct = () => {
     // Here the id is a slug of a product but we need that product id to get reviews from server
     if (productRef.length !== 0) {
       const curProductId = productRef.filter((item) => item.slug === id)[0].id;
+      // When new id is there then clear reviews state
+      dispatch(clearReviews());
       dispatch(setProductId(curProductId));
     }
   }, [productRef, id, dispatch]);
@@ -73,7 +70,6 @@ const SingleProduct = () => {
           if (curReviews.length !== 0) {
             // Update review data from server as we need and delete old one
             const updatedReviews = updateReviewStructure(curReviews);
-            dispatch(clearReviews());
             dispatch(setAllReviews(updatedReviews));
           }
         } catch (err) {
@@ -83,36 +79,6 @@ const SingleProduct = () => {
       fetchData();
     }
   }, [productId, dispatch, reviewAdded]);
-
-  useEffect(() => {
-    console.log('Id Changed');
-  }, [productId]);
-
-  // useEffect(() => {
-  //   if (Object.keys(currentProduct).length !== 0) {
-  //     const currentLocalReviewsList = getLocalReviews(currentProduct.id);
-
-  //     if (currentLocalReviewsList) {
-  //       // Add current localReviews to the state
-  //       const currentReviews = [...ratings, ...currentLocalReviewsList];
-  //* Prevent from adding same local reviews again again when render
-  //       const filteredLocalReviews = currentReviews.filter(
-  //         (item, index, arr) => {
-  //           if (item.reviewId) {
-  //             return (
-  //               arr.findIndex((i) => i.reviewId === item.reviewId) === index
-  //             );
-  //           } else {
-  //             return item;
-  //           }
-  //         }
-  //       );
-  //       // Set filtered local reviews
-  //       setRatings(filteredLocalReviews);
-  //     }
-  //   }
-  //   //eslint-disable-next-line
-  // }, [currentProduct, localReviews]);
 
   return (
     <div>

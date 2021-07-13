@@ -15,8 +15,7 @@ const reviewSlice = createSlice({
       state.reviews.push(payload);
     },
     setAllReviews: (state, { payload }) => {
-      const currentReviews = state.reviews.concat(payload);
-      // state.reviews = state.reviews.concat(payload);
+      const currentReviews = payload.concat(state.reviews);
       const filteredReviews = currentReviews.filter((item, index, arr) => {
         return arr.findIndex((i) => i._id === item._id) === index;
       });

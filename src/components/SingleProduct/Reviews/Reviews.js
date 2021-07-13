@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 // Styles
 import classes from './Reviews.module.scss';
-// Axios
-import axios from 'axios';
 // React Router
 import { withRouter } from 'react-router-dom';
 // Components
