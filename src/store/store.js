@@ -1,12 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 // Filter Reducer
-import filterReducer from "./filter/filterSlice";
+import filterReducer from './filter/filterSlice';
 // Products Reducer
-import productsReducer from "./products/productsSlice";
+import productsReducer from './products/productsSlice';
 // Cart Reducer
-import cartReducer from "./cart/cartSlice";
+import cartReducer from './cart/cartSlice';
 // User Reducer
-import authReducer from "./auth/authSlice";
+import authReducer from './auth/authSlice';
+// Review Reducr
+import reviewReducer from './review/reviewSlice';
 
 export default configureStore({
   reducer: {
@@ -14,5 +16,6 @@ export default configureStore({
     products: productsReducer,
     cart: cartReducer,
     auth: authReducer,
+    review: reviewReducer,
   },
 });

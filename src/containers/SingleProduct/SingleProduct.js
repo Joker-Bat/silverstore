@@ -1,31 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // Axios
-import axios from "../../axios-base";
+import axios from '../../axios-base';
+import pureAxios from 'axios';
 // React Router
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 // HelperFunctions
-import { truncateWords } from "../../utilities/helperFunctions";
-import { getLocalReviews } from "./model/getLocalReviews";
+import { truncateWords, getDaysBefore } from '../../utilities/helperFunctions';
+import { updateReviewStructure } from './model/updateReviewStructure';
+// Redux Toolkit
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setAllReviews,
+  setProductId,
+  clearReviews,
+} from '../../store/review/reviewSlice';
 // Components
-import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
-import SingleProductHeader from "../../components/SingleProduct/SingleProductHeader/SingleProductHeader";
-import SingleProductSpecs from "../../components/SingleProduct/SingleProductSpecs/SingleProductSpecs";
-import Reviews from "../../components/SingleProduct/Reviews/Reviews";
-
-import Loading from "../../components/UI/Loading/Loading";
+import BreadCrumb from '../../components/BreadCrumb/BreadCrumb';
+import SingleProductHeader from '../../components/SingleProduct/SingleProductHeader/SingleProductHeader';
+import SingleProductSpecs from '../../components/SingleProduct/SingleProductSpecs/SingleProductSpecs';
+import Reviews from '../../components/SingleProduct/Reviews/Reviews';
+import Loading from '../../components/UI/Loading/Loading';
 
 /*
   Main Component
 */
 
-const SingleProduct = (props) => {
+const SingleProduct = () => {
+  // Redux Toolkit
+  const dispatch = useDispatch();
+  const { productRef } = useSelector((state) => state.products);
+  const { productId, reviewAdded } = useSelector((state) => state.review);
   // const id = props.match.params.id;
   const { id } = useParams();
   const [currentProduct, setCurrentProduct] = useState({});
 
-  const [ratings, setRatings] = useState([]);
-  // A simple dummy state for render when localstorage changes
-  const [localReviews, setLocalReviews] = useState(0);
+  // const [ratings, setRatings] = useState([]);
+  // A simple dummy state for render when new review added
+  // const [isReviewAdded, setIsReviewAdded] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,38 +47,72 @@ const SingleProduct = (props) => {
       const res = await axios.get(`/api/v1/products/${id}`);
       const product = await res.data.data.product[0];
       setCurrentProduct(product);
-      setRatings((prev) => {
-        return [...product.ratings, ...prev];
-      });
+      // setRatings((prev) => {
+      //   return [...product.ratings, ...prev];
+      // });
+      dispatch(setAllReviews(product.ratings));
     };
     fetchData();
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
-    if (Object.keys(currentProduct).length !== 0) {
-      const currentLocalReviewsList = getLocalReviews(currentProduct.id);
-
-      if (currentLocalReviewsList) {
-        // Add current localReviews to the state
-        const currentReviews = [...ratings, ...currentLocalReviewsList];
-        // Prevent from adding same local reviews again again when render
-        const filteredLocalReviews = currentReviews.filter(
-          (item, index, arr) => {
-            if (item.reviewId) {
-              return (
-                arr.findIndex((i) => i.reviewId === item.reviewId) === index
-              );
-            } else {
-              return item;
-            }
-          }
-        );
-        // Set filtered local reviews
-        setRatings(filteredLocalReviews);
-      }
+    // Here the id is a slug of a product but we need that product id to get reviews from server
+    if (productRef.length !== 0) {
+      const curProductId = productRef.filter((item) => item.slug === id)[0].id;
+      dispatch(setProductId(curProductId));
     }
-    //eslint-disable-next-line
-  }, [currentProduct, localReviews]);
+  }, [productRef, id, dispatch]);
+
+  // Get Reviews from server
+  useEffect(() => {
+    if (productId) {
+      const fetchData = async () => {
+        try {
+          const res = await pureAxios.get(`/api/v1/reviews/${productId}`);
+          const curReviews = res.data.data.reviews;
+          if (curReviews.length !== 0) {
+            // Update review data from server as we need and delete old one
+            const updatedReviews = updateReviewStructure(curReviews);
+            dispatch(clearReviews());
+            dispatch(setAllReviews(updatedReviews));
+          }
+        } catch (err) {
+          console.log('Error', err.response);
+        }
+      };
+      fetchData();
+    }
+  }, [productId, dispatch, reviewAdded]);
+
+  useEffect(() => {
+    console.log('Id Changed');
+  }, [productId]);
+
+  // useEffect(() => {
+  //   if (Object.keys(currentProduct).length !== 0) {
+  //     const currentLocalReviewsList = getLocalReviews(currentProduct.id);
+
+  //     if (currentLocalReviewsList) {
+  //       // Add current localReviews to the state
+  //       const currentReviews = [...ratings, ...currentLocalReviewsList];
+  //* Prevent from adding same local reviews again again when render
+  //       const filteredLocalReviews = currentReviews.filter(
+  //         (item, index, arr) => {
+  //           if (item.reviewId) {
+  //             return (
+  //               arr.findIndex((i) => i.reviewId === item.reviewId) === index
+  //             );
+  //           } else {
+  //             return item;
+  //           }
+  //         }
+  //       );
+  //       // Set filtered local reviews
+  //       setRatings(filteredLocalReviews);
+  //     }
+  //   }
+  //   //eslint-disable-next-line
+  // }, [currentProduct, localReviews]);
 
   return (
     <div>
@@ -89,11 +134,7 @@ const SingleProduct = (props) => {
               highlights={currentProduct.highlights}
               specs={currentProduct.specs}
             />
-            <Reviews
-              id={currentProduct.id}
-              ratings={ratings}
-              updateLocalReviews={setLocalReviews}
-            />
+            <Reviews id={currentProduct.id} />
           </main>
         </>
       ) : (

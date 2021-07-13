@@ -1,25 +1,37 @@
-import React, { useState } from "react";
-
+import React, { useState } from 'react';
 // Styles
-import classes from "./Reviews.module.scss";
-
+import classes from './Reviews.module.scss';
+// Axios
+import axios from 'axios';
+// React Router
+import { withRouter } from 'react-router-dom';
 // Components
-import SimpleButton from "../../UI/SimpleButton/SimpleButton";
-import Backdrop from "../../UI/Backdrop/Backdrop";
-import AddReviewBox from "./AddReviewBox/AddReviewBox";
-import SingleReview from "./SingleReview/SingleReview";
+import SimpleButton from '../../UI/SimpleButton/SimpleButton';
+import Backdrop from '../../UI/Backdrop/Backdrop';
+import AddReviewBox from './AddReviewBox/AddReviewBox';
+import SingleReview from './SingleReview/SingleReview';
+// Redux toolkit
+import { useSelector } from 'react-redux';
 
 /*
   Main Component
 */
 
-const Reviews = ({ ratings, id, updateLocalReviews }) => {
+const Reviews = (props) => {
+  const { authToken } = useSelector((state) => state.auth);
+  const { reviews } = useSelector((state) => state.review);
+
+  const { id } = props;
   // Open or close Add Review Container
   const [addReview, setAddReview] = useState(false);
 
   // Open or close Add Review Container
   const openReviewContainer = () => {
-    setAddReview(true);
+    if (authToken) {
+      setAddReview(true);
+    } else {
+      props.history.push('/login');
+    }
   };
   const closeReviewContainer = () => {
     setAddReview(false);
@@ -31,8 +43,8 @@ const Reviews = ({ ratings, id, updateLocalReviews }) => {
       <h1 className={classes.Heading}>Reviews</h1>
       {/* List of Reviews */}
       <div className={classes.ReviewsContainer}>
-        {ratings.map((item, index) => {
-          return <SingleReview key={`ReviewsSection${index}`} item={item} />;
+        {reviews.map((item, index) => {
+          return <SingleReview key={item._id} item={item} />;
         })}
       </div>
       {/* To add a review to list */}
@@ -44,10 +56,10 @@ const Reviews = ({ ratings, id, updateLocalReviews }) => {
           capitalize
           clicked={openReviewContainer}
         />
-        <AddReviewBox id={id} isOpen={addReview} close={closeReviewContainer} updateLocalReviews={updateLocalReviews} />
+        <AddReviewBox id={id} isOpen={addReview} close={closeReviewContainer} />
       </div>
     </div>
   );
 };
 
-export default Reviews;
+export default withRouter(Reviews);

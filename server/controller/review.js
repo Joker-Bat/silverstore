@@ -15,9 +15,18 @@ exports.addReview = catchAsync(async (req, res, next) => {
     return next(new AppError('Provide all required fields', 400));
 
   const userReview = await Review.findOne({ user: id, productId });
-  if (userReview) return next(new AppError('Users are only allowed to add one review for product', 400));
+  if (userReview)
+    return next(
+      new AppError('Users are only allowed to add one review for product', 400)
+    );
 
-  await Review.create({ productId, user: id, reviewTitle, reviewDescription, rating });
+  await Review.create({
+    productId,
+    user: id,
+    reviewTitle,
+    reviewDescription,
+    rating,
+  });
 
   res.status(200).json({
     status: 'Success',
@@ -32,7 +41,7 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
 
   const reviews = await Review.find({ productId })
     .populate({ path: 'user', select: 'name photo' })
-    .select('-_id -__v -id');
+    .select('-__v');
 
   res.status(200).json({
     status: 'success',
@@ -52,7 +61,8 @@ exports.removeReview = catchAsync(async (req, res, next) => {
 
   const review = await Review.findOne({ productId, user: id });
 
-  if (!review) return next(new AppError('This user no review for this product', 400));
+  if (!review)
+    return next(new AppError('This user no review for this product', 400));
 
   await Review.findOneAndDelete({ productId, user: id });
 
