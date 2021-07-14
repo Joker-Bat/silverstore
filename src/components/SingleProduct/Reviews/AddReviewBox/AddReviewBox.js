@@ -6,7 +6,7 @@ import axios from 'axios';
 // Helperfunctions
 import { updateReviewStructure } from '../../../../utilities/helperFunctions';
 // Components
-import SimpleButton from '../../../UI/SimpleButton/SimpleButton';
+import ButtonWithLoader from '../../../UI/ButtonWithLoader/ButtonWithLoader';
 // Icons
 import { FaStar } from 'react-icons/fa';
 import { withRouter } from 'react-router-dom';
@@ -41,6 +41,8 @@ const maxReviewLength = 150;
 const AddReview = (props) => {
   const dispatch = useDispatch();
   const { authToken } = useSelector((state) => state.auth);
+  // Review post loading
+  const [reviewLoading, setReviewLoading] = useState(false);
   // Stars clicked or hover state
   const [currentStar, setCurrentStar] = useState(0);
   const [hoverStar, setHoverStar] = useState(undefined);
@@ -61,10 +63,11 @@ const AddReview = (props) => {
     setReviewText('');
     setReviewLength(maxReviewLength);
     setReviewTitle('your review');
+    setReviewLoading(false);
   };
 
   // Post an review to localStorage to render
-  const postToLocalStorage = async () => {
+  const addReviewHandler = async () => {
     if (authToken) {
       // If no data there then return
       if (!currentStar || !reviewText) {
@@ -77,6 +80,7 @@ const AddReview = (props) => {
         reviewDescription: reviewText,
       };
       try {
+        setReviewLoading(true);
         const res = await axios.post(
           `/api/v1/reviews/add/${props.id}`,
           currentReview
@@ -182,11 +186,12 @@ const AddReview = (props) => {
             <p>{reviewLength}</p>
           </div>
         </div>
-        <SimpleButton
+        {/* <SimpleButton name="post" capitalize small clicked={addReview} /> */}
+        <ButtonWithLoader
           name="post"
+          clicked={addReviewHandler}
           capitalize
-          small
-          clicked={postToLocalStorage}
+          loading={reviewLoading}
         />
       </form>
     </div>
