@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // Axios
 import axios from '../../axios-base';
 import pureAxios from 'axios';
@@ -30,9 +30,8 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const { currentProduct } = useSelector((state) => state.singleProduct);
   const { id } = useParams();
-  // const [currentProduct, setCurrentProduct] = useState({});
+  const [curProductId, setCurProductId] = useState(null);
 
-  // On initial render clear productId in state because when we change another product it wont cause rerender
   useEffect(() => {
     // When new id is there then clear reviews state
     dispatch(clearReviews());
@@ -45,6 +44,7 @@ const SingleProduct = () => {
       const res = await axios.get(`/api/v1/products/${id}`);
       const product = await res.data.data.product[0];
       dispatch(setCurrentProduct(product));
+      setCurProductId(product.id);
       dispatch(setAllReviews(product.ratings));
     };
     fetchData();
@@ -52,24 +52,24 @@ const SingleProduct = () => {
 
   // Get Reviews from server
   useEffect(() => {
-    // if (productId) {
-    const fetchData = async () => {
-      try {
-        const res = await pureAxios.get(`/api/v1/reviews/${currentProduct.id}`);
-        const curReviews = res.data.data.reviews;
-        console.log(curReviews);
-        if (curReviews.length !== 0) {
-          // Update review data from server as we need and delete old one
-          const updatedReviews = updateReviewStructure(curReviews);
-          dispatch(setAllReviews(updatedReviews));
+    if (curProductId) {
+      const fetchData = async () => {
+        try {
+          const res = await pureAxios.get(`/api/v1/reviews/${curProductId}`);
+          const curReviews = res.data.data.reviews;
+          console.log(curReviews);
+          if (curReviews.length !== 0) {
+            // Update review data from server as we need and delete old one
+            const updatedReviews = updateReviewStructure(curReviews);
+            dispatch(setAllReviews(updatedReviews));
+          }
+        } catch (err) {
+          console.log('Error', err.response);
         }
-      } catch (err) {
-        console.log('Error', err.response);
-      }
-    };
-    fetchData();
-    // }
-  }, [currentProduct.id, dispatch]);
+      };
+      fetchData();
+    }
+  }, [curProductId, dispatch]);
 
   return (
     <div>
