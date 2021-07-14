@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // Styles
-import classes from "./SingleProductImage.module.scss";
+import classes from './SingleProductImage.module.scss';
+// Redux Toolkit
+import { useSelector } from 'react-redux';
 // Components
-import PopupImage from "./PopupImage/PopupImage";
+import PopupImage from './PopupImage/PopupImage';
 /*
   Main Component
 */
 const SingleProductImage = (props) => {
-  const [mainImage, setMainImage] = useState(props.images[0]);
+  const { currentProduct } = useSelector((state) => state.singleProduct);
+
+  const [mainImage, setMainImage] = useState(currentProduct.images[0]);
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
-    setMainImage(props.images[0]);
+    setMainImage(currentProduct.images[0]);
     window.scrollTo(0, 0);
-  }, [props.images]);
+  }, [currentProduct.images]);
 
   return (
     <div className={classes.SingleProductImageContainer}>
       <PopupImage
-        mainImage={mainImage ? mainImage : props.images[0]}
+        mainImage={mainImage ? mainImage : currentProduct.images[0]}
         popupOpen={popupOpen}
         setPopupOpen={setPopupOpen}
       />
@@ -27,18 +31,18 @@ const SingleProductImage = (props) => {
           <div className={classes.MainImage} onClick={() => setPopupOpen(true)}>
             <img
               src={`https://freeestoreapi.herokuapp.com/images/products/${mainImage}`}
-              alt={props.name}
+              alt={currentProduct.name}
             />
           </div>
           <div className={classes.SmallImageContainer}>
-            {props.images.map((item, index) => {
+            {currentProduct.images.map((item, index) => {
               return (
                 <div
                   key={`smallImage${index}`}
                   className={[
                     classes.SmallImage,
-                    mainImage === item ? classes.Active : "",
-                  ].join(" ")}
+                    mainImage === item ? classes.Active : '',
+                  ].join(' ')}
                   onClick={() => setMainImage(item)}
                 >
                   <img

@@ -41,11 +41,16 @@ const SingleProduct = () => {
   // Make a request to public API and get a current product details
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`/api/v1/products/${id}`);
-      const product = await res.data.data.product[0];
-      dispatch(setCurrentProduct(product));
-      setCurProductId(product.id);
-      dispatch(setAllReviews(product.ratings));
+      try {
+        const res = await axios.get(`/api/v1/products/${id}`);
+        const product = await res.data.data.product[0];
+        dispatch(setCurrentProduct(product));
+        // Here id is slug so we need product id to make a request to server
+        setCurProductId(product.id);
+        dispatch(setAllReviews(product.ratings));
+      } catch (err) {
+        console.log('Error in public API request', err.response);
+      }
     };
     fetchData();
   }, [id, dispatch]);
@@ -57,7 +62,6 @@ const SingleProduct = () => {
         try {
           const res = await pureAxios.get(`/api/v1/reviews/${curProductId}`);
           const curReviews = res.data.data.reviews;
-          console.log(curReviews);
           if (curReviews.length !== 0) {
             // Update review data from server as we need and delete old one
             const updatedReviews = updateReviewStructure(curReviews);
@@ -77,21 +81,9 @@ const SingleProduct = () => {
         <>
           <BreadCrumb title={truncateWords(currentProduct.name, 18)} product />
           <main>
-            <SingleProductHeader
-              id={currentProduct.id}
-              name={currentProduct.name}
-              images={currentProduct.images}
-              ratings={currentProduct.ratings}
-              price={currentProduct.price}
-              realPrice={currentProduct.realPrice}
-              brand={currentProduct.brand}
-              type={currentProduct.type}
-            />
-            <SingleProductSpecs
-              highlights={currentProduct.highlights}
-              specs={currentProduct.specs}
-            />
-            <Reviews id={currentProduct.id} />
+            <SingleProductHeader />
+            <SingleProductSpecs />
+            <Reviews />
           </main>
         </>
       ) : (

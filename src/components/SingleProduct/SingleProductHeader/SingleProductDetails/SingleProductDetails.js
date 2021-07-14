@@ -21,6 +21,7 @@ Main Component
 const SingleProductDetails = (props) => {
   // Redux toolkit
   const dispatch = useDispatch();
+  const { currentProduct } = useSelector((state) => state.singleProduct);
   const { authToken } = useSelector((state) => state.auth);
   // Counter for a product
   const [count, setCount] = useState(1);
@@ -39,24 +40,29 @@ const SingleProductDetails = (props) => {
     });
   };
 
-  const noOfRatings = props.ratings.length;
+  const noOfRatings = currentProduct.ratings.length;
   const averageRating =
-    props.ratings
+    currentProduct.ratings
       .map((item) => item.stars)
       .reduce((acc, cur) => {
         return (acc += cur);
       }, 0) / noOfRatings;
 
   const discountPercentage = Math.round(
-    ((props.realPrice - props.price) / props.realPrice) * 100
+    ((currentProduct.realPrice - currentProduct.price) /
+      currentProduct.realPrice) *
+      100
   );
 
   // Add products to cart
   const addToCart = async () => {
     if (authToken) {
-      const currentProductState = { id: props.id, count };
+      const currentProductState = { id: currentProduct.id, count };
       try {
-        await axios.post('/api/v1/carts/add', { productId: props.id, count });
+        await axios.post('/api/v1/carts/add', {
+          productId: currentProduct.id,
+          count,
+        });
         dispatch(addCartItem(currentProductState));
         setCount(1);
       } catch (err) {
@@ -70,7 +76,7 @@ const SingleProductDetails = (props) => {
   return (
     <div className={classes.SingleProductDetails}>
       {/* Product Title */}
-      <h1 className={classes.SingleProductTitle}>{props.name}</h1>
+      <h1 className={classes.SingleProductTitle}>{currentProduct.name}</h1>
       {/* Rating and no of Reviews */}
       <div className={classes.RatingContainer}>
         <Stars averageRating={averageRating} />
@@ -87,7 +93,7 @@ const SingleProductDetails = (props) => {
               thousandSeparator={true}
               thousandsGroupStyle={'lakh'}
               prefix={'₹'}
-              value={props.price}
+              value={currentProduct.price}
             />
           </h1>
         </div>
@@ -98,7 +104,7 @@ const SingleProductDetails = (props) => {
               thousandSeparator={true}
               thousandsGroupStyle={'lakh'}
               prefix={'₹'}
-              value={props.realPrice}
+              value={currentProduct.realPrice}
             />
           </p>
         </div>
@@ -115,11 +121,11 @@ const SingleProductDetails = (props) => {
         </div>
         <div className={classes.Type}>
           <h1>Type :</h1>
-          <p>{props.type}</p>
+          <p>{currentProduct.type}</p>
         </div>
         <div className={classes.Brand}>
           <h1>Brand :</h1>
-          <p>{props.brand}</p>
+          <p>{currentProduct.brand}</p>
         </div>
       </div>
       {/* Counter for product */}

@@ -1,9 +1,17 @@
-import React from "react";
-
+import React from 'react';
 // Styles
-import classes from "./SingleProductSpecs.module.scss";
+import classes from './SingleProductSpecs.module.scss';
+// Redux Toolkit
+import { useSelector } from 'react-redux';
+/**
+ * Main Component
+ */
 
-const SingleProductSpecs = ({ highlights, specs }) => {
+const SingleProductSpecs = () => {
+  const { highlights, specs } = useSelector(
+    (state) => state.singleProduct.currentProduct
+  );
+
   const filteredSpecs =
     specs &&
     Object.keys(specs).map((item, index) => {
@@ -11,11 +19,11 @@ const SingleProductSpecs = ({ highlights, specs }) => {
       if (specs[item]) {
         Product = (
           <div key={`SingleProductSpecs${index}`} className={classes.Spec}>
-            <h1>{item + ":"}</h1> <p>{specs[item]}</p>
+            <h1>{item + ':'}</h1> <p>{specs[item]}</p>
           </div>
         );
       } else {
-        Product = "";
+        Product = '';
       }
       return Product;
     });
@@ -37,7 +45,7 @@ const SingleProductSpecs = ({ highlights, specs }) => {
             <ul>{filteredSpecs}</ul>
           </>
         ) : (
-          ""
+          ''
         )}
       </div>
     </section>
