@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // Style
-import classes from "../Authentication.module.scss";
+import classes from '../Authentication.module.scss';
 // React Router
-import { Link, withRouter, useParams } from "react-router-dom";
+import { Link, withRouter, useParams } from 'react-router-dom';
 // Components
-import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
+import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
 // Axios
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * Main Component
  */
 
 const ResetPassword = (props) => {
-  const [passwordInput, setPasswordInput] = useState("");
-  const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordConfirmInput, setPasswordConfirmInput] = useState('');
   const [passwordEqual, setPasswordEqual] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [resetedPassword, setResetedPassword] = useState(false);
 
@@ -28,21 +28,21 @@ const ResetPassword = (props) => {
   };
 
   const clearInputFields = () => {
-    setPasswordInput("");
-    setPasswordConfirmInput("");
+    setPasswordInput('');
+    setPasswordConfirmInput('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (passwordInput !== passwordConfirmInput) {
-      return setError("Passwords not matching");
+      return setError('Passwords not matching');
     }
 
-    if (!token) return setError("Not a valid token");
+    if (!token) return setError('Not a valid token');
 
     try {
       setResetedPassword(false);
-      setError("");
+      setError('');
       setLoading(true);
       const user = {
         password: passwordInput,
@@ -68,7 +68,7 @@ const ResetPassword = (props) => {
     let timer;
     if (resetedPassword) {
       timer = setTimeout(() => {
-        props.history.push("/login");
+        props.history.push('/login');
       }, [2000]);
     }
     return () => clearTimeout(timer);
@@ -82,7 +82,7 @@ const ResetPassword = (props) => {
             <p>{error}</p>
           </div>
         ) : (
-          ""
+          ''
         )}
 
         {resetedPassword ? (
@@ -90,37 +90,39 @@ const ResetPassword = (props) => {
             <p>Successfully Changed your password</p>
           </div>
         ) : (
-          ""
+          ''
         )}
 
         <div className={classes.InputGroup}>
           <label htmlFor="password">New password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             name="password"
             autoComplete="off"
             placeholder="New password"
+            tabIndex="1"
             required
           />
         </div>
 
         <div
           className={[classes.InputGroup, !passwordEqual && classes.Error].join(
-            " "
+            ' '
           )}
         >
           <label htmlFor="passwordConfirm">Confirm new password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="passwordConfirm"
             value={passwordConfirmInput}
             onChange={checkIsPasswordEqual}
             name="password"
             autoComplete="off"
             placeholder="Confirm new password"
+            tabIndex="2"
             required
           />
         </div>
@@ -141,9 +143,13 @@ const ResetPassword = (props) => {
           </label>
         </div>
 
-        <button type="submit" className={loading ? classes.Disabled : ""}>
-          {loading ? <ButtonLoader /> : "Reset Password"}
-        </button>
+        <ButtonWithLoader
+          name="reset password"
+          capitalize
+          loading={loading}
+          submit
+          tabIndex="3"
+        />
       </form>
 
       <div className={classes.BottomText}>

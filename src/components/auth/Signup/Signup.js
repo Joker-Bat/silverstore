@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // Style
-import classes from "../Authentication.module.scss";
+import classes from '../Authentication.module.scss';
 // React Router
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 // Components
-import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
+import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
 // Axios
-import axios from "axios";
+import axios from 'axios';
 // Redux toolkit
-import { useDispatch } from "react-redux";
-import { setToken } from "../../../store/auth/authSlice";
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../../store/auth/authSlice';
 
 /**
  * Main Component
@@ -18,13 +18,13 @@ import { setToken } from "../../../store/auth/authSlice";
 const Signup = (props) => {
   const dispatch = useDispatch();
 
-  const [emailInput, setEmailInput] = useState("");
-  const [usernameInput, setUsernameInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
+  const [emailInput, setEmailInput] = useState('');
+  const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordConfirmInput, setPasswordConfirmInput] = useState('');
   const [passwordEqual, setPasswordEqual] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
   let timer;
@@ -40,27 +40,27 @@ const Signup = (props) => {
   };
 
   const clearInputFields = () => {
-    setEmailInput("");
-    setUsernameInput("");
-    setPasswordInput("");
-    setPasswordConfirmInput("");
+    setEmailInput('');
+    setUsernameInput('');
+    setPasswordInput('');
+    setPasswordConfirmInput('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (passwordInput !== passwordConfirmInput) {
-      return setError("Passwords not matching");
+      return setError('Passwords not matching');
     }
     try {
       setSignedUp(false);
-      setError("");
+      setError('');
       setLoading(true);
       const user = {
         name: usernameInput,
         email: emailInput,
         password: passwordInput,
       };
-      const res = await axios.post("/api/v1/users/signup", user);
+      const res = await axios.post('/api/v1/users/signup', user);
       setTokenToLocalAndState(res.data.token);
       setSignedUp(true);
       setLoading(false);
@@ -91,7 +91,7 @@ const Signup = (props) => {
             <p>{error}</p>
           </div>
         ) : (
-          ""
+          ''
         )}
 
         {signedUp ? (
@@ -99,22 +99,8 @@ const Signup = (props) => {
             <p>Successfully Created Account</p>
           </div>
         ) : (
-          ""
+          ''
         )}
-
-        <div className={classes.InputGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={emailInput}
-            onChange={(e) => setEmailInput(e.target.value)}
-            name="email"
-            autoComplete="off"
-            placeholder="Email"
-            required
-          />
-        </div>
 
         <div className={classes.InputGroup}>
           <label htmlFor="username">Username</label>
@@ -126,6 +112,22 @@ const Signup = (props) => {
             name="username"
             autoComplete="off"
             placeholder="Username"
+            tabIndex="1"
+            required
+          />
+        </div>
+
+        <div className={classes.InputGroup}>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={emailInput}
+            onChange={(e) => setEmailInput(e.target.value)}
+            name="email"
+            autoComplete="off"
+            placeholder="Email"
+            tabIndex="2"
             required
           />
         </div>
@@ -133,31 +135,33 @@ const Signup = (props) => {
         <div className={classes.InputGroup}>
           <label htmlFor="password">Password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             name="password"
             autoComplete="off"
             placeholder="Password"
+            tabIndex="3"
             required
           />
         </div>
 
         <div
           className={[classes.InputGroup, !passwordEqual && classes.Error].join(
-            " "
+            ' '
           )}
         >
           <label htmlFor="passwordConfirm">Confirm Password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="passwordConfirm"
             value={passwordConfirmInput}
             onChange={checkIsPasswordEqual}
             name="password"
             autoComplete="off"
             placeholder="Confirm Password"
+            tabIndex="4"
             required
           />
         </div>
@@ -178,9 +182,13 @@ const Signup = (props) => {
           </label>
         </div>
 
-        <button type="submit" className={loading ? classes.Disabled : ""}>
-          {loading ? <ButtonLoader /> : "Sign Up"}
-        </button>
+        <ButtonWithLoader
+          name="sign up"
+          capitalize
+          loading={loading}
+          submit
+          tabIndex="5"
+        />
       </form>
 
       <div className={classes.BottomText}>

@@ -1,35 +1,35 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // Styles
-import classes from "../Authentication.module.scss";
+import classes from '../Authentication.module.scss';
 // React Router
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter } from 'react-router-dom';
 // Components
-import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
+import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
 // Axios
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * Main Component
  */
 
 const ForgotPassword = (props) => {
-  const [emailInput, setEmailInput] = useState("");
+  const [emailInput, setEmailInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [tokenSended, setTokenSended] = useState(false);
 
   const clearInputFields = () => {
-    setEmailInput("");
+    setEmailInput('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setError("");
+      setError('');
       setTokenSended(false);
       setLoading(true);
       const user = { email: emailInput };
-      await axios.post("/api/v1/users/forgotpassword", user);
+      await axios.post('/api/v1/users/forgotpassword', user);
       setLoading(false);
       setTokenSended(true);
     } catch (err) {
@@ -47,7 +47,7 @@ const ForgotPassword = (props) => {
             <p>{error}</p>
           </div>
         ) : (
-          ""
+          ''
         )}
 
         {tokenSended ? (
@@ -55,7 +55,7 @@ const ForgotPassword = (props) => {
             <p>Password reset link send to your mail</p>
           </div>
         ) : (
-          ""
+          ''
         )}
         <div className={classes.InputGroup}>
           <label htmlFor="email">Email</label>
@@ -71,9 +71,12 @@ const ForgotPassword = (props) => {
           />
         </div>
 
-        <button type="submit" className={loading ? classes.Disabled : ""}>
-          {loading ? <ButtonLoader /> : "Reset Password"}
-        </button>
+        <ButtonWithLoader
+          name="forgot password"
+          capitalize
+          loading={loading}
+          submit
+        />
       </form>
 
       <div className={classes.BottomText}>

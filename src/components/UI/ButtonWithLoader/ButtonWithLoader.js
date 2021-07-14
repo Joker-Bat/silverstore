@@ -13,6 +13,7 @@ const ButtonWithLoader = ({
   clicked,
   uppercase,
   capitalize,
+  tabIndex,
 }) => {
   const buttonClass = [classes.ButtonWithLoader];
   loading && buttonClass.push(classes.Disabled);
@@ -21,6 +22,7 @@ const ButtonWithLoader = ({
 
   return (
     <button
+      tabIndex={tabIndex ? tabIndex : ''}
       type={submit ? 'submit' : 'button'}
       className={buttonClass.join(' ')}
       onClick={clicked}

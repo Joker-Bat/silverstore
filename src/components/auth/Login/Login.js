@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // Styles
-import classes from "../Authentication.module.scss";
+import classes from '../Authentication.module.scss';
 // React Router
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 // Components
-import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
+import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
 // Axios
-import axios from "axios";
+import axios from 'axios';
 // Redux toolkit
-import { useDispatch } from "react-redux";
-import { setToken } from "../../../store/auth/authSlice";
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../../store/auth/authSlice';
 
 /**
  * Main Component
@@ -18,11 +18,11 @@ import { setToken } from "../../../store/auth/authSlice";
 const Login = (props) => {
   const dispatch = useDispatch();
 
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   let timer;
 
@@ -37,18 +37,18 @@ const Login = (props) => {
   };
 
   const clearInputFields = () => {
-    setEmailInput("");
-    setPasswordInput("");
+    setEmailInput('');
+    setPasswordInput('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setError("");
+      setError('');
       setLoggedIn(false);
       setLoading(true);
       const user = { email: emailInput, password: passwordInput };
-      const res = await axios.post("/api/v1/users/login", user);
+      const res = await axios.post('/api/v1/users/login', user);
       setTokenToLocalAndState(res.data.token);
       setLoading(false);
       setLoggedIn(true);
@@ -72,7 +72,7 @@ const Login = (props) => {
             <p>{error}</p>
           </div>
         ) : (
-          ""
+          ''
         )}
 
         {loggedIn ? (
@@ -80,7 +80,7 @@ const Login = (props) => {
             <p>Successfully Logged In</p>
           </div>
         ) : (
-          ""
+          ''
         )}
         <div className={classes.InputGroup}>
           <label htmlFor="email">Email</label>
@@ -100,7 +100,7 @@ const Login = (props) => {
         <div className={classes.InputGroup}>
           <label htmlFor="password">Password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             id="password"
@@ -129,13 +129,13 @@ const Login = (props) => {
           </label>
         </div>
 
-        <button
-          type="submit"
+        <ButtonWithLoader
+          name="log in"
+          capitalize
+          loading={loading}
+          submit
           tabIndex="3"
-          className={loading ? classes.Disabled : ""}
-        >
-          {loading ? <ButtonLoader /> : "Log In"}
-        </button>
+        />
       </form>
 
       <div className={classes.BottomText}>
