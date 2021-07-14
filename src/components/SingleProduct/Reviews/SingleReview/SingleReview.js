@@ -10,7 +10,11 @@ const SingleReview = ({ item }) => {
     <div className={classes.Review}>
       <div className={classes.UserIcon}>
         {item.userPhoto ? (
-          <img src={`/images/users/${item.userPhoto}`} alt={item.userName} />
+          item.userPhoto === 'default.png' ? (
+            <FaUser />
+          ) : (
+            <img src={`/images/users/${item.userPhoto}`} alt={item.userName} />
+          )
         ) : (
           <FaUser />
         )}
