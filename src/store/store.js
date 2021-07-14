@@ -8,7 +8,7 @@ import cartReducer from './cart/cartSlice';
 // User Reducer
 import authReducer from './auth/authSlice';
 // Review Reducr
-import reviewReducer from './review/reviewSlice';
+import singleProductReducer from './singleProduct/singleProductSlice';
 
 export default configureStore({
   reducer: {
@@ -16,6 +16,6 @@ export default configureStore({
     products: productsReducer,
     cart: cartReducer,
     auth: authReducer,
-    review: reviewReducer,
+    singleProduct: singleProductReducer,
   },
 });

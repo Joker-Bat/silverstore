@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import classes from './AddReviewBox.module.scss';
 // Axios
 import axios from 'axios';
+// Helperfunctions
+import { updateReviewStructure } from '../../../../utilities/helperFunctions';
 // Components
 import SimpleButton from '../../../UI/SimpleButton/SimpleButton';
 // Icons
@@ -10,7 +12,7 @@ import { FaStar } from 'react-icons/fa';
 import { withRouter } from 'react-router-dom';
 // React Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { setReviewAdded } from '../../../../store/review/reviewSlice';
+import { addReview } from '../../../../store/singleProduct/singleProductSlice';
 
 // HelperFunctions
 const getTitleByRating = (value) => {
@@ -79,34 +81,15 @@ const AddReview = (props) => {
           `/api/v1/reviews/add/${props.id}`,
           currentReview
         );
-        console.log(res.data);
-        dispatch(setReviewAdded());
+        const createdReview = updateReviewStructure([res.data.data.review]);
+        dispatch(addReview(createdReview));
         clearAllStates();
         props.close();
       } catch (err) {
+        clearAllStates();
+        props.close();
         console.log('Error', err.response);
       }
-      // Current localReviews in localStorage
-      // const currentLocalReviews = JSON.parse(
-      //   localStorage.getItem('localReviews')
-      // );
-      // If already localReview is there then add to them
-      // if (currentLocalReviews) {
-      //   currentLocalReviews.push(currentReview);
-      //   localStorage.setItem(
-      //     'localReviews',
-      //     JSON.stringify(currentLocalReviews)
-      //   );
-      //   props.updateLocalReviews((prev) => prev + 1);
-      // } else {
-      //   // insert an object into an array
-      //   const allReviews = [currentReview];
-      //   // Set this array to localStorage
-      //   localStorage.setItem('localReviews', JSON.stringify(allReviews));
-      //   props.updateLocalReviews((prev) => prev + 1);
-      // }
-
-      // Clear All states and close modal
     } else {
       props.history.push('/login');
     }

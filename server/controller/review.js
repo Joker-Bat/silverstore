@@ -20,7 +20,7 @@ exports.addReview = catchAsync(async (req, res, next) => {
       new AppError('Users are only allowed to add one review for product', 400)
     );
 
-  await Review.create({
+  const review = await Review.create({
     productId,
     user: id,
     reviewTitle,
@@ -28,9 +28,14 @@ exports.addReview = catchAsync(async (req, res, next) => {
     rating,
   });
 
+  const createdReviews = await Review.findById(review._id);
+
   res.status(200).json({
     status: 'Success',
     message: 'Review added successfully',
+    data: {
+      review: createdReviews,
+    },
   });
 });
 

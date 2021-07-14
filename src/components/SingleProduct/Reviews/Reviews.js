@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 
 const Reviews = (props) => {
   const { authToken } = useSelector((state) => state.auth);
-  const { reviews } = useSelector((state) => state.review);
+  const { reviews } = useSelector((state) => state.singleProduct);
 
   const { id } = props;
   // Open or close Add Review Container
