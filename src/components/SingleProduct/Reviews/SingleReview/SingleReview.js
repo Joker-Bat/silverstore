@@ -1,15 +1,19 @@
-import React from "react";
+import React from 'react';
 // Styles
-import classes from "./SingleReview.module.scss";
+import classes from './SingleReview.module.scss';
 // Icons
-import { FaStar } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaStar } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 
 const SingleReview = ({ item }) => {
   return (
     <div className={classes.Review}>
       <div className={classes.UserIcon}>
-        <FaUser />
+        {item.userPhoto ? (
+          <img src={`/images/users/${item.userPhoto}`} alt={item.userName} />
+        ) : (
+          <FaUser />
+        )}
       </div>
       <div className={classes.ReviewDetail}>
         <div className={classes.UserDetails}>
