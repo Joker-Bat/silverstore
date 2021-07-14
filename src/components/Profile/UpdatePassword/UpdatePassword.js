@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // Styles
-import classes from "./UpdatePassword.module.scss";
+import classes from './UpdatePassword.module.scss';
 // Axios
-import axios from "axios";
+import axios from 'axios';
 // Components
-import ErrorMessage from "../../UI/ErrorMessage/ErrorMessage";
-import SuccessMessage from "../../UI/SuccessMessage/SuccessMessage";
-import ButtonLoader from "../../UI/ButtonLoader/ButtonLoader";
+import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
+import SuccessMessage from '../../UI/SuccessMessage/SuccessMessage';
+import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
 
 /**
  * Main Component
  */
 
 const UpdatePassword = () => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [passwordsEqual, setPasswordsEqual] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
+  const [passwordError, setPasswordError] = useState('');
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -27,19 +27,19 @@ const UpdatePassword = () => {
   };
 
   const clearInputFields = () => {
-    setOldPassword("");
-    setNewPassword("");
-    setNewPasswordConfirm("");
+    setOldPassword('');
+    setNewPassword('');
+    setNewPasswordConfirm('');
   };
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
     if (newPassword !== newPasswordConfirm)
-      return setPasswordError("New Passwords not match");
+      return setPasswordError('New Passwords not match');
 
     try {
       setPasswordLoading(true);
-      await axios.patch("/api/v1/users/updatepassword", {
+      await axios.patch('/api/v1/users/updatepassword', {
         oldPassword,
         newPassword,
       });
@@ -61,7 +61,7 @@ const UpdatePassword = () => {
   useEffect(() => {
     let timer;
     timer = setTimeout(() => {
-      setPasswordError("");
+      setPasswordError('');
       setPasswordSuccess(false);
     }, 4000);
 
@@ -71,23 +71,23 @@ const UpdatePassword = () => {
   return (
     <div className={classes.UpdatePasswordContainer}>
       <h2>update password</h2>
-      {passwordError ? <ErrorMessage message={passwordError} /> : ""}
+      {passwordError ? <ErrorMessage message={passwordError} /> : ''}
       {passwordSuccess ? (
         <SuccessMessage message="Password updated try login again" />
       ) : (
-        ""
+        ''
       )}
       <form onSubmit={handlePasswordUpdate}>
         {/* Below input field is for accesability */}
         <input
           type="text"
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           autoComplete="username"
         />
         <div className={classes.InputGroup}>
           <label htmlFor="oldPassword">old password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
             autoComplete="current-password"
@@ -99,7 +99,7 @@ const UpdatePassword = () => {
         <div className={classes.InputGroup}>
           <label htmlFor="newPassword">new password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             id="newPassword"
@@ -111,11 +111,11 @@ const UpdatePassword = () => {
           className={[
             classes.InputGroup,
             !passwordsEqual && classes.Error,
-          ].join(" ")}
+          ].join(' ')}
         >
           <label htmlFor="newPasswordConfirm">new password confirm</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             value={newPasswordConfirm}
             onChange={handlePasswordEqual}
             id="newPasswordConfirm"
@@ -138,12 +138,12 @@ const UpdatePassword = () => {
             Show password
           </label>
         </div>
-        <button
-          type="submit"
-          className={passwordLoading ? classes.Disabled : ""}
-        >
-          {passwordLoading ? <ButtonLoader /> : "Update password"}
-        </button>
+        <ButtonWithLoader
+          name="update password"
+          capitalize
+          loading={passwordLoading}
+          submit
+        />
       </form>
     </div>
   );

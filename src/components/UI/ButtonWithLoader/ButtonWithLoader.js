@@ -12,11 +12,12 @@ const ButtonWithLoader = ({
   submit,
   clicked,
   uppercase,
+  disabled,
   capitalize,
   tabIndex,
 }) => {
   const buttonClass = [classes.ButtonWithLoader];
-  loading && buttonClass.push(classes.Disabled);
+  (loading || disabled) && buttonClass.push(classes.Disabled);
   uppercase && buttonClass.push(classes.Uppercase);
   capitalize && buttonClass.push(classes.Capitalize);
 
