@@ -1,8 +1,8 @@
-const path = require("path");
-const multer = require("multer");
-const sharp = require("sharp");
-const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
+const path = require('path');
+const multer = require('multer');
+const sharp = require('sharp');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 const multerStorage = multer.memoryStorage();
 
@@ -11,7 +11,7 @@ function checkFileType(file, cb) {
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
   if (mimetype && extname) return cb(null, true);
-  cb("filetype");
+  cb('filetype');
 }
 
 const multerUpload = multer({
@@ -22,13 +22,13 @@ const multerUpload = multer({
 });
 
 exports.upload = (req, res, next) => {
-  const uploadMiddleWare = multerUpload.single("photo");
+  const uploadMiddleWare = multerUpload.single('photo');
   uploadMiddleWare(req, res, function (err) {
     if (err instanceof multer.MulterError) {
-      return next(new AppError("File is too large", 400));
+      return next(new AppError('File is too large', 400));
     } else if (err) {
-      if (err === "filetype") {
-        return next(new AppError("Select only image files"));
+      if (err === 'filetype') {
+        return next(new AppError('Select only image files'));
       }
       return next(err);
     }
@@ -41,9 +41,9 @@ exports.resize = catchAsync(async (req, res, next) => {
 
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
-  await sharp(req.file.buffer)
+  await sharp(req.file.buffer, { failOnError: false })
     .resize(500, 500)
-    .toFormat("jpeg")
+    .toFormat('jpeg')
     .jpeg({ quality: 90 })
     .toFile(`public/images/users/${req.file.filename}`);
 
