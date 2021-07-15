@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 // Styles
 import classes from './SingleProductDetails.module.scss';
 // React Router
@@ -33,6 +33,32 @@ const SingleProductDetails = (props) => {
   const [count, setCount] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  // Success Message
+  const successMessageInProduct = useCallback(
+    (message) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setSuccessMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeSuccessMessage());
+      }, 2000);
+    },
+    [dispatch]
+  );
+  // Error Message
+  const errorMessageInProduct = useCallback(
+    (message, path) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setErrorMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+        props.history.push(path);
+      }, 2000);
+    },
+    [dispatch, props.history]
+  );
+
   const increaseCounter = () => {
     setCount((prev) => prev + 1);
   };
@@ -63,7 +89,6 @@ const SingleProductDetails = (props) => {
 
   // Add products to cart
   const addToCart = async () => {
-    let timer;
     if (authToken) {
       const currentProductState = { id: currentProduct.id, count };
       try {
@@ -75,30 +100,17 @@ const SingleProductDetails = (props) => {
         dispatch(addCartItem(currentProductState));
         setLoading(false);
         // Below lines for showing message to user
-        clearTimeout(timer);
-        dispatch(setSuccessMessage('Cart added successfully'));
-        timer = setTimeout(() => {
-          dispatch(removeSuccessMessage());
-        }, 1500);
+        successMessageInProduct('Cart added successfully');
         // Reset count in product page
         setCount(1);
       } catch (err) {
         setLoading(false);
         // For message
-        clearTimeout(timer);
-        dispatch(setErrorMessage('Something went wrong with connection'));
-        timer = setTimeout(() => {
-          dispatch(removeErrorMessage());
-        }, 2000);
+        errorMessageInProduct('Something went wrong with connection');
       }
     } else {
       // For message and redirect
-      clearTimeout(timer);
-      dispatch(setErrorMessage('You are not logged in'));
-      timer = setTimeout(() => {
-        dispatch(removeErrorMessage());
-        props.history.push('/login');
-      }, 2000);
+      errorMessageInProduct('Something went wrong with connection', '/login');
     }
   };
 

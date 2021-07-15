@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 // Styles
 import classes from './AddReviewBox.module.scss';
 // Axios
@@ -70,6 +70,20 @@ const AddReview = (props) => {
     setReviewLoading(false);
   };
 
+  // Error Message
+  const errorMessageInReview = useCallback(
+    (message, path) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setErrorMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+        props.history.push(path);
+      }, 2000);
+    },
+    [dispatch, props.history]
+  );
+
   // Post an review to localStorage to render
   const addReviewHandler = async () => {
     let timer;
@@ -98,20 +112,12 @@ const AddReview = (props) => {
         // If error happen show error message
         clearAllStates();
         props.close();
-        clearTimeout(timer);
-        dispatch(setErrorMessage(err.response.data.error.message));
-        timer = setTimeout(() => {
-          dispatch(removeErrorMessage());
-        }, 3000);
+        errorMessageInReview(err.response.data.error.message);
       }
     } else {
       // If not logged in
       clearTimeout(timer);
-      dispatch(setErrorMessage('You are not logged in'));
-      timer = setTimeout(() => {
-        dispatch(removeErrorMessage());
-        props.history.push('/login');
-      }, 2500);
+      errorMessageInReview('You are not logged in', '/login');
     }
   };
 

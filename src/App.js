@@ -66,23 +66,31 @@ const App = () => {
     }
   }, [dispatch]);
 
+  // Error Message
+  const errorMessageInApp = useCallback(
+    (message) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setErrorMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+      }, 2000);
+    },
+    [dispatch]
+  );
+
   // At first render check if token is not expired
   useEffect(() => {
     const fetchData = async () => {
-      let timer;
       try {
         await pureAxios.get('/api/v1/users/isloggedin');
       } catch (err) {
-        clearTimeout(timer);
-        dispatch(setErrorMessage('You are not logged in'));
-        timer = setTimeout(() => {
-          dispatch(removeErrorMessage());
-        }, 3000);
+        errorMessageInApp('You are not logged in');
         dispatch(removeToken());
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, errorMessageInApp]);
 
   // Get Category State
   const getProductsPageDetails = useCallback(
@@ -103,7 +111,6 @@ const App = () => {
   useEffect(() => {
     if (productRef.length === 0) {
       const fetchData = async () => {
-        let timer;
         try {
           dispatch(setGlobalLoading(true));
           const res = await axios.get('/api/v1/products');
@@ -117,31 +124,22 @@ const App = () => {
           dispatch(setAllProducts(products));
           dispatch(setGlobalLoading(false));
         } catch (err) {
-          clearTimeout(timer);
-          dispatch(setErrorMessage('Something went wrong with connection'));
-          timer = setTimeout(() => {
-            dispatch(removeErrorMessage());
-          }, 3000);
+          errorMessageInApp('Something went wrong with connection');
         }
       };
       fetchData();
     }
-  }, [productRef, dispatch, getProductsPageDetails]);
+  }, [productRef, dispatch, getProductsPageDetails, errorMessageInApp]);
 
   // To fetch Cart item from server and set to state
   useEffect(() => {
-    let timer;
     if (authToken) {
       const fetchData = async () => {
         try {
           const res = await pureAxios.get('/api/v1/carts/getall');
           dispatch(setCartProducts(res.data.data.carts));
         } catch (err) {
-          clearTimeout(timer);
-          dispatch(setErrorMessage('Something went wrong with connection'));
-          timer = setTimeout(() => {
-            dispatch(removeErrorMessage());
-          }, 3000);
+          errorMessageInApp('Something went wrong with connection');
         }
       };
 
@@ -149,7 +147,7 @@ const App = () => {
     }
 
     // Here i am using productRef from productSlice but this wont do any change both are same states
-  }, [productRef, authToken, dispatch]);
+  }, [productRef, authToken, dispatch, errorMessageInApp]);
 
   let routes = (
     <Suspense fallback={<Loading />}>
