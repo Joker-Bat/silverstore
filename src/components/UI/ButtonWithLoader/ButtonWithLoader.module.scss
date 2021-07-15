@@ -2,9 +2,9 @@
 @import '../../../styles/ResponsiveSheet.scss';
 
 .ButtonWithLoader {
-  width: auto;
-  min-width: 40%;
+  min-width: 30%;
   height: 40px;
+  max-width: 300px;
   appearance: none;
   border: none;
   background-color: var(--main);
@@ -13,7 +13,7 @@
   cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease-in;
   padding: 0.8rem 1.8rem;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   border-radius: 4px;
   display: flex;
   align-items: center;

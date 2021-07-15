@@ -27,6 +27,7 @@ import { removeToken } from './store/auth/authSlice';
 import { arrayToObjectState } from './utilities/helperFunctions';
 // Components
 import ErrorMessage from './components/UI/ErrorMessage/ErrorMessage';
+import SuccessMessage from './components/UI/SuccessMessage/SuccessMessage';
 
 // Lazy Loading Products
 const lazySingleProduct = lazy(() =>
@@ -53,7 +54,9 @@ const App = () => {
   const dispatch = useDispatch();
   const { authToken } = useSelector((state) => state.auth);
   const { productRef } = useSelector((state) => state.products);
-  const { errorMessage } = useSelector((state) => state.notification);
+  const { errorMessage, successMessage } = useSelector(
+    (state) => state.notification
+  );
 
   // Get auth token if available
   useEffect(() => {
@@ -184,6 +187,10 @@ const App = () => {
         <ErrorMessage
           message={errorMessage}
           show={errorMessage ? true : false}
+        />
+        <SuccessMessage
+          message={successMessage}
+          show={successMessage ? true : false}
         />
         {routes}
       </Layout>

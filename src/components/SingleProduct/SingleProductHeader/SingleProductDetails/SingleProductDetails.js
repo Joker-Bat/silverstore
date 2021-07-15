@@ -5,15 +5,17 @@ import classes from './SingleProductDetails.module.scss';
 import { withRouter } from 'react-router-dom';
 // Components
 import NumberFormat from 'react-number-format';
-import SimpleButton from '../../../UI/SimpleButton/SimpleButton';
 import Stars from './Stars/Stars';
 import ProductCounter from '../../../UI/ProductCounter/ProductCounter';
+import ButtonWithLoader from '../../../UI/ButtonWithLoader/ButtonWithLoader';
 //Redux toolkit
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem } from '../../../../store/cart/cartSlice';
 import {
   setErrorMessage,
   removeErrorMessage,
+  setSuccessMessage,
+  removeSuccessMessage,
 } from '../../../../store/notification/notificationSlice';
 // Axios
 import axios from 'axios';
@@ -29,6 +31,7 @@ const SingleProductDetails = (props) => {
   const { authToken } = useSelector((state) => state.auth);
   // Counter for a product
   const [count, setCount] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const increaseCounter = () => {
     setCount((prev) => prev + 1);
@@ -64,14 +67,24 @@ const SingleProductDetails = (props) => {
     if (authToken) {
       const currentProductState = { id: currentProduct.id, count };
       try {
+        setLoading(true);
         await axios.post('/api/v1/carts/add', {
           productId: currentProduct.id,
           count,
         });
         dispatch(addCartItem(currentProductState));
+        setLoading(false);
+        // Below lines for showing message to user
+        clearTimeout(timer);
+        dispatch(setSuccessMessage('Cart added successfully'));
+        timer = setTimeout(() => {
+          dispatch(removeSuccessMessage());
+        }, 1500);
         // Reset count in product page
         setCount(1);
       } catch (err) {
+        setLoading(false);
+        // For message
         clearTimeout(timer);
         dispatch(setErrorMessage('Something went wrong with connection'));
         timer = setTimeout(() => {
@@ -79,6 +92,7 @@ const SingleProductDetails = (props) => {
         }, 2000);
       }
     } else {
+      // For message and redirect
       clearTimeout(timer);
       dispatch(setErrorMessage('You are not logged in'));
       timer = setTimeout(() => {
@@ -154,7 +168,12 @@ const SingleProductDetails = (props) => {
 
       {/* Add to cart button */}
       <div className={classes.AddToCartBtn}>
-        <SimpleButton large name="add to cart" uppercase clicked={addToCart} />
+        <ButtonWithLoader
+          name="add to cart"
+          uppercase
+          clicked={addToCart}
+          loading={loading}
+        />
       </div>
     </div>
   );

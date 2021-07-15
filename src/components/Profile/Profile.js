@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 // Styles
 import classes from './Profile.module.scss';
 // Axios
@@ -6,11 +6,14 @@ import axios from 'axios';
 // Redux toolkit
 import { useDispatch } from 'react-redux';
 import { removeToken } from '../../store/auth/authSlice';
+import {
+  setErrorMessage,
+  setSuccessMessage,
+  removeSuccessMessage,
+  removeErrorMessage,
+} from '../../store/notification/notificationSlice';
 // Components
-import SimpleButton from '../UI/SimpleButton/SimpleButton';
 import Title from '../UI/Title/Title';
-import ErrorMessage from '../UI/ErrorMessage/ErrorMessage';
-import SuccessMessage from '../UI/SuccessMessage/SuccessMessage';
 import UpdatePassword from './UpdatePassword/UpdatePassword';
 import Loading from '../UI/Loading/Loading';
 import ButtonWithLoader from '../UI/ButtonWithLoader/ButtonWithLoader';
@@ -23,8 +26,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   // For profile pic upload
-  const [pictureError, setPictureError] = useState('');
-  const [pictureSuccess, setPictureSuccess] = useState(false);
   const [pictureLoading, setPictureLoading] = useState(false);
   const [currentPic, setCurrentPic] = useState('');
   const [newPic, setNewPic] = useState(null);
@@ -36,13 +37,38 @@ const Profile = () => {
   const [profileNameRef, setProfileNameRef] = useState('');
   const [profileEmailRef, setProfileEmailRef] = useState('');
   const [profileUpdateDisabled, setProfileUploadDisabled] = useState(true);
-  const [profileError, setProfileError] = useState('');
-  const [profileSuccess, setProfileSuccess] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
-
-  // Common State for All update
+  // Logout
+  const [logoutLoading, setLogoutLoading] = useState(false);
+  // Common State for All update to refetch data
   const [profileUpdated, setProfileUpdated] = useState(false);
 
+  // Success Message
+  const successMessageInProfile = useCallback(
+    (message) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setSuccessMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeSuccessMessage());
+      }, 2000);
+    },
+    [dispatch]
+  );
+  // Error Message
+  const errorMessageInProfile = useCallback(
+    (message) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setErrorMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+      }, 2000);
+    },
+    [dispatch]
+  );
+
+  // Fill all state values from data
   const fillStateValues = (user) => {
     setProfileName(user.name);
     setProfileNameRef(user.name);
@@ -50,22 +76,33 @@ const Profile = () => {
     setProfileEmailRef(user.email);
     setCurrentPic(user.photo);
   };
-
+  // Profile Picture updated clear state
   const successfullyPictureUpdated = () => {
     setProfileUpdated(true);
-    setPictureSuccess(true);
     setNewFilename('');
     setPictureLoading(false);
   };
-
+  // Logout
   const handleLogout = async () => {
-    await axios.get('/api/v1/users/logout');
-    dispatch(removeToken());
+    let timer;
+    try {
+      setLogoutLoading(true);
+      await axios.get('/api/v1/users/logout');
+      setLogoutLoading(false);
+      dispatch(removeToken());
+    } catch (err) {
+      setLogoutLoading(false);
+      clearTimeout(timer);
+      dispatch(setErrorMessage('Something went wrong with connection'));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+      }, 2000);
+    }
   };
-
+  // Update profile picture
   const handlePictureUpdate = async (e) => {
     e.preventDefault();
-    if (!newPic) return setPictureError('Select image to upload');
+    if (!newPic) return errorMessageInProfile('Select image to upload');
     const fd = new FormData();
     fd.append('photo', newPic);
     try {
@@ -78,16 +115,17 @@ const Profile = () => {
         },
       });
       successfullyPictureUpdated();
+      successMessageInProfile('Profile picture updated successfully');
     } catch (err) {
       setPictureLoading(false);
-      setPictureError(err.response.data.message);
+      errorMessageInProfile(err.response.data.error.message);
     }
   };
-
+  // Update profile info name and email
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     if (profileUpdateDisabled) {
-      return setProfileError('Change data before update');
+      return errorMessageInProfile('Change data before update');
     }
     try {
       setProfileLoading(true);
@@ -95,22 +133,22 @@ const Profile = () => {
         name: profileName,
         email: profileEmail,
       });
-      setProfileSuccess(true);
+      successMessageInProfile('Profile info updated successfully');
       setProfileLoading(false);
       setProfileUpdated(true);
     } catch (err) {
       setProfileLoading(false);
-      console.log(err.response.data);
+      errorMessageInProfile(err.response.data.error.message);
     }
   };
-
+  // Choose only images
   const handleFileChange = (e) => {
     const currentImage = e.target.files[0];
     if (currentImage?.type.split('/')[0] === 'image') {
       setNewPic(currentImage);
       setNewFilename(currentImage.name);
     } else {
-      setPictureError('Select only image files');
+      errorMessageInProfile('Select only image files');
       setNewPic(null);
       setNewFilename('');
     }
@@ -119,24 +157,32 @@ const Profile = () => {
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
-      const res = await axios.get('/api/v1/users/profile');
-      fillStateValues(res.data.data.user);
+      try {
+        const res = await axios.get('/api/v1/users/profile');
+        fillStateValues(res.data.data.user);
+      } catch (err) {
+        errorMessageInProfile('Something went wrong with connection');
+      }
     };
     fetchData();
     setLoading(false);
-  }, []);
+  }, [errorMessageInProfile]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get('/api/v1/users/profile');
-      fillStateValues(res.data.data.user);
+      try {
+        const res = await axios.get('/api/v1/users/profile');
+        fillStateValues(res.data.data.user);
+      } catch (err) {
+        errorMessageInProfile('Something went wrong with connection');
+      }
     };
     if (profileUpdated) {
       fetchData();
       setProfileUpdated(false);
       setUploadPercentage('0%');
     }
-  }, [profileUpdated]);
+  }, [profileUpdated, errorMessageInProfile]);
 
   useEffect(() => {
     if (profileName === profileNameRef && profileEmail === profileEmailRef) {
@@ -145,26 +191,6 @@ const Profile = () => {
       setProfileUploadDisabled(false);
     }
   }, [profileName, profileEmail, profileNameRef, profileEmailRef]);
-
-  useEffect(() => {
-    let timer;
-    timer = setTimeout(() => {
-      setProfileError('');
-      setPictureError('');
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  }, [pictureError, profileError]);
-
-  useEffect(() => {
-    let timer;
-    timer = setTimeout(() => {
-      setPictureSuccess(false);
-      setProfileSuccess(false);
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  }, [pictureSuccess, profileSuccess]);
 
   return (
     <>
@@ -177,12 +203,6 @@ const Profile = () => {
               <img src={`/images/users/${currentPic}`} alt="emoji" />
             </div>
             <form onSubmit={handlePictureUpdate}>
-              {pictureError ? <ErrorMessage message={pictureError} /> : ''}
-              {pictureSuccess ? (
-                <SuccessMessage message="Profile picture updated" />
-              ) : (
-                ''
-              )}
               <input
                 type="file"
                 id="profilePic"
@@ -208,12 +228,6 @@ const Profile = () => {
           <div className={classes.UpdateDetailContainer}>
             <div className={classes.UpdateUserContainer}>
               <h2>update profile</h2>
-              {profileError ? <ErrorMessage message={profileError} /> : ''}
-              {profileSuccess ? (
-                <SuccessMessage message="Profile updated successfully" />
-              ) : (
-                ''
-              )}
               <form onSubmit={handleProfileUpdate}>
                 <input
                   type="text"
@@ -237,11 +251,11 @@ const Profile = () => {
               </form>
             </div>
             <UpdatePassword />
-            <SimpleButton
+            <ButtonWithLoader
               name="logout"
-              clicked={handleLogout}
-              small
               capitalize
+              clicked={handleLogout}
+              loading={logoutLoading}
             />
           </div>
         </div>
