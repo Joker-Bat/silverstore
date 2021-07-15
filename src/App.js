@@ -18,9 +18,16 @@ import { setToken } from './store/auth/authSlice';
 import { setPrice, setCategory } from './store/filter/filterSlice';
 import { setAllProducts, setCartProducts } from './store/cart/cartSlice';
 import { setProducts, setGlobalLoading } from './store/products/productsSlice';
+import {
+  removeErrorMessage,
+  setErrorMessage,
+} from './store/notification/notificationSlice';
 import { removeToken } from './store/auth/authSlice';
 // Helper function
 import { arrayToObjectState } from './utilities/helperFunctions';
+// Components
+import ErrorMessage from './components/UI/ErrorMessage/ErrorMessage';
+
 // Lazy Loading Products
 const lazySingleProduct = lazy(() =>
   import('./containers/SingleProduct/SingleProduct')
@@ -46,6 +53,7 @@ const App = () => {
   const dispatch = useDispatch();
   const { authToken } = useSelector((state) => state.auth);
   const { productRef } = useSelector((state) => state.products);
+  const { errorMessage } = useSelector((state) => state.notification);
 
   // Get auth token if available
   useEffect(() => {
@@ -58,9 +66,15 @@ const App = () => {
   // At first render check if token is not expired
   useEffect(() => {
     const fetchData = async () => {
+      let timer;
       try {
         await pureAxios.get('/api/v1/users/isloggedin');
       } catch (err) {
+        clearTimeout(timer);
+        dispatch(setErrorMessage('You are not logged in'));
+        timer = setTimeout(() => {
+          dispatch(removeErrorMessage());
+        }, 3000);
         dispatch(removeToken());
       }
     };
@@ -86,17 +100,26 @@ const App = () => {
   useEffect(() => {
     if (productRef.length === 0) {
       const fetchData = async () => {
-        dispatch(setGlobalLoading(true));
-        const res = await axios.get('/api/v1/products');
-        const products = res.data.data.products;
-        if (productRef.length === 0) {
-          dispatch(setProducts(products));
+        let timer;
+        try {
+          dispatch(setGlobalLoading(true));
+          const res = await axios.get('/api/v1/products');
+          const products = res.data.data.products;
+          if (productRef.length === 0) {
+            dispatch(setProducts(products));
+          }
+          // For Single Product page
+          getProductsPageDetails(products);
+          // For Cart
+          dispatch(setAllProducts(products));
+          dispatch(setGlobalLoading(false));
+        } catch (err) {
+          clearTimeout(timer);
+          dispatch(setErrorMessage('Something went wrong with connection'));
+          timer = setTimeout(() => {
+            dispatch(removeErrorMessage());
+          }, 3000);
         }
-        // For Single Product page
-        getProductsPageDetails(products);
-        // For Cart
-        dispatch(setAllProducts(products));
-        dispatch(setGlobalLoading(false));
       };
       fetchData();
     }
@@ -104,13 +127,18 @@ const App = () => {
 
   // To fetch Cart item from server and set to state
   useEffect(() => {
+    let timer;
     if (authToken) {
       const fetchData = async () => {
         try {
           const res = await pureAxios.get('/api/v1/carts/getall');
           dispatch(setCartProducts(res.data.data.carts));
         } catch (err) {
-          console.log('Error', err.response);
+          clearTimeout(timer);
+          dispatch(setErrorMessage('Something went wrong with connection'));
+          timer = setTimeout(() => {
+            dispatch(removeErrorMessage());
+          }, 3000);
         }
       };
 
@@ -152,7 +180,13 @@ const App = () => {
 
   return (
     <Router>
-      <Layout>{routes}</Layout>
+      <Layout>
+        <ErrorMessage
+          message={errorMessage}
+          show={errorMessage ? true : false}
+        />
+        {routes}
+      </Layout>
     </Router>
   );
 };

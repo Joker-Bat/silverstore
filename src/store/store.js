@@ -7,8 +7,10 @@ import productsReducer from './products/productsSlice';
 import cartReducer from './cart/cartSlice';
 // User Reducer
 import authReducer from './auth/authSlice';
-// Review Reducr
+// Review Reducer
 import singleProductReducer from './singleProduct/singleProductSlice';
+// Error Reducer
+import notificationReducer from './notification/notificationSlice';
 
 export default configureStore({
   reducer: {
@@ -17,5 +19,6 @@ export default configureStore({
     cart: cartReducer,
     auth: authReducer,
     singleProduct: singleProductReducer,
+    notification: notificationReducer,
   },
 });
