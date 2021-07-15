@@ -13,6 +13,10 @@ import { withRouter } from 'react-router-dom';
 // React Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { addReview } from '../../../../store/singleProduct/singleProductSlice';
+import {
+  setErrorMessage,
+  removeErrorMessage,
+} from '../../../../store/notification/notificationSlice';
 
 // HelperFunctions
 const getTitleByRating = (value) => {
@@ -68,6 +72,7 @@ const AddReview = (props) => {
 
   // Post an review to localStorage to render
   const addReviewHandler = async () => {
+    let timer;
     if (authToken) {
       // If no data there then return
       if (!currentStar || !reviewText) {
@@ -90,12 +95,23 @@ const AddReview = (props) => {
         clearAllStates();
         props.close();
       } catch (err) {
+        // If error happen show error message
         clearAllStates();
         props.close();
-        console.log('Error', err.response);
+        clearTimeout(timer);
+        dispatch(setErrorMessage(err.response.data.error.message));
+        timer = setTimeout(() => {
+          dispatch(removeErrorMessage());
+        }, 3000);
       }
     } else {
-      props.history.push('/login');
+      // If not logged in
+      clearTimeout(timer);
+      dispatch(setErrorMessage('You are not logged in'));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+        props.history.push('/login');
+      }, 2500);
     }
   };
 
@@ -186,7 +202,6 @@ const AddReview = (props) => {
             <p>{reviewLength}</p>
           </div>
         </div>
-        {/* <SimpleButton name="post" capitalize small clicked={addReview} /> */}
         <ButtonWithLoader
           name="post"
           clicked={addReviewHandler}

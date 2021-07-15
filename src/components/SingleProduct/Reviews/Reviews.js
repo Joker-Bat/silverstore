@@ -9,13 +9,18 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 import AddReviewBox from './AddReviewBox/AddReviewBox';
 import SingleReview from './SingleReview/SingleReview';
 // Redux toolkit
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  setErrorMessage,
+  removeErrorMessage,
+} from '../../../store/notification/notificationSlice';
 
 /*
   Main Component
 */
 
 const Reviews = (props) => {
+  const dispatch = useDispatch();
   const { authToken } = useSelector((state) => state.auth);
   const { reviews, currentProduct } = useSelector(
     (state) => state.singleProduct
@@ -27,10 +32,16 @@ const Reviews = (props) => {
 
   // Open or close Add Review Container
   const openReviewContainer = () => {
+    let timer;
     if (authToken) {
       setAddReview(true);
     } else {
-      props.history.push('/login');
+      clearTimeout(timer);
+      dispatch(setErrorMessage('You are not logged in'));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+        props.history.push('/login');
+      }, 2500);
     }
   };
   const closeReviewContainer = () => {
