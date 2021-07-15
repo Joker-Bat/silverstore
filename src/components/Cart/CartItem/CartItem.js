@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 // Styles
 import classes from './CartItem.module.scss';
 // Axios
@@ -16,6 +16,12 @@ import {
   increaseProductCount,
   decreaseProductCount,
 } from '../../../store/cart/cartSlice';
+import {
+  setErrorMessage,
+  setSuccessMessage,
+  removeErrorMessage,
+  removeSuccessMessage,
+} from '../../../store/notification/notificationSlice';
 
 /*
  * Main Conponent
@@ -27,13 +33,38 @@ const CartItem = ({ id, name, image, price, subTotal, slug }) => {
   const { products } = useSelector((state) => state.cart);
   const count = products.filter((item) => item.id === id)[0].count;
 
+  // Success Message
+  const successMessageInCart = useCallback(
+    (message) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setSuccessMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeSuccessMessage());
+      }, 2000);
+    },
+    [dispatch]
+  );
+  // Error Message
+  const errorMessageInCart = useCallback(
+    (message) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setErrorMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+      }, 2000);
+    },
+    [dispatch]
+  );
+
   // Increase or decrease count in Cart
   const increaseCount = async () => {
     try {
       await axios.patch(`/api/v1/carts/increase/${id}`);
       dispatch(increaseProductCount(id));
     } catch (err) {
-      console.log(err.response);
+      errorMessageInCart('Something went wrong with connection');
     }
   };
   const decreaseCount = async () => {
@@ -41,9 +72,11 @@ const CartItem = ({ id, name, image, price, subTotal, slug }) => {
       if (count > 1) {
         await axios.patch(`/api/v1/carts/decrease/${id}`);
         dispatch(decreaseProductCount(id));
+      } else {
+        errorMessageInCart('Better remove this product from cart');
       }
     } catch (err) {
-      console.log(err.response);
+      errorMessageInCart('Something went wrong with connection');
     }
   };
 
@@ -51,9 +84,10 @@ const CartItem = ({ id, name, image, price, subTotal, slug }) => {
   const handleRemoveCartItem = async () => {
     try {
       await axios.delete(`/api/v1/carts/remove/${id}`);
+      successMessageInCart('Product removed from cart successfully');
       dispatch(removeCartItem(id));
     } catch (err) {
-      console.log(err.response);
+      errorMessageInCart('Something went wrong with connection');
     }
   };
 
