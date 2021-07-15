@@ -11,6 +11,10 @@ import ProductCounter from '../../../UI/ProductCounter/ProductCounter';
 //Redux toolkit
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem } from '../../../../store/cart/cartSlice';
+import {
+  setErrorMessage,
+  removeErrorMessage,
+} from '../../../../store/notification/notificationSlice';
 // Axios
 import axios from 'axios';
 
@@ -56,6 +60,7 @@ const SingleProductDetails = (props) => {
 
   // Add products to cart
   const addToCart = async () => {
+    let timer;
     if (authToken) {
       const currentProductState = { id: currentProduct.id, count };
       try {
@@ -64,12 +69,22 @@ const SingleProductDetails = (props) => {
           count,
         });
         dispatch(addCartItem(currentProductState));
+        // Reset count in product page
         setCount(1);
       } catch (err) {
-        console.log('Error', err.response);
+        clearTimeout(timer);
+        dispatch(setErrorMessage('Something went wrong with connection'));
+        timer = setTimeout(() => {
+          dispatch(removeErrorMessage());
+        }, 2000);
       }
     } else {
-      props.history.push('/login');
+      clearTimeout(timer);
+      dispatch(setErrorMessage('You are not logged in'));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+        props.history.push('/login');
+      }, 2000);
     }
   };
 
