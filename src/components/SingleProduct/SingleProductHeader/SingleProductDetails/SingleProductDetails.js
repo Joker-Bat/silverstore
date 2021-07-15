@@ -110,7 +110,7 @@ const SingleProductDetails = (props) => {
       }
     } else {
       // For message and redirect
-      errorMessageInProduct('Something went wrong with connection', '/login');
+      errorMessageInProduct('You are not logged in', '/login');
     }
   };
 

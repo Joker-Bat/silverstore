@@ -26,6 +26,10 @@ const Login = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   let timer;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const setTokenToLocalAndState = (token) => {
     timer = setTimeout(() => {
       dispatch(setToken({ token }));
