@@ -6,12 +6,7 @@ import Loading from './components/UI/Loading/Loading';
 import axios from './axios-base';
 import pureAxios from 'axios';
 // Router
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 // Redux toolkit
 import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from './store/auth/authSlice';
@@ -28,6 +23,8 @@ import { arrayToObjectState } from './utilities/helperFunctions';
 // Components
 import ErrorMessage from './components/UI/ErrorMessage/ErrorMessage';
 import SuccessMessage from './components/UI/SuccessMessage/SuccessMessage';
+// Framer motion
+import { AnimatePresence } from 'framer-motion';
 
 // Lazy Loading Products
 const lazySingleProduct = lazy(() =>
@@ -51,6 +48,7 @@ const lazyResetPassword = lazy(() =>
  */
 
 const App = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { authToken } = useSelector((state) => state.auth);
   const { productRef } = useSelector((state) => state.products);
@@ -151,48 +149,47 @@ const App = () => {
 
   let routes = (
     <Suspense fallback={<Loading />}>
-      <Switch>
-        <Route path="/products/:id" exact component={lazySingleProduct} />
-        <Route path="/products" component={lazyProducts} />
-        <Route path="/forgotpassword" component={lazyForgotPassword} />
-        <Route path="/resetpassword/:token" component={lazyResetPassword} />
-        <Route path="/login" component={lazyLogin} />
-        <Route path="/signup" component={lazySignup} />
-        <Route exact path="/" component={lazyHomepage} />
-        <Redirect to="/login" />
-      </Switch>
+      <AnimatePresence exitBeforeEnter>
+        <Switch location={location} key={location.key}>
+          <Route path="/products/:id" exact component={lazySingleProduct} />
+          <Route path="/products" component={lazyProducts} />
+          <Route path="/forgotpassword" component={lazyForgotPassword} />
+          <Route path="/resetpassword/:token" component={lazyResetPassword} />
+          <Route path="/login" component={lazyLogin} />
+          <Route path="/signup" component={lazySignup} />
+          <Route exact path="/" component={lazyHomepage} />
+          <Redirect to="/login" />
+        </Switch>
+      </AnimatePresence>
     </Suspense>
   );
 
   if (authToken) {
     routes = (
       <Suspense fallback={<Loading />}>
-        <Switch>
-          <Route path="/products/:id" exact component={lazySingleProduct} />
-          <Route path="/products" component={lazyProducts} />
-          <Route path="/cart" component={lazyCart} />
-          <Route path="/profile" component={lazyProfile} />
-          <Route path="/" exact component={lazyHomepage} />
-          <Redirect to="/" />
-        </Switch>
+        <AnimatePresence exitBeforeEnter>
+          <Switch location={location} key={location.key}>
+            <Route path="/products/:id" exact component={lazySingleProduct} />
+            <Route path="/products" component={lazyProducts} />
+            <Route path="/cart" component={lazyCart} />
+            <Route path="/profile" component={lazyProfile} />
+            <Route path="/" exact component={lazyHomepage} />
+            <Redirect to="/" />
+          </Switch>
+        </AnimatePresence>
       </Suspense>
     );
   }
 
   return (
-    <Router>
-      <Layout>
-        <ErrorMessage
-          message={errorMessage}
-          show={errorMessage ? true : false}
-        />
-        <SuccessMessage
-          message={successMessage}
-          show={successMessage ? true : false}
-        />
-        {routes}
-      </Layout>
-    </Router>
+    <Layout>
+      <ErrorMessage message={errorMessage} show={errorMessage ? true : false} />
+      <SuccessMessage
+        message={successMessage}
+        show={successMessage ? true : false}
+      />
+      {routes}
+    </Layout>
   );
 };
 
