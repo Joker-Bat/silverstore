@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 // Styles
-import classes from "./Stars.module.scss";
+import classes from './Stars.module.scss';
 // Icons
-import { FaStar } from "react-icons/fa";
+import { FaStar } from 'react-icons/fa';
 
 const Stars = ({ averageRating }) => {
   return (
@@ -12,10 +12,10 @@ const Stars = ({ averageRating }) => {
         .map((item, index) => {
           const starClass = [
             classes.Star,
-            index + 1 <= averageRating && classes.Active,
+            index + 1 <= Math.ceil(averageRating) && classes.Active,
           ];
           return (
-            <span key={`Rating${item}${index}`} className={starClass.join(" ")}>
+            <span key={`Rating${item}${index}`} className={starClass.join(' ')}>
               <FaStar />
             </span>
           );

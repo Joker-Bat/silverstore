@@ -27,7 +27,9 @@ Main Component
 const SingleProductDetails = (props) => {
   // Redux toolkit
   const dispatch = useDispatch();
-  const { currentProduct } = useSelector((state) => state.singleProduct);
+  const { currentProduct, reviews } = useSelector(
+    (state) => state.singleProduct
+  );
   const { authToken } = useSelector((state) => state.auth);
   // Counter for a product
   const [count, setCount] = useState(1);
@@ -73,9 +75,9 @@ const SingleProductDetails = (props) => {
     });
   };
 
-  const noOfRatings = currentProduct.ratings.length;
+  const noOfRatings = reviews.length;
   const averageRating =
-    currentProduct.ratings
+    reviews
       .map((item) => item.stars)
       .reduce((acc, cur) => {
         return (acc += cur);
