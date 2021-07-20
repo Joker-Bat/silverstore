@@ -33,7 +33,6 @@ const Product = ({ name, image, price, searchingAnimation, id, history }) => {
       </div>
       <div className={classes.ProductDetails}>
         <h1>{truncateWords(name, 18)}</h1>
-        <h1>{imageLoading ? 'Loading' : 'Loaded'}</h1>
         <h3>
           <NumberFormat
             displayType={'text'}
