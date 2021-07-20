@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 // Axios
 import axios from '../../axios-base';
 import pureAxios from 'axios';
@@ -14,6 +14,10 @@ import {
   clearReviews,
   setCurrentProduct,
 } from '../../store/singleProduct/singleProductSlice';
+import {
+  setErrorMessage,
+  removeErrorMessage,
+} from '../../store/notification/notificationSlice';
 // Components
 import BreadCrumb from '../../components/BreadCrumb/BreadCrumb';
 import SingleProductHeader from '../../components/SingleProduct/SingleProductHeader/SingleProductHeader';
@@ -32,6 +36,19 @@ const SingleProduct = () => {
   const { id } = useParams();
   const [curProductId, setCurProductId] = useState(null);
 
+  // Error Message
+  const errorMessageInSingleProduct = useCallback(
+    (message) => {
+      let timer;
+      clearTimeout(timer);
+      dispatch(setErrorMessage(message));
+      timer = setTimeout(() => {
+        dispatch(removeErrorMessage());
+      }, 2000);
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     // When new id is there then clear reviews state
     dispatch(clearReviews());
@@ -49,11 +66,11 @@ const SingleProduct = () => {
         setCurProductId(product.id);
         dispatch(setAllReviews(product.ratings));
       } catch (err) {
-        console.log('Error in public API request', err.response);
+        errorMessageInSingleProduct('Something went wrong');
       }
     };
     fetchData();
-  }, [id, dispatch]);
+  }, [id, dispatch, errorMessageInSingleProduct]);
 
   // Get Reviews from server
   useEffect(() => {
@@ -68,12 +85,12 @@ const SingleProduct = () => {
             dispatch(setAllReviews(updatedReviews));
           }
         } catch (err) {
-          console.log('Error', err.response);
+          errorMessageInSingleProduct('Something went wrong');
         }
       };
       fetchData();
     }
-  }, [curProductId, dispatch]);
+  }, [curProductId, dispatch, errorMessageInSingleProduct]);
 
   return (
     <div>
