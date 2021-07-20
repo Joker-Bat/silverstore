@@ -53,6 +53,11 @@ const SingleProduct = () => {
     // When new id is there then clear reviews state
     dispatch(clearReviews());
     window.scrollTo(0, 0);
+
+    // When unmount clear currentData
+    return () => {
+      dispatch(setCurrentProduct({}));
+    };
   }, [dispatch]);
 
   // Make a request to public API and get a current product details
