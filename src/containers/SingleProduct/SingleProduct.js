@@ -49,6 +49,7 @@ const SingleProduct = () => {
     [dispatch]
   );
 
+  // On initial render
   useEffect(() => {
     // When new id is there then clear reviews state
     dispatch(clearReviews());

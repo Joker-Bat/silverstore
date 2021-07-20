@@ -1,7 +1,8 @@
-@import "../../../../styles/Variables.scss";
-@import "../../../../styles/ResponsiveSheet.scss";
+@import '../../../../styles/Variables.scss';
+@import '../../../../styles/ResponsiveSheet.scss';
 
 .Slide {
+  position: relative;
   height: 100%;
   transition: height 0.2s;
   cursor: pointer;
@@ -14,13 +15,16 @@
     height: 230px;
   }
 
-  & .Banner {
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: fill;
-    background-color: var(--black);
-    opacity: 0.9;
+  }
 
+  & .Banner {
+    object-fit: fill;
     @include respond($TABLET) {
       opacity: 1;
     }
