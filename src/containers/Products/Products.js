@@ -1,19 +1,14 @@
-import React, { useEffect } from 'react';
-// Redux toolkit
-import { useDispatch, useSelector } from 'react-redux';
-import { resetFilter } from '../../store/filter/filterSlice';
-import { resetProducts } from '../../store/products/productsSlice';
-// components
-import BreadCrumb from '../../components/BreadCrumb/BreadCrumb';
-import Products from '../../components/Products/Products';
-import Loading from '../../components/UI/Loading/Loading';
+import React, { useEffect } from "react";
 
-// Framer motion
-import { motion } from 'framer-motion';
-import containerVariants from '../../styles/framerMotion';
-/**
- * Main component
- */
+// components
+import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
+import Products from "../../components/Products/Products";
+import Loading from "../../components/UI/Loading/Loading";
+
+// Redux toolkit
+import { useDispatch, useSelector } from "react-redux";
+import { resetFilter } from "../../store/filter/filterSlice";
+import { resetProducts } from "../../store/products/productsSlice";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -27,16 +22,11 @@ const ProductsPage = () => {
   }, [dispatch]);
 
   return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
+    <section>
       {globalLoading ? <Loading /> : null}
       <BreadCrumb title="products" />
       <Products />
-    </motion.section>
+    </section>
   );
 };
 

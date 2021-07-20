@@ -20,9 +20,7 @@ import SingleProductHeader from '../../components/SingleProduct/SingleProductHea
 import SingleProductSpecs from '../../components/SingleProduct/SingleProductSpecs/SingleProductSpecs';
 import Reviews from '../../components/SingleProduct/Reviews/Reviews';
 import Loading from '../../components/UI/Loading/Loading';
-// Framer motion
-import { motion } from 'framer-motion';
-import containerVariants from '../../styles/framerMotion';
+
 /*
   Main Component
 */
@@ -78,12 +76,7 @@ const SingleProduct = () => {
   }, [curProductId, dispatch]);
 
   return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
+    <div>
       {Object.keys(currentProduct).length !== 0 ? (
         <>
           <BreadCrumb title={truncateWords(currentProduct.name, 18)} product />
@@ -96,7 +89,7 @@ const SingleProduct = () => {
       ) : (
         <Loading />
       )}
-    </motion.section>
+    </div>
   );
 };
 

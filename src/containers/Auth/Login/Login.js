@@ -1,22 +1,15 @@
-import React from 'react';
+import React from "react";
+
 // Components
-import BreadCrumb from '../../../components/BreadCrumb/BreadCrumb';
-import LoginContainer from '../../../components/auth/Login/Login';
-// Framer motion
-import { motion } from 'framer-motion';
-import containerVariants from '../../../styles/framerMotion';
+import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
+import LoginContainer from "../../../components/auth/Login/Login";
 
 const Login = () => {
   return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
+    <section>
       <BreadCrumb title="login" />
       <LoginContainer />
-    </motion.section>
+    </section>
   );
 };
 

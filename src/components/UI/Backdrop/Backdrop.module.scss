@@ -1,5 +1,5 @@
-@import '../../../styles/Variables.scss';
-@import '../../../styles/ResponsiveSheet.scss';
+@import "../../../styles/Variables.scss";
+@import "../../../styles/ResponsiveSheet.scss";
 
 .Backdrop {
   position: fixed;
@@ -7,7 +7,6 @@
   right: 1rem;
   width: 60px;
   height: 60px;
-  overflow: hidden;
   background-color: rgba($backdrop, 0.8);
   border-radius: 50%;
   z-index: 5;
@@ -25,7 +24,7 @@
   }
 
   &.Active {
-    transform: scale(100);
+    transform: scale(50);
   }
 
   &.Close {
