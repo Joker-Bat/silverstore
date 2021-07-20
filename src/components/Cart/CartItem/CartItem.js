@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 // Styles
 import classes from './CartItem.module.scss';
 // Axios
@@ -22,6 +22,7 @@ import {
   removeErrorMessage,
   removeSuccessMessage,
 } from '../../../store/notification/notificationSlice';
+import ImageLoader from '../../UI/ImageLoader/ImageLoader';
 
 /*
  * Main Conponent
@@ -32,6 +33,13 @@ const CartItem = ({ id, name, image, price, subTotal, slug }) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.cart);
   const count = products.filter((item) => item.id === id)[0].count;
+
+  const [imageLoading, setImageLoading] = useState(true);
+
+  // After image loaded
+  const handleImageLoading = () => {
+    setImageLoading(false);
+  };
 
   // Success Message
   const successMessageInCart = useCallback(
@@ -94,9 +102,11 @@ const CartItem = ({ id, name, image, price, subTotal, slug }) => {
   return (
     <div className={classes.CartItem}>
       <Link to={`/products/${slug}`} className={classes.CartItemImage}>
+        {imageLoading && <ImageLoader />}
         <img
           src={`https://freeestoreapi.herokuapp.com/images/products/${image}`}
           alt={name}
+          onLoad={handleImageLoading}
         />
       </Link>
       <div className={classes.CartItemDetails}>

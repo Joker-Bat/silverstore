@@ -5,10 +5,12 @@ import classes from './SingleProductImage.module.scss';
 import { useSelector } from 'react-redux';
 // Components
 import PopupImage from './PopupImage/PopupImage';
+import ImageLoader from '../../../UI/ImageLoader/ImageLoader';
 /*
   Main Component
 */
 const SingleProductImage = (props) => {
+  const [imageLoading, setImageLoading] = useState(true);
   const { currentProduct } = useSelector((state) => state.singleProduct);
 
   const [mainImage, setMainImage] = useState(currentProduct.images[0]);
@@ -18,6 +20,10 @@ const SingleProductImage = (props) => {
     setMainImage(currentProduct.images[0]);
     window.scrollTo(0, 0);
   }, [currentProduct.images]);
+
+  const handleImageLoading = () => {
+    setImageLoading(false);
+  };
 
   return (
     <div className={classes.SingleProductImageContainer}>
@@ -29,9 +35,11 @@ const SingleProductImage = (props) => {
       <div className={classes.SingleProductImage}>
         <div className={classes.ImageContainer}>
           <div className={classes.MainImage} onClick={() => setPopupOpen(true)}>
+            {imageLoading && <ImageLoader />}
             <img
               src={`https://freeestoreapi.herokuapp.com/images/products/${mainImage}`}
               alt={currentProduct.name}
+              onLoad={handleImageLoading}
             />
           </div>
           <div className={classes.SmallImageContainer}>
@@ -45,9 +53,11 @@ const SingleProductImage = (props) => {
                   ].join(' ')}
                   onClick={() => setMainImage(item)}
                 >
+                  {imageLoading && <ImageLoader />}
                   <img
                     src={`https://freeestoreapi.herokuapp.com/images/products/${item}`}
                     alt="smallImage"
+                    onLoad={handleImageLoading}
                   />
                 </div>
               );

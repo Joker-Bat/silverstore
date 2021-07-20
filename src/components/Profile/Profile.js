@@ -17,6 +17,7 @@ import Title from '../UI/Title/Title';
 import UpdatePassword from './UpdatePassword/UpdatePassword';
 import Loading from '../UI/Loading/Loading';
 import ButtonWithLoader from '../UI/ButtonWithLoader/ButtonWithLoader';
+import ImageLoader from '../UI/ImageLoader/ImageLoader';
 
 /**
  * Main Component
@@ -42,6 +43,12 @@ const Profile = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   // Common State for All update to refetch data
   const [profileUpdated, setProfileUpdated] = useState(false);
+  // Image loading state
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const handleImageLoading = () => {
+    setImageLoading(false);
+  };
 
   // Success Message
   const successMessageInProfile = useCallback(
@@ -200,7 +207,12 @@ const Profile = () => {
         <div className={classes.ProfileContainer}>
           <div className={classes.UpdateProfileContainer}>
             <div className={classes.ProfilePictureContainer}>
-              <img src={`/images/users/${currentPic}`} alt="emoji" />
+              {imageLoading && <ImageLoader />}
+              <img
+                src={`/images/users/${currentPic}`}
+                alt="emoji"
+                onLoad={handleImageLoading}
+              />
             </div>
             <form onSubmit={handlePictureUpdate}>
               <input

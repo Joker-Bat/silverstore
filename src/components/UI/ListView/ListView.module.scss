@@ -1,5 +1,5 @@
-@import "../../../styles/Variables.scss";
-@import "../../../styles/ResponsiveSheet.scss";
+@import '../../../styles/Variables.scss';
+@import '../../../styles/ResponsiveSheet.scss';
 
 .ListView {
   width: 90%;
@@ -32,6 +32,7 @@
   }
 
   .ImageContainer {
+    position: relative;
     background-color: var(--white);
     height: 190px;
     display: flex;
@@ -92,7 +93,7 @@
         }
 
         &::before {
-          content: "\2022";
+          content: '\2022';
           color: var(--tertiary);
           font-weight: bold;
           display: inline-block;

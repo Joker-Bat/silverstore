@@ -1,5 +1,5 @@
-@import "../../styles/Variables.scss";
-@import "../../styles/ResponsiveSheet.scss";
+@import '../../styles/Variables.scss';
+@import '../../styles/ResponsiveSheet.scss';
 
 .Profile {
   max-width: 1000px;
@@ -48,6 +48,7 @@
     }
 
     .ProfilePictureContainer {
+      position: relative;
       background-color: var(--white);
       border: 1px dashed var(--main);
       border-radius: 50%;
@@ -76,7 +77,7 @@
       flex-direction: column;
       align-items: center;
 
-      input[type="file"] {
+      input[type='file'] {
         display: none;
       }
 

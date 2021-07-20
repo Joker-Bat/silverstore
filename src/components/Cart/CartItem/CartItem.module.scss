@@ -1,5 +1,5 @@
-@import "../../../styles/Variables.scss";
-@import "../../../styles/ResponsiveSheet.scss";
+@import '../../../styles/Variables.scss';
+@import '../../../styles/ResponsiveSheet.scss';
 
 .CartItem {
   width: 100%;
@@ -34,6 +34,7 @@
   }
 
   .CartItemImage {
+    position: relative;
     background-color: var(--white);
     height: 190px;
     text-decoration: none;
