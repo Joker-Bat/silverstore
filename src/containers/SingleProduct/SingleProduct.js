@@ -65,6 +65,7 @@ const SingleProduct = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        dispatch(clearReviews());
         const res = await axios.get(`/api/v1/products/${id}`);
         const product = await res.data.data.product[0];
         dispatch(setCurrentProduct(product));
