@@ -1,5 +1,5 @@
-@import "./styles/Variables.scss";
-@import "./styles/ResponsiveSheet.scss";
+@import './styles/Variables.scss';
+@import './styles/ResponsiveSheet.scss';
 
 :root {
   --tertiary: #ccc;
@@ -18,7 +18,7 @@
   --grey: #e0e0e0;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --primary: #f7f7f7;
   --secondary: #111;
   --bgSwitcher: #181818;
@@ -45,7 +45,7 @@ html {
 }
 
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: var(--secondary);
   color: var(--primary);
   transition: $darkTransition;

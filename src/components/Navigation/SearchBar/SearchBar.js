@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 // React Router
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 // Styles
-import classes from "./SearchBar.module.scss";
+import classes from './SearchBar.module.scss';
 // Redux toolkit
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 // Components
-import SuggestionItem from "./SuggestionItem/SuggestionItem";
+import SuggestionItem from './SuggestionItem/SuggestionItem';
 
-/* 
+/*
   Main Component
 */
 
@@ -20,7 +20,7 @@ const SearchBar = (props) => {
   const searchInput = useRef(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isVisble, setIsVisible] = useState(false);
-  const [searchWord, setSearchWord] = useState("");
+  const [searchWord, setSearchWord] = useState('');
   const [cursor, setCursor] = useState(0);
 
   const handleFilter = (event) => {
@@ -30,7 +30,7 @@ const SearchBar = (props) => {
       return item.name.toLowerCase().includes(currentWord.toLowerCase());
     });
 
-    if (currentWord === "") setFilteredProducts([]);
+    if (currentWord === '') setFilteredProducts([]);
     else setFilteredProducts(newFilter);
   };
 
@@ -52,22 +52,21 @@ const SearchBar = (props) => {
     props.history.push(`/products/${filteredProducts[cursor].slug}`);
     hideSuggestion();
     setFilteredProducts([]);
-    setSearchWord("");
+    setSearchWord('');
   };
 
   const keyboardNavigation = (e) => {
-    if (e.key === "ArrowDown") {
-      isVisble
-        ? setCursor((c) => (c < filteredProducts.length - 1 ? c + 1 : c))
-        : showSuggestion();
+    if (e.key === 'ArrowDown') {
+      // Here c < 3 => 3 referes to the no of search suggestion we are going to show to the ueer
+      isVisble ? setCursor((c) => (c < 3 ? c + 1 : c)) : showSuggestion();
     }
-    if (e.key === "ArrowUp") {
+    if (e.key === 'ArrowUp') {
       setCursor((c) => (c > 0 ? c - 1 : 0));
     }
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       hideSuggestion();
     }
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleClick();
     }
   };
@@ -77,10 +76,10 @@ const SearchBar = (props) => {
   }, [productRef]);
 
   useEffect(() => {
-    window.addEventListener("mousedown", handleOutsideClick);
+    window.addEventListener('mousedown', handleOutsideClick);
 
     return () => {
-      window.removeEventListener("mousedown", handleOutsideClick);
+      window.removeEventListener('mousedown', handleOutsideClick);
     };
     // eslint-disable-next-line
   }, []);
@@ -89,7 +88,7 @@ const SearchBar = (props) => {
     <div className={classes.Search} ref={searchContainer}>
       <div className={classes.SearchInputs}>
         <input
-          className={props.shrink ? classes.ShrinkInput : ""}
+          className={props.shrink ? classes.ShrinkInput : ''}
           type="search"
           name="name"
           placeholder="Search Product here..."
@@ -104,10 +103,10 @@ const SearchBar = (props) => {
       {isVisble && (
         <div className={classes.DataResult}>
           {filteredProducts.length !== 0 ? (
-            filteredProducts.slice(0, 8).map((item, key) => {
+            filteredProducts.slice(0, 4).map((item, key) => {
               const highlightClass = [
                 classes.DataItem,
-                cursor === key ? classes.Active : "",
+                cursor === key ? classes.Active : '',
               ];
               return (
                 <SuggestionItem
@@ -124,9 +123,9 @@ const SearchBar = (props) => {
             })
           ) : (
             <p href="#" className={classes.DataItem}>
-              {searchWord === ""
-                ? "Search some product"
-                : "No matched products!"}
+              {searchWord === ''
+                ? 'Search some product'
+                : 'No matched products!'}
             </p>
           )}
         </div>
