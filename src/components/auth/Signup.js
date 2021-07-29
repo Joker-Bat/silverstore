@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 // Style
-import classes from '../Authentication.module.scss';
+import classes from './Authentication.module.scss';
 // React Router
 import { Link } from 'react-router-dom';
 // Components
-import Button from '../../Button/Button';
+import Button from '../Button/Button';
 // Axios
 import axios from 'axios';
 // Redux toolkit
 import { useDispatch } from 'react-redux';
-import { setToken } from '../../../store/auth/authSlice';
+import { setToken } from '../../store/auth/authSlice';
 
 /**
  * Main Component

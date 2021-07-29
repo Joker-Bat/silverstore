@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 // Styles
-import classes from '../Authentication.module.scss';
+import classes from './Authentication.module.scss';
 // React Router
 import { Link, withRouter } from 'react-router-dom';
 // Components
-import Button from '../../Button/Button';
+import Button from '../Button/Button';
 // Axios
 import axios from 'axios';
 

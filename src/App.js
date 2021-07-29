@@ -35,16 +35,14 @@ const lazySingleProduct = lazy(() =>
 );
 const lazyProducts = lazy(() => import('./containers/Products/Products'));
 const lazyCart = lazy(() => import('./containers/Cart/Cart'));
-const lazyLogin = lazy(() => import('./containers/Auth/Login/Login'));
-const lazySignup = lazy(() => import('./containers/Auth/Signup/Signup'));
 const lazyProfile = lazy(() => import('./containers/Profile/Profile'));
 const lazyHomepage = lazy(() => import('./containers/Homepage/Homepage'));
+const lazyLogin = lazy(() => import('./containers/Auth/Login'));
+const lazySignup = lazy(() => import('./containers/Auth/Signup'));
 const lazyForgotPassword = lazy(() =>
-  import('./containers/Auth/ForgotPassword/ForgotPassword')
+  import('./containers/Auth/ForgotPassword')
 );
-const lazyResetPassword = lazy(() =>
-  import('./containers/Auth/ResetPassword/ResetPassword')
-);
+const lazyResetPassword = lazy(() => import('./containers/Auth/ResetPassword'));
 
 /**
  * Main Component

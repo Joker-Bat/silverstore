@@ -1,8 +1,7 @@
-import React from "react";
-
+import React from 'react';
 // Components
-import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
-import LoginContainer from "../../../components/auth/Login/Login";
+import BreadCrumb from '../../components/BreadCrumb/BreadCrumb';
+import LoginContainer from '../../components/auth/Login';
 
 const Login = () => {
   return (
