@@ -12,7 +12,7 @@ import {
 // Components
 import Title from '../../UI/Title/Title';
 import Product from '../../UI/Product/Product';
-import SimpleButton from '../../UI/SimpleButton/SimpleButton';
+import Button from '../../Button/Button';
 
 /**
  * Main component
@@ -62,7 +62,7 @@ const RandomProduct = () => {
           searchingAnimation={searching}
         />
       ) : null}
-      <SimpleButton
+      <Button
         name={'get random'}
         clicked={getRandomProduct}
         large

@@ -4,7 +4,7 @@ import classes from '../Authentication.module.scss';
 // React Router
 import { Link } from 'react-router-dom';
 // Components
-import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
+import Button from '../../Button/Button';
 // Axios
 import axios from 'axios';
 // Redux toolkit
@@ -182,12 +182,13 @@ const Signup = (props) => {
           </label>
         </div>
 
-        <ButtonWithLoader
+        <Button
           name="sign up"
           capitalize
           loading={loading}
           submit
           tabIndex="5"
+          fixedWidth
         />
       </form>
 

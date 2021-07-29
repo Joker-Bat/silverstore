@@ -1,11 +1,9 @@
-import React from "react";
-
+import React from 'react';
 // Styles
-import classes from "./PriceCard.module.scss";
-
+import classes from './PriceCard.module.scss';
 // Components
-import NumberFormat from "react-number-format";
-import SimpleButton from "../../UI/SimpleButton/SimpleButton";
+import NumberFormat from 'react-number-format';
+import Button from '../../Button/Button';
 
 /*
 Main Component
@@ -23,14 +21,14 @@ const PriceCard = ({ totalPrice, totalProducts }) => {
         <p className={classes.Price}>
           <NumberFormat
             value={totalPrice}
-            displayType={"text"}
-            prefix={"₹"}
+            displayType={'text'}
+            prefix={'₹'}
             thousandSeparator={true}
             thousandsGroupStyle="lakh"
           />
         </p>
       </div>
-      <SimpleButton name="continue" uppercase large />
+      <Button name="continue" uppercase large />
     </div>
   );
 };

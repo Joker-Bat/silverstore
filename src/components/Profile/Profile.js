@@ -16,7 +16,7 @@ import {
 import Title from '../UI/Title/Title';
 import UpdatePassword from './UpdatePassword/UpdatePassword';
 import Loading from '../UI/Loading/Loading';
-import ButtonWithLoader from '../UI/ButtonWithLoader/ButtonWithLoader';
+import Button from '../Button/Button';
 import ImageLoader from '../UI/ImageLoader/ImageLoader';
 
 /**
@@ -228,7 +228,7 @@ const Profile = () => {
                   className={classes.Progress}
                 ></span>
               </label>
-              <ButtonWithLoader
+              <Button
                 name="upload"
                 capitalize
                 loading={pictureLoading}
@@ -253,7 +253,7 @@ const Profile = () => {
                   onChange={(e) => setProfileEmail(e.target.value)}
                   required
                 />
-                <ButtonWithLoader
+                <Button
                   name="update"
                   capitalize
                   loading={profileLoading}
@@ -263,7 +263,7 @@ const Profile = () => {
               </form>
             </div>
             <UpdatePassword />
-            <ButtonWithLoader
+            <Button
               name="logout"
               capitalize
               clicked={handleLogout}

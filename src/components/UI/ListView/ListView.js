@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 // Styles
 import classes from './ListView.module.scss';
 // NumberFormat
@@ -7,7 +6,7 @@ import NumberFormat from 'react-number-format';
 // HelperFunction
 import { truncateWords } from '../../../utilities/helperFunctions';
 // Components
-import Button from '../../UI/Button/Button';
+import Button from '../../Button/Button';
 import ImageLoader from '../ImageLoader/ImageLoader';
 
 const ListView = ({ id, name, price, highlights, image }) => {

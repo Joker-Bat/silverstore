@@ -1,8 +1,10 @@
-@import '../../../styles/Variables.scss';
-@import '../../../styles/ResponsiveSheet.scss';
+@import '../../styles/Variables.scss';
+@import '../../styles/ResponsiveSheet.scss';
 
 .Button {
-  position: relative;
+  min-width: 80px;
+  height: 40px;
+  max-width: 300px;
   appearance: none;
   border: none;
   background-color: var(--main);
@@ -10,9 +12,25 @@
   color: var(--white);
   cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease-in;
+  padding: 0.8rem 1.8rem;
+  font-size: 1.7rem;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include respond($MOBILE) {
+    min-width: 50px;
+    height: 35px;
+  }
+
+  &.FixedWidth {
+    min-width: 200px;
+  }
 
   &.Shine {
-    &::after {
+    &::before {
       content: '';
       position: absolute;
       top: 0;
@@ -26,11 +44,21 @@
       background: linear-gradient(
         to right,
         var(--white),
-        var(--white) 10px,
+        var(--white) 8px,
         transparent 20px
       );
       transform-origin: left bottom;
       animation: shine 3s ease infinite;
+    }
+  }
+
+  &.Disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+
+    &:hover {
+      transform: none;
+      filter: none;
     }
   }
 
@@ -68,6 +96,34 @@
     transform: scale(0.98);
     filter: brightness(120%);
   }
+
+  @include respond($TABLET) {
+    font-size: 1.6rem;
+    padding: 0.8rem 1.6rem;
+  }
+
+  @include respond($MOBILE) {
+    font-size: 1.8rem;
+    padding: 1rem 1.8rem;
+  }
+}
+
+.Spinner {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border-top: 2px solid var(--white);
+  animation: rotate 0.5s infinite linear;
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 @keyframes shine {
@@ -76,6 +132,8 @@
   }
   20% {
     transform: skewX(-45deg) translateX(100%);
+  }
+  22% {
     opacity: 0;
   }
   100% {

@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 import Stars from './Stars/Stars';
 import ProductCounter from '../../../UI/ProductCounter/ProductCounter';
-import ButtonWithLoader from '../../../UI/ButtonWithLoader/ButtonWithLoader';
+import Button from '../../../Button/Button';
 //Redux toolkit
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem } from '../../../../store/cart/cartSlice';
@@ -182,12 +182,13 @@ const SingleProductDetails = (props) => {
 
       {/* Add to cart button */}
       <div className={classes.AddToCartBtn}>
-        <ButtonWithLoader
+        <Button
           name="add to cart"
           uppercase
           clicked={addToCart}
           loading={loading}
           shine
+          fixedWidth
         />
       </div>
     </div>

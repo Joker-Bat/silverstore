@@ -4,7 +4,7 @@ import classes from '../Authentication.module.scss';
 // React Router
 import { Link, withRouter, useParams } from 'react-router-dom';
 // Components
-import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
+import Button from '../../Button/Button';
 // Axios
 import axios from 'axios';
 
@@ -143,12 +143,13 @@ const ResetPassword = (props) => {
           </label>
         </div>
 
-        <ButtonWithLoader
+        <Button
           name="reset password"
           capitalize
           loading={loading}
           submit
           tabIndex="3"
+          fixedWidth
         />
       </form>
 

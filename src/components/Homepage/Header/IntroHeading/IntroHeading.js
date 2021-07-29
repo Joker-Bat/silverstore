@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from '../../../UI/Button/Button';
-
 // Styles
 import classes from './IntroHeading.module.scss';
+// Components
+import Button from '../../../Button/Button';
 
 const IntroHeading = () => {
   return (

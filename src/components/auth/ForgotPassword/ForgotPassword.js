@@ -4,7 +4,7 @@ import classes from '../Authentication.module.scss';
 // React Router
 import { Link, withRouter } from 'react-router-dom';
 // Components
-import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
+import Button from '../../Button/Button';
 // Axios
 import axios from 'axios';
 
@@ -71,11 +71,12 @@ const ForgotPassword = (props) => {
           />
         </div>
 
-        <ButtonWithLoader
+        <Button
           name="forgot password"
           capitalize
           loading={loading}
           submit
+          fixedWidth
         />
       </form>
 

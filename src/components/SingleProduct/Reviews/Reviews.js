@@ -4,7 +4,7 @@ import classes from './Reviews.module.scss';
 // React Router
 import { withRouter } from 'react-router-dom';
 // Components
-import SimpleButton from '../../UI/SimpleButton/SimpleButton';
+import Button from '../../Button/Button';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 import AddReviewBox from './AddReviewBox/AddReviewBox';
 import SingleReview from './SingleReview/SingleReview';
@@ -61,7 +61,7 @@ const Reviews = (props) => {
       {/* To add a review to list */}
       <div className={classes.AddReview}>
         <Backdrop isOpen={addReview} close={closeReviewContainer} />
-        <SimpleButton
+        <Button
           name="Add your review"
           small
           capitalize

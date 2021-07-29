@@ -6,7 +6,7 @@ import axios from 'axios';
 // Helperfunctions
 import { updateReviewStructure } from '../../../../utilities/helperFunctions';
 // Components
-import ButtonWithLoader from '../../../UI/ButtonWithLoader/ButtonWithLoader';
+import Button from '../../../Button/Button';
 // Icons
 import { FaStar } from 'react-icons/fa';
 import { withRouter } from 'react-router-dom';
@@ -208,7 +208,7 @@ const AddReview = (props) => {
             <p>{reviewLength}</p>
           </div>
         </div>
-        <ButtonWithLoader
+        <Button
           name="post"
           clicked={addReviewHandler}
           capitalize

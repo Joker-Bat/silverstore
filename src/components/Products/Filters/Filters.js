@@ -1,25 +1,22 @@
-import React, { useEffect } from "react";
-
+import React, { useEffect } from 'react';
 // Styles
-import classes from "./Filters.module.scss";
+import classes from './Filters.module.scss';
 // Helperfunctions
-import getCompanysFromCategorys from "./getCompanysFromCategorys";
-// Data
-// import data from "../../../data/data";
+import getCompanysFromCategorys from './getCompanysFromCategorys';
 // Components
-import Checkbox from "./Checkbox/Checkbox";
-import RangeSlider from "./RangeSlider/RangeSlider";
-import SimpleButton from "../../UI/SimpleButton/SimpleButton";
+import Checkbox from './Checkbox/Checkbox';
+import RangeSlider from './RangeSlider/RangeSlider';
+import Button from '../../Button/Button';
 // Redux toolkit
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   resetFilter,
   setCompanys,
   updatePrice,
-} from "../../../store/filter/filterSlice";
-import { resetProducts } from "../../../store/products/productsSlice";
+} from '../../../store/filter/filterSlice';
+import { resetProducts } from '../../../store/products/productsSlice';
 
-/*  
+/*
   Main Component
 */
 const Filters = (props) => {
@@ -58,13 +55,13 @@ const Filters = (props) => {
 
   const categoryToShow = Object.keys(categoryRef).map((item, index) => {
     return (
-      <Checkbox key={"CategoryCheckBox" + index} value={item} type="category" />
+      <Checkbox key={'CategoryCheckBox' + index} value={item} type="category" />
     );
   });
 
   const companyToShow = Object.keys(companys).map((item, index) => {
     return (
-      <Checkbox key={"CategoryCheckBox" + index} value={item} type="company" />
+      <Checkbox key={'CategoryCheckBox' + index} value={item} type="company" />
     );
   });
 
@@ -73,7 +70,7 @@ const Filters = (props) => {
   openFilter && filterClasses.push(classes.ToggleFilter);
 
   return (
-    <aside className={filterClasses.join(" ")}>
+    <aside className={filterClasses.join(' ')}>
       <div className={classes.CategoryContainer}>
         <h1 className={classes.CategoryTitle}>Category</h1>
         <div className={classes.CategoryList}>{categoryToShow}</div>
@@ -100,12 +97,7 @@ const Filters = (props) => {
       </div>
 
       <div className={classes.ClearFilter}>
-        <SimpleButton
-          name="clear filters"
-          clicked={clearFilters}
-          capitalize
-          small
-        />
+        <Button name="clear filters" clicked={clearFilters} capitalize small />
       </div>
     </aside>
   );

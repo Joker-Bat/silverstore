@@ -1,10 +1,8 @@
-import React from "react";
-
+import React from 'react';
 // Styles
-import classes from "./EmptyCart.module.scss";
-
+import classes from './EmptyCart.module.scss';
 // Components
-import Button from "../../UI/Button/Button";
+import Button from '../../Button/Button';
 
 const EmptyCart = () => {
   return (

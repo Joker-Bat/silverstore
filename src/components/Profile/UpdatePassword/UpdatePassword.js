@@ -4,7 +4,7 @@ import classes from './UpdatePassword.module.scss';
 // Axios
 import axios from 'axios';
 // Components
-import ButtonWithLoader from '../../UI/ButtonWithLoader/ButtonWithLoader';
+import Button from '../../Button/Button';
 // Redux Toolkit
 import { useDispatch } from 'react-redux';
 import {
@@ -152,7 +152,7 @@ const UpdatePassword = () => {
             Show password
           </label>
         </div>
-        <ButtonWithLoader
+        <Button
           name="update password"
           capitalize
           loading={passwordLoading}
