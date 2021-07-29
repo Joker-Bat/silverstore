@@ -67,6 +67,7 @@ const RandomProduct = () => {
         clicked={getRandomProduct}
         large
         uppercase
+        shine
       />
     </section>
   );

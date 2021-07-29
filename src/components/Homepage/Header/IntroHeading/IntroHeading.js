@@ -1,8 +1,8 @@
-import React from "react";
-import Button from "../../../UI/Button/Button";
+import React from 'react';
+import Button from '../../../UI/Button/Button';
 
 // Styles
-import classes from "./IntroHeading.module.scss";
+import classes from './IntroHeading.module.scss';
 
 const IntroHeading = () => {
   return (
@@ -13,7 +13,7 @@ const IntroHeading = () => {
       <h4 className={classes.SubHeading}>
         Live like a <span>pro</span>
       </h4>
-      <Button name="Start shopping" route="/products" capitalize small />
+      <Button name="Start shopping" route="/products" capitalize small shine />
     </div>
   );
 };

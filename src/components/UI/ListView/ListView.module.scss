@@ -2,6 +2,7 @@
 @import '../../../styles/ResponsiveSheet.scss';
 
 .ListView {
+  overflow: hidden;
   width: 90%;
   max-width: 800px;
   height: auto;

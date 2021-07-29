@@ -187,6 +187,7 @@ const SingleProductDetails = (props) => {
           uppercase
           clicked={addToCart}
           loading={loading}
+          shine
         />
       </div>
     </div>

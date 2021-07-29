@@ -44,7 +44,7 @@ const ListView = ({ id, name, price, highlights, image }) => {
               value={price}
             />
           </h1>
-          <Button name="View" route={`/products/${id}`} small />
+          <Button name="View" route={`/products/${id}`} small shine />
         </div>
       </div>
     </div>

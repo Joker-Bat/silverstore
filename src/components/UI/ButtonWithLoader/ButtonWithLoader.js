@@ -15,11 +15,13 @@ const ButtonWithLoader = ({
   disabled,
   capitalize,
   tabIndex,
+  shine,
 }) => {
   const buttonClass = [classes.ButtonWithLoader];
   (loading || disabled) && buttonClass.push(classes.Disabled);
   uppercase && buttonClass.push(classes.Uppercase);
   capitalize && buttonClass.push(classes.Capitalize);
+  shine && buttonClass.push(classes.Shine);
 
   return (
     <button

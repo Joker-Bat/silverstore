@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 // Styles
-import classes from "./SimpleButton.module.scss";
+import classes from './SimpleButton.module.scss';
 
 const SimpleButton = ({
   name,
@@ -10,6 +10,7 @@ const SimpleButton = ({
   uppercase,
   capitalize,
   clicked,
+  shine,
 }) => {
   const buttonClass = [classes.Button];
 
@@ -17,9 +18,10 @@ const SimpleButton = ({
   large && buttonClass.push(classes.Large);
   uppercase && buttonClass.push(classes.Uppercase);
   capitalize && buttonClass.push(classes.Capitalize);
+  shine && buttonClass.push(classes.Shine);
 
   return (
-    <button onClick={clicked} type="button" className={buttonClass.join(" ")}>
+    <button onClick={clicked} type="button" className={buttonClass.join(' ')}>
       {name}
     </button>
   );

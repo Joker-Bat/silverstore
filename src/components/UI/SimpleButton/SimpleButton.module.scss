@@ -1,7 +1,8 @@
-@import "../../../styles/Variables.scss";
-@import "../../../styles/ResponsiveSheet.scss";
+@import '../../../styles/Variables.scss';
+@import '../../../styles/ResponsiveSheet.scss';
 
 .Button {
+  position: relative;
   appearance: none;
   border: none;
   background-color: var(--main);
@@ -9,6 +10,29 @@
   color: var(--white);
   cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease-in;
+
+  &.Shine {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 80%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 2;
+      opacity: 0.8;
+      transform: skewX(-45deg);
+      background: linear-gradient(
+        to right,
+        var(--white),
+        var(--white) 10px,
+        transparent 20px
+      );
+      transform-origin: left bottom;
+      animation: shine 3s ease infinite;
+    }
+  }
 
   &.Small {
     padding: 0.8rem 1.8rem;
@@ -43,5 +67,19 @@
   &:hover {
     transform: scale(0.98);
     filter: brightness(120%);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: skewX(-45deg) translateX(0%);
+  }
+  20% {
+    transform: skewX(-45deg) translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: skewX(-45deg) translateX(100%);
+    opacity: 0;
   }
 }
