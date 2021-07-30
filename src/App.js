@@ -122,6 +122,7 @@ const App = () => {
           dispatch(setAllProducts(products));
           dispatch(setGlobalLoading(false));
         } catch (err) {
+          dispatch(setGlobalLoading(false));
           errorMessageInApp('Something went wrong with connection');
         }
       };
