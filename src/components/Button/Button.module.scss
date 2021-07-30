@@ -7,6 +7,7 @@
   max-width: 300px;
   appearance: none;
   border: none;
+  user-select: none;
   background-color: var(--main);
   text-decoration: none;
   color: var(--white);
@@ -35,18 +36,14 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 80%;
+      width: 0;
       height: 100%;
       overflow: hidden;
+      user-select: none;
       z-index: 2;
-      opacity: 0.8;
+      opacity: 0.6;
+      border-right: 8px solid var(--white);
       transform: skewX(-45deg);
-      background: linear-gradient(
-        to right,
-        var(--white),
-        var(--white) 8px,
-        transparent 20px
-      );
       transform-origin: left bottom;
       animation: shine 3s ease infinite;
     }
@@ -128,16 +125,13 @@
 
 @keyframes shine {
   0% {
-    transform: skewX(-45deg) translateX(0%);
+    width: 0;
   }
   20% {
-    transform: skewX(-45deg) translateX(100%);
-  }
-  22% {
     opacity: 0;
+    width: 85%;
   }
   100% {
-    transform: skewX(-45deg) translateX(100%);
     opacity: 0;
   }
 }
