@@ -18,6 +18,7 @@ const Button = ({
   capitalize,
   shine,
   fixedWidth,
+  danger,
 }) => {
   const buttonClass = [classes.Button];
 
@@ -28,6 +29,7 @@ const Button = ({
   capitalize && buttonClass.push(classes.Capitalize);
   shine && buttonClass.push(classes.Shine);
   fixedWidth && buttonClass.push(classes.FixedWidth);
+  danger && buttonClass.push(classes.Danger);
 
   let button = (
     <button

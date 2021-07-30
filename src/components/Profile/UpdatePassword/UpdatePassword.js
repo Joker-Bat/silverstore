@@ -157,6 +157,7 @@ const UpdatePassword = () => {
           capitalize
           loading={passwordLoading}
           submit
+          fixedWidth
         />
       </form>
     </div>

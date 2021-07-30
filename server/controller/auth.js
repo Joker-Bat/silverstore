@@ -212,10 +212,11 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 exports.deleteAccount = catchAsync(async (req, res, next) => {
   const { id } = req.user;
   const { oldPassword } = req.body;
+  console.log(req.body);
 
   // Need to provide old password to delete account
   if (!oldPassword)
-    return next(new AppError('Provide your password for confirmation'));
+    return next(new AppError('Provide your password for confirmation', 400));
 
   const curUser = await User.findById(id).select('+password');
 

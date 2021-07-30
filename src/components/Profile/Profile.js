@@ -18,6 +18,7 @@ import UpdatePassword from './UpdatePassword/UpdatePassword';
 import Loading from '../UI/Loading/Loading';
 import Button from '../Button/Button';
 import ImageLoader from '../UI/ImageLoader/ImageLoader';
+import DeleteAccount from './DeleteAccount/DeleteAccount';
 
 /**
  * Main Component
@@ -45,6 +46,8 @@ const Profile = () => {
   const [profileUpdated, setProfileUpdated] = useState(false);
   // Image loading state
   const [imageLoading, setImageLoading] = useState(true);
+  // Delete account form
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
 
   const handleImageLoading = () => {
     setImageLoading(false);
@@ -233,6 +236,7 @@ const Profile = () => {
                 capitalize
                 loading={pictureLoading}
                 submit
+                fixedWidth
               />
               <small>Choose only square image</small>
             </form>
@@ -259,16 +263,29 @@ const Profile = () => {
                   loading={profileLoading}
                   disabled={profileUpdateDisabled}
                   submit
+                  fixedWidth
                 />
               </form>
             </div>
             <UpdatePassword />
-            <Button
-              name="logout"
-              capitalize
-              clicked={handleLogout}
-              loading={logoutLoading}
-            />
+            <div className={classes.ButtonContainer}>
+              <DeleteAccount
+                isActive={showDeleteForm}
+                showForm={setShowDeleteForm}
+              />
+              <Button
+                name="delete account"
+                capitalize
+                clicked={() => setShowDeleteForm(true)}
+                danger
+              />
+              <Button
+                name="logout"
+                capitalize
+                clicked={handleLogout}
+                loading={logoutLoading}
+              />
+            </div>
           </div>
         </div>
       </div>
