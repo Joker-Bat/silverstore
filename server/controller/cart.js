@@ -96,3 +96,18 @@ exports.decreaseCount = catchAsync(async (req, res, next) => {
     message: 'Product count decreased',
   });
 });
+
+exports.checkoutCart = catchAsync(async (req, res, next) => {
+  const { id } = req.user;
+
+  const carts = await Cart.find({ user: id });
+  if (!carts.length > 0)
+    return next(new AppError('User has no cart item', 400));
+
+  await Cart.deleteMany({ user: id });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Successfully checkedout',
+  });
+});

@@ -8,7 +8,7 @@ const EmptyCart = () => {
   return (
     <section className={classes.EmptyCart}>
       <h1>Your cart is empty</h1>
-      <Button name="start shoping" capitalize large route="/products" />
+      <Button name="start shoping" capitalize large route="/products" shine />
     </section>
   );
 };
