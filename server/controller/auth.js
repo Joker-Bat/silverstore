@@ -1,9 +1,12 @@
 const crypto = require('crypto');
 
-const User = require('../models/user');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Email = require('../utils/email');
+
+const User = require('../models/user');
+const Review = require('../models/review');
+const Cart = require('../models/cart');
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = user.getSignToken();
@@ -174,10 +177,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
  */
 
 exports.logout = (req, res, next) => {
-  res.cookie('jwt', 'loggedOut', {
-    maxAge: Date.now() + 5 * 1000,
-    httpOnly: true,
-  });
+  res.clearCookie('jwt');
   res.status(200).json({ status: 'success' });
 };
 
@@ -203,4 +203,35 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await curUser.save();
 
   createSendToken(curUser, 200, req, res);
+});
+
+/**
+ * DeleteAccount
+ */
+
+exports.deleteAccount = catchAsync(async (req, res, next) => {
+  const { id } = req.user;
+  const { oldPassword } = req.body;
+
+  // Need to provide old password to delete account
+  if (!oldPassword)
+    return next(new AppError('Provide your password for confirmation'));
+
+  const curUser = await User.findById(id).select('+password');
+
+  // Provided password should be correct
+  if (!(await curUser.matchPasswords(oldPassword, curUser.password))) {
+    return next(new AppError('Password does not match', 401));
+  }
+
+  await User.findByIdAndDelete(id);
+  await Review.deleteMany({ user: id });
+  await Cart.deleteMany({ user: id });
+
+  res.clearCookie('jwt');
+
+  res.status(200).json({
+    status: 'message',
+    message: 'Your account deleted successfully',
+  });
 });

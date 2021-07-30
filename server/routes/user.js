@@ -1,8 +1,21 @@
 const express = require('express');
 
-const { signup, login, forgotPassword, resetPassword, logout, updatePassword } = require('../controller/auth');
+const {
+  signup,
+  login,
+  forgotPassword,
+  resetPassword,
+  logout,
+  updatePassword,
+  deleteAccount,
+} = require('../controller/auth');
 
-const { profile, updateProfilePicture, updateProfile, isLoggedIn } = require('../controller/user');
+const {
+  profile,
+  updateProfilePicture,
+  updateProfile,
+  isLoggedIn,
+} = require('../controller/user');
 const { protect } = require('../middleware/auth');
 const { upload, resize } = require('../middleware/upload');
 
@@ -24,5 +37,8 @@ router.get('/profile', profile);
 router.patch('/updatepassword', updatePassword);
 router.patch('/updateprofilepicture', upload, resize, updateProfilePicture);
 router.patch('/updateprofile', updateProfile);
+
+// Delete account
+router.delete('/deleteaccount', deleteAccount);
 
 module.exports = router;
