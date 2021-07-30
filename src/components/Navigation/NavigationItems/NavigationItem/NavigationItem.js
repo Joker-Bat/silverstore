@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 // Styles
-import classes from "./NavigationItem.module.scss";
+import classes from './NavigationItem.module.scss';
 // Router
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 // Redux toolkit
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 // Icons
-import { FaShoppingBag } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaSignInAlt } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaShoppingBag } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
+import { FaSignInAlt } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 
 const NavigationItem = (props) => {
   // Redux toolkit
@@ -18,20 +18,22 @@ const NavigationItem = (props) => {
 
   const NavItemClass = [classes.NavItem, props.shrink && classes.ShrinkNavItem];
 
-  const cartCount = <span className={classes.CartCount}>{noOfProducts}</span>;
+  const cartCount = noOfProducts > 0 && (
+    <span className={classes.CartCount}>{noOfProducts}</span>
+  );
 
   let icon = null;
   switch (props.name) {
-    case "Products":
+    case 'Products':
       icon = <FaShoppingBag />;
       break;
-    case "Cart":
+    case 'Cart':
       icon = <FaShoppingCart />;
       break;
-    case "Login":
+    case 'Login':
       icon = <FaSignInAlt />;
       break;
-    case "Profile":
+    case 'Profile':
       icon = <FaUser />;
       break;
     default:
@@ -39,7 +41,7 @@ const NavigationItem = (props) => {
   }
 
   return (
-    <li className={NavItemClass.join(" ")} onClick={props.closeBackdrop}>
+    <li className={NavItemClass.join(' ')} onClick={props.closeBackdrop}>
       <NavLink
         to={props.path}
         exact
@@ -47,7 +49,7 @@ const NavigationItem = (props) => {
         className={classes.NavLink}
       >
         <div className={classes.IconContainer}>
-          {props.name === "Cart" ? cartCount : ""}
+          {props.name === 'Cart' ? cartCount : ''}
           {icon}
         </div>
         <p>{props.name}</p>
