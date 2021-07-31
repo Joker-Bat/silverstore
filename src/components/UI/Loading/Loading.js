@@ -1,8 +1,6 @@
-import React from "react";
+import React from 'react';
 // Style
-import classes from "./Loading.module.scss";
-// React Spinners
-import SyncLoader from "react-spinners/SyncLoader";
+import classes from './Loading.module.scss';
 
 /**
  * @returns a Loading Component
@@ -11,7 +9,11 @@ import SyncLoader from "react-spinners/SyncLoader";
 const Loading = () => {
   return (
     <div className={classes.Loading}>
-      <SyncLoader />
+      <span className={classes.BallContainer}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </div>
   );
 };
