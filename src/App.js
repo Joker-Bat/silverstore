@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from './store/auth/authSlice';
 import { setPrice, setCategory } from './store/filter/filterSlice';
 import { setAllProducts, setCartProducts } from './store/cart/cartSlice';
-import { setProducts, setGlobalLoading } from './store/products/productsSlice';
+import { setProducts } from './store/products/productsSlice';
 import {
   removeErrorMessage,
   setErrorMessage,
@@ -110,7 +110,6 @@ const App = () => {
     if (productRef.length === 0) {
       const fetchData = async () => {
         try {
-          dispatch(setGlobalLoading(true));
           const res = await axios.get('/api/v1/products');
           const products = res.data.data.products;
           if (productRef.length === 0) {
@@ -120,9 +119,7 @@ const App = () => {
           getProductsPageDetails(products);
           // For Cart
           dispatch(setAllProducts(products));
-          dispatch(setGlobalLoading(false));
         } catch (err) {
-          dispatch(setGlobalLoading(false));
           errorMessageInApp('Something went wrong with connection');
         }
       };
