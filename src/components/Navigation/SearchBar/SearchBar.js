@@ -57,8 +57,14 @@ const SearchBar = (props) => {
 
   const keyboardNavigation = (e) => {
     if (e.key === 'ArrowDown') {
-      // Here c < 3 => 3 referes to the no of search suggestion we are going to show to the ueer
-      isVisble ? setCursor((c) => (c < 3 ? c + 1 : c)) : showSuggestion();
+      // Here c < (filteredProducts.length > 4 ? 3 : filteredProducts.length) =>  if the filtered products length greater then we move out cursor only 4steps otherwise we can move cursor as result length
+      isVisble
+        ? setCursor((c) =>
+            c < (filteredProducts.length > 4 ? 3 : filteredProducts.length - 1)
+              ? c + 1
+              : c
+          )
+        : showSuggestion();
     }
     if (e.key === 'ArrowUp') {
       setCursor((c) => (c > 0 ? c - 1 : 0));
