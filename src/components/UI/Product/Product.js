@@ -14,7 +14,15 @@ import ImageLoader from '../../UI/ImageLoader/ImageLoader';
  * Main component
  */
 
-const Product = ({ name, image, price, searchingAnimation, id, history }) => {
+const Product = ({
+  name,
+  image,
+  price,
+  searchingAnimation,
+  id,
+  history,
+  skeleton,
+}) => {
   const [imageLoading, setImageLoading] = useState(true);
 
   const handleClick = (curID) => {
@@ -27,23 +35,29 @@ const Product = ({ name, image, price, searchingAnimation, id, history }) => {
 
   return (
     <div className={classes.Product} onClick={() => handleClick(id)}>
-      <div className={classes.ImageContainer}>
-        {imageLoading && <ImageLoader />}
-        <img src={image} alt={name} onLoad={handleImageLoading} />
-      </div>
-      <div className={classes.ProductDetails}>
-        <h1>{truncateWords(name, 18)}</h1>
-        <h3>
-          <NumberFormat
-            displayType={'text'}
-            thousandSeparator={true}
-            thousandsGroupStyle="lakh"
-            prefix={'₹'}
-            value={price}
-          />
-        </h3>
-      </div>
-      {searchingAnimation && <ImageLoader bgDark />}
+      {!skeleton ? (
+        <>
+          <div className={classes.ImageContainer}>
+            {imageLoading && <ImageLoader />}
+            <img src={image} alt={name} onLoad={handleImageLoading} />
+          </div>
+          <div className={classes.ProductDetails}>
+            <h1>{truncateWords(name, 18)}</h1>
+            <h3>
+              <NumberFormat
+                displayType={'text'}
+                thousandSeparator={true}
+                thousandsGroupStyle="lakh"
+                prefix={'₹'}
+                value={price}
+              />
+            </h3>
+          </div>
+          {searchingAnimation && <ImageLoader bgDark />}
+        </>
+      ) : (
+        <ImageLoader />
+      )}
     </div>
   );
 };

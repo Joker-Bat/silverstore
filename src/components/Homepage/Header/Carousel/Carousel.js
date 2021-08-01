@@ -45,7 +45,7 @@ const CarouselSet = (props) => {
       {bannerImages.map((item, index) => {
         return (
           <div className={classes.Slide} key={`banner${item.id}${index}`}>
-            {imageLoading && <ImageLoader bannerImage />}
+            {imageLoading && <ImageLoader />}
             <img
               src={`https://freeestoreapi.herokuapp.com/images/products/${item.bannerImage}`}
               alt={item.name}
