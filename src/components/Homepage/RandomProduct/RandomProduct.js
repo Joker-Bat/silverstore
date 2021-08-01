@@ -61,7 +61,9 @@ const RandomProduct = () => {
           price={product.price}
           searchingAnimation={searching}
         />
-      ) : null}
+      ) : (
+        <Product skeleton />
+      )}
       <Button
         name={'get random'}
         clicked={getRandomProduct}

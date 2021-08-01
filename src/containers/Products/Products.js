@@ -1,18 +1,14 @@
-import React, { useEffect } from "react";
-
+import React, { useEffect } from 'react';
 // components
-import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
-import Products from "../../components/Products/Products";
-import Loading from "../../components/UI/Loading/Loading";
-
+import BreadCrumb from '../../components/BreadCrumb/BreadCrumb';
+import Products from '../../components/Products/Products';
 // Redux toolkit
-import { useDispatch, useSelector } from "react-redux";
-import { resetFilter } from "../../store/filter/filterSlice";
-import { resetProducts } from "../../store/products/productsSlice";
+import { useDispatch } from 'react-redux';
+import { resetFilter } from '../../store/filter/filterSlice';
+import { resetProducts } from '../../store/products/productsSlice';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
-  const { globalLoading } = useSelector((state) => state.products);
 
   // Reseting stuff
   useEffect(() => {
@@ -23,7 +19,6 @@ const ProductsPage = () => {
 
   return (
     <section>
-      {globalLoading ? <Loading /> : null}
       <BreadCrumb title="products" />
       <Products />
     </section>

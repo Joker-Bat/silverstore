@@ -9,7 +9,7 @@ import { truncateWords } from '../../../utilities/helperFunctions';
 import Button from '../../Button/Button';
 import ImageLoader from '../ImageLoader/ImageLoader';
 
-const ListView = ({ id, name, price, highlights, image }) => {
+const ListView = ({ id, name, price, highlights, image, skeleton }) => {
   const [imageLoading, setImageLoading] = useState(true);
 
   const handleImageLoading = () => {
@@ -18,34 +18,40 @@ const ListView = ({ id, name, price, highlights, image }) => {
 
   return (
     <div className={classes.ListView}>
-      <div className={classes.ImageContainer}>
-        {imageLoading && <ImageLoader />}
-        <img src={image} alt={name} onLoad={handleImageLoading} />
-      </div>
-      <div className={classes.Details}>
-        <h1 className={classes.Title}>{truncateWords(name, 28)}</h1>
-        <ul className={classes.Highlights}>
-          {highlights.map((item, index) => {
-            return (
-              <li key={'ListViewHighLights' + index}>
-                {truncateWords(item, 58)}
-              </li>
-            );
-          })}
-        </ul>
-        <div className={classes.ButtonContainer}>
-          <h1 className={classes.Price}>
-            <NumberFormat
-              displayType={'text'}
-              thousandSeparator={true}
-              thousandsGroupStyle="lakh"
-              prefix={'₹'}
-              value={price}
-            />
-          </h1>
-          <Button name="View" route={`/products/${id}`} small shine />
-        </div>
-      </div>
+      {!skeleton ? (
+        <>
+          <div className={classes.ImageContainer}>
+            {imageLoading && <ImageLoader />}
+            <img src={image} alt={name} onLoad={handleImageLoading} />
+          </div>
+          <div className={classes.Details}>
+            <h1 className={classes.Title}>{truncateWords(name, 28)}</h1>
+            <ul className={classes.Highlights}>
+              {highlights.map((item, index) => {
+                return (
+                  <li key={'ListViewHighLights' + index}>
+                    {truncateWords(item, 58)}
+                  </li>
+                );
+              })}
+            </ul>
+            <div className={classes.ButtonContainer}>
+              <h1 className={classes.Price}>
+                <NumberFormat
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  thousandsGroupStyle="lakh"
+                  prefix={'₹'}
+                  value={price}
+                />
+              </h1>
+              <Button name="View" route={`/products/${id}`} small shine />
+            </div>
+          </div>
+        </>
+      ) : (
+        <ImageLoader />
+      )}
     </div>
   );
 };

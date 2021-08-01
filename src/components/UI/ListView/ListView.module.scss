@@ -2,9 +2,11 @@
 @import '../../../styles/ResponsiveSheet.scss';
 
 .ListView {
+  position: relative;
   overflow: hidden;
   width: 90%;
   max-width: 800px;
+  min-height: 200px;
   height: auto;
   display: grid;
   grid-template-columns: 250px 1fr;
@@ -17,11 +19,13 @@
   transition: outline 0.1s ease;
 
   @include respond($TABLET) {
+    min-height: 150px;
     align-items: center;
     grid-template-columns: 150px 1fr;
   }
 
   @include respond($MOBILE) {
+    min-height: 130px;
     gap: 1.5rem;
     grid-template-columns: 120px 1fr;
   }

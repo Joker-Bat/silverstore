@@ -42,19 +42,25 @@ const CarouselSet = (props) => {
       useKeyboardArrows={true}
       autoFocus={true}
     >
-      {bannerImages.map((item, index) => {
-        return (
-          <div className={classes.Slide} key={`banner${item.id}${index}`}>
-            {imageLoading && <ImageLoader />}
-            <img
-              src={`https://freeestoreapi.herokuapp.com/images/products/${item.bannerImage}`}
-              alt={item.name}
-              className={classes.Banner}
-              onLoad={handleImageLoading}
-            />
-          </div>
-        );
-      })}
+      {bannerImages.length !== 0 ? (
+        bannerImages.map((item, index) => {
+          return (
+            <div className={classes.Slide} key={`banner${item.id}${index}`}>
+              {imageLoading && <ImageLoader />}
+              <img
+                src={`https://freeestoreapi.herokuapp.com/images/products/${item.bannerImage}`}
+                alt={item.name}
+                className={classes.Banner}
+                onLoad={handleImageLoading}
+              />
+            </div>
+          );
+        })
+      ) : (
+        <div className={classes.Slide}>
+          <ImageLoader />
+        </div>
+      )}
     </Carousel>
   );
 };
