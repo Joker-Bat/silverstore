@@ -4,39 +4,60 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: transparent;
-  border-radius: 5px;
+  background-color: var(--tertiary);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
+  animation: blinkAnimation 1s ease-in-out alternate infinite;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    overflow: hidden;
+    transform: translateX(-100%) skewX(8deg);
+    border-right: 8px solid var(--white);
+    animation: shineAnimation 3s ease-in-out infinite;
+  }
 
   &.BgDark {
     background-color: rgba(0, 0, 0, 0.6);
   }
 
-  &.BannerImage {
-    div {
-      height: 70%;
-    }
+  // &.BannerImage {
+  //   div {
+  //     height: 70%;
+  //   }
+  // }
+}
+
+@keyframes shineAnimation {
+  0% {
+    transform: translateX(-100%) skewX(8deg);
   }
 
-  div {
-    width: 40%;
-    height: 50%;
-    border-top: 5px solid var(--main);
-    border-bottom: 5px solid var(--main);
-    border-radius: 50%;
-    animation: searchAnimation 0.8s linear infinite;
+  25% {
+    transform: translateX(0%) skewX(8deg);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(0%) skewX(8deg);
   }
 }
 
-@keyframes searchAnimation {
-  0%,
-  100% {
-    transform: rotate(0deg);
+@keyframes blinkAnimation {
+  from {
+    opacity: 0.9;
   }
-
-  50% {
-    transform: rotate(360deg);
+  to {
+    opacity: 1;
   }
 }
