@@ -13,11 +13,15 @@ const reviewRouter = require('./routes/review');
 
 const app = express();
 
+app.enable('trust proxy');
+
 // Parse incoming data
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 app.use(cors());
+
+app.options('*', cors());
 
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));
