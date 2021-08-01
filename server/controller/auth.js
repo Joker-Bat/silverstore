@@ -17,7 +17,7 @@ const createSendToken = (user, statusCode, req, res) => {
     ),
     httpOnly: true,
     // Below is only when hosting
-    // secure: req.secure || req.headers("x-forwarded-proto") === "https",
+    secure: req.secure || req.headers('x-forwarded-proto') === 'https',
   });
 
   // Hide password and photo from response
@@ -48,7 +48,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // Dont show active on Response
   newUser.active = undefined;
-  const url = `http://localhost:3000/profile`;
+  const url = `${req.protocol}://${req.get('host')}/profile`;
   const message = `
     <h3>Successfully signed up to SilverStore</h3>
     <p>Thank you for signing up for SilverStore account</p>
@@ -96,7 +96,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   try {
-    const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
+    const resetUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/resetpassword/${resetToken}`;
 
     const message = `
       <h3>Hi ${user.name} you have requested for password reset</h3>
@@ -156,7 +158,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  const url = `http://localhost:3000/profile`;
+  const url = `${req.protocol}://${req.get('host')}/profile`;
 
   const message = `
     <h3>Hi ${user.name} Successfully Changed your password</h3>

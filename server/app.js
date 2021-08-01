@@ -7,7 +7,6 @@ const path = require('path');
 
 // Our modules
 const globalErrorController = require('./middleware/error');
-const AppError = require('./utils/appError');
 const userRouter = require('./routes/user');
 const cartRouter = require('./routes/cart');
 const reviewRouter = require('./routes/review');
@@ -38,9 +37,13 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/carts', cartRouter);
 app.use('/api/v1/reviews', reviewRouter);
 
-app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
+// Serve my frontend
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  });
+}
 
 app.use(globalErrorController);
 
