@@ -1,5 +1,5 @@
-@import "../../../styles/Variables.scss";
-@import "../../../styles/ResponsiveSheet.scss";
+@import '../../../styles/Variables.scss';
+@import '../../../styles/ResponsiveSheet.scss';
 
 .Filter {
   color: var(--primary);
@@ -24,7 +24,7 @@
     top: unset;
     bottom: 12rem;
     right: 2rem;
-    z-index: 2;
+    z-index: 5;
     transform: scale(0);
     transform-origin: bottom right;
     transition: transform 0.4s ease;
@@ -34,7 +34,7 @@
     }
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: -1.6rem;
       right: 2rem;

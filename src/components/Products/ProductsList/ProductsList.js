@@ -1,15 +1,12 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 // Styles
 import classes from './ProductsList.module.scss';
-
 // Component
 import ProductsTop from './ProductsTop/ProductsTop';
 import Product from '../../UI/Product/Product';
 import ListView from '../../UI/ListView/ListView';
-
 // Redux toolkit
 import { useSelector, useDispatch } from 'react-redux';
-
 // Helper function
 import { getFilteredProductsByChoices } from './model/getFilteredProducts';
 import { updateProducts } from '../../../store/products/productsSlice';
@@ -19,6 +16,7 @@ import { updateProducts } from '../../../store/products/productsSlice';
 */
 
 const ProductsList = () => {
+  const [productChanged, setProductChanged] = useState(false);
   const skeletonFilllup = Array(20).fill(0);
   // Redux toolkit
   const { categorys, companys, price, listView } = useSelector(
@@ -36,43 +34,54 @@ const ProductsList = () => {
       productRef
     );
     dispatch(updateProducts(filteredProductsByPrice));
+  }, [categorys, companys, price, dispatch, productRef]);
 
-    // eslint-disable-next-line
-  }, [categorys, companys, price]);
+  const getListView = useCallback(
+    (products) => {
+      const listViews = products.map((item) => {
+        const image = `https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`;
+        return (
+          <ListView
+            key={'ProductsListView' + item.id}
+            id={item.slug}
+            name={item.name}
+            image={image}
+            price={item.price}
+            highlights={item.highlights}
+          />
+        );
+      });
+      // Here i am usring productChanged to check if the products is changed from initial empty array to render skeleton
+      if (!productChanged) {
+        setProductChanged(true);
+      }
+      return listViews;
+    },
+    [productChanged]
+  );
 
-  const getListView = useCallback((products) => {
-    const listViews = products.map((item) => {
-      const image = `https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`;
-      return (
-        <ListView
-          key={'ProductsListView' + item.id}
-          id={item.slug}
-          name={item.name}
-          image={image}
-          price={item.price}
-          highlights={item.highlights}
-        />
-      );
-    });
-    return listViews;
-  }, []);
-
-  const getGridView = useCallback((products) => {
-    const gridViews = products.map((item) => {
-      const image = `https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`;
-      return (
-        <Product
-          key={'ProductsList' + item.id}
-          id={item.slug}
-          name={item.name}
-          image={image}
-          price={item.price}
-        />
-      );
-    });
-
-    return gridViews;
-  }, []);
+  const getGridView = useCallback(
+    (products) => {
+      const gridViews = products.map((item) => {
+        const image = `https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`;
+        return (
+          <Product
+            key={'ProductsList' + item.id}
+            id={item.slug}
+            name={item.name}
+            image={image}
+            price={item.price}
+          />
+        );
+      });
+      // Here i am usring productChanged to check if the products is changed from initial empty array to render skeleton
+      if (!productChanged) {
+        setProductChanged(true);
+      }
+      return gridViews;
+    },
+    [productChanged]
+  );
 
   const getGridViewSkeleton = useCallback((products) => {
     const gridViewSkeletons = products.map((_, index) => {
@@ -98,13 +107,21 @@ const ProductsList = () => {
     <div className={classes.ProductsContainer}>
       <ProductsTop />
       <div className={ProductListClass}>
-        {products.length !== 0
-          ? listView
-            ? getListView(products)
-            : getGridView(products)
-          : listView
-          ? getListViewSkeleton(skeletonFilllup)
-          : getGridViewSkeleton(skeletonFilllup)}
+        {products.length !== 0 ? ( // If product length is not empty
+          listView ? (
+            getListView(products)
+          ) : (
+            getGridView(products)
+          )
+        ) : products.length === 0 && !productChanged ? ( // if product is empty and before its not changed from empty to some products
+          listView ? (
+            getListViewSkeleton(skeletonFilllup)
+          ) : (
+            getGridViewSkeleton(skeletonFilllup)
+          )
+        ) : (
+          <h1>No result for this filter</h1>
+        )}
       </div>
     </div>
   );
