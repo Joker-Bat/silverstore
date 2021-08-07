@@ -56,14 +56,6 @@ const App = () => {
     (state) => state.notification
   );
 
-  // Get auth token if available
-  useEffect(() => {
-    const token = localStorage.getItem('silvertoken');
-    if (token) {
-      dispatch(setToken({ token }));
-    }
-  }, [dispatch]);
-
   // Error Message
   const errorMessageInApp = useCallback(
     (message) => {
@@ -160,7 +152,15 @@ const App = () => {
     </Suspense>
   );
 
-  if (authToken) {
+  // Get auth token if available to check synchronously instead of push into redux store for determining a routes based on token
+  const token = localStorage.getItem('silvertoken');
+  useEffect(() => {
+    if (token) {
+      dispatch(setToken({ token }));
+    }
+  }, [dispatch, token]);
+
+  if (token) {
     routes = (
       <Suspense fallback={<Loading />}>
         <Switch>
