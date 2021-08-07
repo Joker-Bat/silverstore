@@ -148,6 +148,7 @@ const Profile = () => {
       setProfileLoading(false);
       setProfileUpdated(true);
     } catch (err) {
+      setNewPic(null);
       setProfileLoading(false);
       errorMessageInProfile(err.response.data.error.message);
     }
