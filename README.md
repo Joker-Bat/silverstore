@@ -1,70 +1,136 @@
-# Getting Started with Create React App
+# SilverStore
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is how homepage will look like at initial render if nothing goes wrong 😅
 
-## Available Scripts
+<img src="./images/homepage.png" width="250" height="100%" />
 
-In the project directory, you can run:
+## Preview this project here 👉 [SilverStore](https://silver-store-react.herokuapp.com/)
 
-### `npm start`
+<br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Tech Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+> Frontend
 
-### `npm test`
+- React
+- SCSS
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+> Backend
 
-### `npm run build`
+- Express
+- Mongoose
+- MongoDB
+- JWT (Authentication)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br />
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## >>> Without Authentication
 
-### `npm run eject`
+<br />
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+> Light / Dark theme toggler
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Double Click on the icon (Logo) to toggle between light and dark theme <small>(It will popup one notification on initial render about this)</small>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<br />
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+> Search for product
 
-## Learn More
+Search for product with its keyword to naviagate straight to that product
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Random product
 
-### Code Splitting
+If you have lot of money and dont know what to buy then you can use this to make desicions.😅
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<br />
 
-### Analyzing the Bundle Size
+> Products
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- In products page you can see list of all products and you can filter those products by its category, company and its price.
 
-### Making a Progressive Web App
+- In products page you can toggle between list or grid view to see the products.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<br />
 
-### Advanced Configuration
+> Single product
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+In product detail page you can see expanded detail about single product like, specifications, and reviews.
 
-### Deployment
+<br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## >>> With Authentication
 
-### `npm run build` fails to minify
+<br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> Add products to cart
+
+You can add products to your cart for later purchasing 😉
+
+<br />
+
+> Add review to the product
+
+You can add Review to the product (One review for one product)
+
+<br />
+
+> Increase or decrease product count in cart
+
+After product added to cart you can increase or decrease it count as your need.
+
+<br />
+
+> Remove product from cart
+
+Remove product from cart if you dont want to be purchased with your real money.😅
+
+<br />
+
+> Checkout your products
+
+You can checkout your products in cart to get your products delivered to your home, be ready with money 😉
+
+<br />
+
+## >>> Authentication
+
+<br />
+
+> Signup
+
+- Simple signup method with username, email and password.
+- After signup if its real email you will get welcome mail.
+
+<br />
+
+> Login
+
+Login user with password checking
+
+<br />
+
+> Forgot password
+
+If you forgot your password then you can provide your email and get reset password link in your mail.
+
+<br />
+
+## >> Profile
+
+<br />
+
+If your are logged in then you can access your profile page, here you can
+
+- Upload your profile picture
+- Update your Username or Email
+- Update your password
+
+This profile picture will be visible in reviews you added on products.
+
+<br />
+
+## Any Suggestion make a pull request 😉.
