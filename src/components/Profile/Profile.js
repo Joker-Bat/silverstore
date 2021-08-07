@@ -231,13 +231,15 @@ const Profile = () => {
                   className={classes.Progress}
                 ></span>
               </label>
-              <Button
-                name="upload"
-                capitalize
-                loading={pictureLoading}
-                submit
-                fixedWidth
-              />
+              {newPic && (
+                <Button
+                  name="upload"
+                  capitalize
+                  loading={pictureLoading}
+                  submit
+                  fixedWidth
+                />
+              )}
               <small>Choose only square image</small>
             </form>
           </div>
