@@ -75,7 +75,6 @@ const App = () => {
       try {
         await pureAxios.get('/api/v1/users/isloggedin');
       } catch (err) {
-        errorMessageInApp('You are not logged in');
         dispatch(removeToken());
       }
     };
