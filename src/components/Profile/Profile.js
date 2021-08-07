@@ -91,6 +91,7 @@ const Profile = () => {
     setProfileUpdated(true);
     setNewFilename('');
     setPictureLoading(false);
+    setNewPic(null);
   };
   // Logout
   const handleLogout = async () => {
