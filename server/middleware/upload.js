@@ -43,6 +43,7 @@ exports.resize = catchAsync(async (req, res, next) => {
 
   await sharp(req.file.buffer, { failOnError: false })
     .resize(500, 500)
+    .withMetadata()
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
     .toFile(`public/images/users/${req.file.filename}`);
