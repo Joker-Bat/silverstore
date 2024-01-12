@@ -45,7 +45,7 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
   if (!productId) return next(new AppError('Provide a product id', 400));
 
   const reviews = await Review.find({ productId })
-    .populate({ path: 'user', select: 'name photo' })
+    .populate({ path: 'user', select: 'name photo', strictPopulate: false })
     .select('-__v');
 
   res.status(200).json({
