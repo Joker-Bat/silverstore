@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://freeestoreapi.herokuapp.com/",
+  baseURL: "https://free-e-store-api.onrender.com/",
 });
 
 export default instance;
