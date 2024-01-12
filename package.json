@@ -2,8 +2,8 @@
   "name": "silver-store",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://silver-store-react.herokuapp.com/",
-  "homepage": "https://silver-store-react.herokuapp.com/",
+  "proxy": "https://silver-store-react.onrender.com/",
+  "homepage": "https://silver-store-react.onrender.com/",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@reduxjs/toolkit": "^1.5.1",
