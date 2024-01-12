@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // Helper function
 import { getFilteredProductsByChoices } from './model/getFilteredProducts';
 import { updateProducts } from '../../../store/products/productsSlice';
+import { getImageUrl } from '../../../utilities/helperFunctions';
 
 /*
   Code
@@ -39,7 +40,7 @@ const ProductsList = () => {
   const getListView = useCallback(
     (products) => {
       const listViews = products.map((item) => {
-        const image = `https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`;
+        const image = getImageUrl(`/images/products/${item.images[0]}`);
         return (
           <ListView
             key={'ProductsListView' + item.id}
@@ -63,7 +64,7 @@ const ProductsList = () => {
   const getGridView = useCallback(
     (products) => {
       const gridViews = products.map((item) => {
-        const image = `https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`;
+        const image = getImageUrl(`/images/products/${item.images[0]}`);
         return (
           <Product
             key={'ProductsList' + item.id}

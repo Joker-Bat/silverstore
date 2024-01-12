@@ -11,6 +11,7 @@ import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // Skeleton-Elements
 import ImageLoader from '../../../UI/ImageLoader/ImageLoader';
+import { getImageUrl } from '../../../../utilities/helperFunctions';
 
 /**
  * Main Component
@@ -48,7 +49,7 @@ const CarouselSet = (props) => {
             <div className={classes.Slide} key={`banner${item.id}${index}`}>
               {imageLoading && <ImageLoader />}
               <img
-                src={`https://freeestoreapi.herokuapp.com/images/products/${item.bannerImage}`}
+                src={getImageUrl(`/images/products/${item.bannerImage}`)}
                 alt={item.name}
                 className={classes.Banner}
                 onLoad={handleImageLoading}

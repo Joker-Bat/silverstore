@@ -13,6 +13,7 @@ import {
 import Title from '../../UI/Title/Title';
 import Product from '../../UI/Product/Product';
 import Button from '../../Button/Button';
+import { getImageUrl } from '../../../utilities/helperFunctions';
 
 /**
  * Main component
@@ -56,7 +57,7 @@ const RandomProduct = () => {
       {product ? (
         <Product
           id={product.slug}
-          image={`https://freeestoreapi.herokuapp.com/images/products/${product.images[0]}`}
+          image={getImageUrl(`/images/products/${product.images[0]}`)}
           name={product.name}
           price={product.price}
           searchingAnimation={searching}

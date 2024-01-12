@@ -23,6 +23,7 @@ import {
   removeSuccessMessage,
 } from '../../../store/notification/notificationSlice';
 import ImageLoader from '../../UI/ImageLoader/ImageLoader';
+import { getImageUrl } from '../../../utilities/helperFunctions';
 
 /*
  * Main Conponent
@@ -104,7 +105,7 @@ const CartItem = ({ id, name, image, price, subTotal, slug }) => {
       <Link to={`/products/${slug}`} className={classes.CartItemImage}>
         {imageLoading && <ImageLoader />}
         <img
-          src={`https://freeestoreapi.herokuapp.com/images/products/${image}`}
+          src={getImageUrl(`/images/products/${image}`)}
           alt={name}
           onLoad={handleImageLoading}
         />
