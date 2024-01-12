@@ -19,12 +19,7 @@ const DB = process.env.DATABASE.replace(
 
 // Connect To Database
 mongoose
-  .connect(DB, {
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(DB)
   .then(() => console.log('Connected To Database Successfully. :)'))
   .catch((err) => console.log('Error in database connection', err.message));
 // Error happen after initial connect
