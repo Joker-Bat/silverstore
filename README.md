@@ -4,7 +4,7 @@ This is how homepage will look like at initial render if nothing goes wrong 😅
 
 <img src="./images/homepage.png" width="250" height="auto" />
 
-## Preview this project here 👉 [SilverStore](https://silver-store-react.herokuapp.com/)
+## Preview this project here 👉 [SilverStore](https://silver-store-react.onrender.com/)
 
 <br />
 
