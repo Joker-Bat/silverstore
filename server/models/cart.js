@@ -23,8 +23,9 @@ const CartSchema = mongoose.Schema({
 // Populate User Schema
 CartSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'User',
+    path: 'user',
     select: 'name',
+    strictPopulate: false,
   });
   next();
 });
