@@ -62,5 +62,5 @@ export const updateReviewStructure = (curReviews) => {
 };
 
 export const getImageUrl = (path) => {
-  return `https://silver-store-react.onrender.com/${path}`;
+  return `https://silver-store-react.onrender.com${path}`;
 };
