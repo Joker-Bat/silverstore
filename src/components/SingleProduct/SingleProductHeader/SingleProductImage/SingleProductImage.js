@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 // Components
 import PopupImage from './PopupImage/PopupImage';
 import ImageLoader from '../../../UI/ImageLoader/ImageLoader';
+import { getImageUrl } from '../../../../utilities/helperFunctions';
 /*
   Main Component
 */
@@ -37,7 +38,7 @@ const SingleProductImage = (props) => {
           <div className={classes.MainImage} onClick={() => setPopupOpen(true)}>
             {imageLoading && <ImageLoader />}
             <img
-              src={`https://freeestoreapi.herokuapp.com/images/products/${mainImage}`}
+              src={getImageUrl(`/images/products/${mainImage}`)}
               alt={currentProduct.name}
               onLoad={handleImageLoading}
             />
@@ -55,7 +56,7 @@ const SingleProductImage = (props) => {
                 >
                   {imageLoading && <ImageLoader />}
                   <img
-                    src={`https://freeestoreapi.herokuapp.com/images/products/${item}`}
+                    src={getImageUrl(`/images/products/${item}`)}
                     alt="smallImage"
                     onLoad={handleImageLoading}
                   />

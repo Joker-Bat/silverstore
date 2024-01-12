@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 
 // Styles
-import classes from "./PopupImage.module.scss";
+import classes from './PopupImage.module.scss';
 
 // Components
-import Backdrop from "../../../../UI/Backdrop/Backdrop";
+import Backdrop from '../../../../UI/Backdrop/Backdrop';
+import { getImageUrl } from '../../../../../utilities/helperFunctions';
 
 const PopupImage = ({ popupOpen, setPopupOpen, mainImage }) => {
   return (
@@ -14,13 +15,13 @@ const PopupImage = ({ popupOpen, setPopupOpen, mainImage }) => {
         className={[
           classes.PopupImageContainer,
           popupOpen && classes.OpenPopup,
-        ].join(" ")}
+        ].join(' ')}
       >
         <div className={classes.CloseIcon} onClick={() => setPopupOpen(false)}>
           <i className="fas fa-times"></i>
         </div>
         <img
-          src={`https://freeestoreapi.herokuapp.com/images/products/${mainImage}`}
+          src={getImageUrl(`/images/products/${mainImage}`)}
           alt="mainImage"
           className={classes.PopupImage}
         />

@@ -60,3 +60,7 @@ export const updateReviewStructure = (curReviews) => {
   });
   return updatedReviews;
 };
+
+export const getImageUrl = (path) => {
+  return `${window.location.pathname}${path}`;
+};

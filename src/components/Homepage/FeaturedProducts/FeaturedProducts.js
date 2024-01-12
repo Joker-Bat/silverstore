@@ -7,6 +7,7 @@ import Product from '../../UI/Product/Product';
 import Button from '../../Button/Button';
 // React Redux
 import { useSelector } from 'react-redux';
+import { getImageUrl } from '../../../utilities/helperFunctions';
 
 const FeaturedProducts = () => {
   const skeletonFillup = Array(3).fill(0);
@@ -26,7 +27,7 @@ const FeaturedProducts = () => {
                 <Product
                   key={'FeaturedProduct' + item.id}
                   id={item.slug}
-                  image={`https://freeestoreapi.herokuapp.com/images/products/${item.images[0]}`}
+                  image={getImageUrl(`/images/products/${item.images[0]}`)}
                   name={item.name}
                   price={item.price}
                 />
